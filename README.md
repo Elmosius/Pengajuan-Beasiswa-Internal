@@ -10,5 +10,4 @@ Selamat datang di repositori GitHub kami untuk Tugas Besar Ujian Akhir Semester 
 
  ## 📚 Daftar Branch
 -  Main
--  Comming Soon
 
