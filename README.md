@@ -12,3 +12,8 @@ Selamat datang di repositori GitHub kami untuk Tugas Besar Ujian Akhir Semester 
 -  Main
 -  Mencoba
 
+ ## ⚙️ Teknologi yang dipakai
+-  Tailwind
+-  Vue + Vite
+-  NodeJs 
+
