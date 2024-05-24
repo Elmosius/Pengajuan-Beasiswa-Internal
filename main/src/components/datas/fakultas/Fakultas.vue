@@ -12,7 +12,7 @@ import Layout from '../Layout.vue'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Dashboard',
+  name: 'Fakultas',
   components: {
     Layout
   }

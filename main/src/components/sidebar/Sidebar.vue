@@ -31,7 +31,16 @@
         </button>
         <!-- Logo -->
         <router-link class="block" to="/">
-          <h2 class="text-white text-2xl mt-3 font-medium">Dashboard</h2>
+          <span
+            class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+            aria-hidden="true"
+            >•••</span
+          >
+          <h2
+            class="text-white text-2xl mt-3 font-medium lg:hidden lg:sidebar-expanded:block 2xl:block"
+          >
+            Dashboard
+          </h2>
         </router-link>
       </div>
 
@@ -82,7 +91,7 @@
                     </svg>
 
                     <span
-                      class="text-md font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                      class="font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                       >Data</span
                     >
                   </div>
@@ -115,7 +124,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >Fakultas</span
                         >
                       </a>
@@ -136,7 +145,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >Program Studi</span
                         >
                       </a>
@@ -153,7 +162,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >User</span
                         >
                       </a>
@@ -211,7 +220,7 @@
                     </svg>
 
                     <span
-                      class="text-md font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                      class="font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                       >Beasiswa</span
                     >
                   </div>
@@ -244,7 +253,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >Daftar List</span
                         >
                       </a>
@@ -265,7 +274,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >Pendaftaran</span
                         >
                       </a>
@@ -286,7 +295,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >History</span
                         >
                       </a>
@@ -343,7 +352,7 @@
                     </svg>
 
                     <span
-                      class="text-md font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                      class="font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                       >Laporan</span
                     >
                   </div>
@@ -376,7 +385,7 @@
                         @click="navigate"
                       >
                         <span
-                          class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                          class="font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                           >Lihat Laporan</span
                         >
                       </a>

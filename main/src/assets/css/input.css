@@ -6,7 +6,7 @@
 @layer utilities {
   @media (min-width: 1536px) {
     .\32xl\:\!w-64 {
-      width: 20rem !important;
+      width: 18rem !important;
     }
   }
 }
