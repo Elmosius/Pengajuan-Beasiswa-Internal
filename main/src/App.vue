@@ -1,9 +1,17 @@
-<script setup>
-import { ref } from 'vue'
-
-const x = ref('Hello VUE!!')
-</script>
-
 <template>
-  <h1 class="text-3xl bg">{{ x }}</h1>
+  <div id="app">
+    <Layout />
+    <router-view />
+  </div>
 </template>
+
+<script>
+import Layout from './components/Layout.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Layout
+  }
+}
+</script>
