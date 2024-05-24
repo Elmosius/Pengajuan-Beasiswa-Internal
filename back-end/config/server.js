@@ -20,7 +20,7 @@ db.connect((err) => {
 });
 
 app.get("/api", (req, res) => {
-  res.send("API is working");
+  res.send("API is working...");
 });
 
 const PORT = process.env.PORT || 8000;
