@@ -11,7 +11,7 @@
     <div
       id="sidebar"
       ref="sidebar"
-      class="flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out"
+      class="flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-24 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-6 transition-all duration-200 ease-in-out"
       :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'"
     >
       <!-- Sidebar header -->
@@ -50,12 +50,12 @@
           <ul class="mt-3">
             <SidebarLinkGroup
               v-slot="parentLink"
-              :activeCondition="currentRoute.fullPath.includes('beasiswa')"
+              :activeCondition="currentRoute.fullPath.includes('data')"
             >
               <a
                 class="block text-slate-200 truncate transition duration-150"
                 :class="
-                  currentRoute.fullPath.includes('beasiswa')
+                  currentRoute.fullPath.includes('data')
                     ? 'hover:text-slate-200'
                     : 'hover:text-white'
                 "
@@ -101,7 +101,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/beasiswa/pendaftaran"
+                    to="/data/fakultas"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >
@@ -120,6 +120,12 @@
                         >
                       </a>
                     </li>
+                  </router-link>
+                  <router-link
+                    to="/data/program-studi"
+                    custom
+                    v-slot="{ href, navigate, isExactActive }"
+                  >
                     <li class="mb-1 last:mb-0">
                       <a
                         class="block transition duration-150 truncate"
@@ -136,11 +142,7 @@
                       </a>
                     </li>
                   </router-link>
-                  <router-link
-                    to="/beasiswa/daftar-list"
-                    custom
-                    v-slot="{ href, navigate, isExactActive }"
-                  >
+                  <router-link to="/data/user" custom v-slot="{ href, navigate, isExactActive }">
                     <li class="mb-1 last:mb-0">
                       <a
                         class="block transition duration-150 truncate"
@@ -228,7 +230,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/beasiswa/pendaftaran"
+                    to="/beasiswa/daftar-list"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >
@@ -247,6 +249,12 @@
                         >
                       </a>
                     </li>
+                  </router-link>
+                  <router-link
+                    to="/beasiswa/pendaftaran"
+                    custom
+                    v-slot="{ href, navigate, isExactActive }"
+                  >
                     <li class="mb-1 last:mb-0">
                       <a
                         class="block transition duration-150 truncate"
@@ -264,7 +272,7 @@
                     </li>
                   </router-link>
                   <router-link
-                    to="/beasiswa/daftar-list"
+                    to="/beasiswa/history"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >
