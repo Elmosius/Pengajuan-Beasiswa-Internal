@@ -71,7 +71,6 @@
 import { ref } from 'vue'
 import SearchModal from './ModalSearch.vue'
 import Notifications from './DropdownNotifications.vue'
-import Help from './DropdownHelp.vue'
 import UserMenu from './DropdownProfile.vue'
 
 export default {
@@ -81,7 +80,6 @@ export default {
   components: {
     SearchModal,
     Notifications,
-    Help,
     UserMenu
   },
   setup() {
