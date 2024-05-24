@@ -12,7 +12,6 @@
       <main>
         <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
           <!-- Welcome banner -->
-          <WelcomeBanner />
           <slot></slot>
         </div>
       </main>
@@ -25,7 +24,6 @@
 import { ref } from 'vue'
 import Sidebar from './sidebar/Sidebar.vue'
 import Header from './header/Header.vue'
-import WelcomeBanner from './dashboard/WelcomeBanner.vue'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -33,8 +31,7 @@ export default {
   components: {
     Sidebar,
     // eslint-disable-next-line vue/no-reserved-component-names
-    Header,
-    WelcomeBanner
+    Header
   },
   setup() {
     const sidebarOpen = ref(false)

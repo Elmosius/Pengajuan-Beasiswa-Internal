@@ -118,7 +118,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -139,7 +139,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -156,7 +156,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -247,7 +247,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -268,7 +268,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -289,7 +289,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"
@@ -379,7 +379,7 @@
                       <a
                         class="block transition duration-150 truncate"
                         :class="
-                          isExactActive ? 'text-indigo-500' : 'text-slate-400 hover:text-slate-200'
+                          isExactActive ? 'text-slate-100' : 'text-slate-400 hover:text-slate-200'
                         "
                         :href="href"
                         @click="navigate"

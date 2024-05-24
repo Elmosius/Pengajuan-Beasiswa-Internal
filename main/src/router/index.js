@@ -1,17 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '@/components/dashboard/Dashboard.vue'
-import Layout from '@/components/Layout.vue'
+import Fakultas from '@/components/datas/fakultas/Fakultas.vue'
+import FakultasCreate from '@/components/datas/fakultas/FakultasCreate.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Layout
+    component: Dashboard
   },
   {
     path: '/data/fakultas',
-    name: 'fakultas',
-    component: Dashboard
+    name: 'Fakultas',
+    component: Fakultas
+  },
+  {
+    path: '/data/fakultas-create',
+    name: 'FakultasCreate',
+    component: FakultasCreate
   }
 ]
 

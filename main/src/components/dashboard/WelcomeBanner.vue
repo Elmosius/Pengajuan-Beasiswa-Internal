@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-indigo-200 dark:bg-indigo-500 p-4 sm:p-6 rounded-md overflow-hidden mb-8">
-    <!-- Background illustration -->
+    <!-- Backgroud -->
     <div
       class="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block"
       aria-hidden="true"
@@ -45,15 +45,8 @@
       </svg>
     </div>
 
-    <!-- Content -->
-    <div class="relative">
-      <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-3">
-        Welcome back, Elmosius👋
-      </h1>
-      <p class="dark:text-indigo-200">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
-      </p>
-    </div>
+    <!-- Konten -->
+    <slot> </slot>
   </div>
 </template>
 
