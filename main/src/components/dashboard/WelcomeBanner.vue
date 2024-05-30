@@ -46,7 +46,7 @@
     </div>
 
     <!-- Konten -->
-    <slot> </slot>
+    <slot></slot>
   </div>
 </template>
 
