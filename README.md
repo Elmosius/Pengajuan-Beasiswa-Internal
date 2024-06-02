@@ -29,7 +29,6 @@ Berikut adalah hal yang dapat dilakukan oleh masing-masing pengguna:
 - Vue + Vite
 - NodeJs
 - MySql
-- Prisma
 - ExpressJs
 - Postman
 - Bcrypt
