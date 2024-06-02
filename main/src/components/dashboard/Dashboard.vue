@@ -2,7 +2,6 @@
   <div>
     <Layout>
       <WelcomeBanner>
-  
         <!-- Content -->
         <div class="relative">
           <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-3">
