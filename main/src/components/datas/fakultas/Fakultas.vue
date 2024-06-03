@@ -146,15 +146,6 @@ export default {
       try {
         const response = await Api.getFakultas()
         this.fakultasList = response.data
-        console.log('Tipe data fakultasList:', typeof this.fakultasList)
-
-        // Memeriksa tipe data dari fakultasList
-        console.log('Tipe data fakultasList:', typeof this.fakultasList)
-
-        // Iterasi melalui setiap objek dalam properti 'data' dan mencetak id dan nama_fakultas
-        this.fakultasList.data.forEach((fakultas) => {
-          console.log(`ID: ${fakultas.id}, Nama Fakultas: ${fakultas.nama_fakultas}`)
-        })
       } catch (error) {
         console.error('Error fetching fakultas: ', error)
       }
