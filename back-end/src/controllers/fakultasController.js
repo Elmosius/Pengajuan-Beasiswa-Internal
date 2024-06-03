@@ -1,4 +1,4 @@
-const { findAllFakultas, insertFakultas, findFakultasById } = require("../models/fakultasModel");
+const { findAllFakultas, insertFakultas, findFakultasById, updateFakultas, deleteFakultas } = require("../models/fakultasModel");
 
 const getAllFakultas = async (req, res) => {
   try {
@@ -15,7 +15,7 @@ const getAllFakultas = async (req, res) => {
   }
 };
 
-const getFakultas = async (req, res) => {
+const getFakultasById = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
     const [data] = await findFakultasById(id);
@@ -60,8 +60,44 @@ const createFakultas = async (req, res) => {
   }
 };
 
+const editFakultasById = async (req, res) => {
+  const id = parseInt(req.params.id);
+  const data = req.body;
+
+  try {
+    await updateFakultas(id, data);
+    res.status(200).json({
+      message: "Update fakultas success",
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error",
+      serverMessage: error,
+    });
+  }
+};
+
+const deleteFakultasById = async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    await deleteFakultas(id);
+    res.json({
+      message: "Delete fakultas success",
+      data: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error",
+      serverMessage: error,
+    });
+  }
+};
+
 module.exports = {
-  getFakultas,
+  getFakultasById,
   getAllFakultas,
   createFakultas,
+  editFakultasById,
+  deleteFakultasById,
 };

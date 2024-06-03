@@ -36,9 +36,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="fakultas in fakultasList" :key="fakultas.id">
+              <tr v-for="fakultas in fakultasList.data" :key="fakultas.id">
                 <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">{{ fakultas }}</p>
+                  <p class="text-black dark:text-white">{{ fakultas.id }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">{{ fakultas.nama_fakultas }}</p>
@@ -146,7 +146,15 @@ export default {
       try {
         const response = await Api.getFakultas()
         this.fakultasList = response.data
-        console.log('Response:', response.data)
+        console.log('Tipe data fakultasList:', typeof this.fakultasList)
+
+        // Memeriksa tipe data dari fakultasList
+        console.log('Tipe data fakultasList:', typeof this.fakultasList)
+
+        // Iterasi melalui setiap objek dalam properti 'data' dan mencetak id dan nama_fakultas
+        this.fakultasList.data.forEach((fakultas) => {
+          console.log(`ID: ${fakultas.id}, Nama Fakultas: ${fakultas.nama_fakultas}`)
+        })
       } catch (error) {
         console.error('Error fetching fakultas: ', error)
       }

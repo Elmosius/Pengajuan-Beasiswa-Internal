@@ -8,6 +8,7 @@ const apiClient = axios.create({
 })
 
 export default {
+  // get all fakultas
   getFakultas() {
     return apiClient.get('/data/fakultas')
   }

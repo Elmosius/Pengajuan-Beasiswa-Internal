@@ -17,8 +17,23 @@ const insertFakultas = async (data) => {
   return dbPool.execute(query);
 };
 
+const updateFakultas = async (id, data) => {
+  const query = `UPDATE Fakultas 
+                 SET nama_fakultas = '${data.nama_fakultas}', updated_at = now() 
+                  WHERE id = ${id}`;
+
+  return dbPool.execute(query);
+};
+
+const deleteFakultas = async (id) => {
+  const query = `DELETE FROM Fakultas WHERE id = '${id}'`;
+  return dbPool.execute(query);
+};
+
 module.exports = {
   findFakultasById,
   findAllFakultas,
   insertFakultas,
+  updateFakultas,
+  deleteFakultas,
 };
