@@ -36,12 +36,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="fakultas in fakultasList" :key="fakultas.id">
                 <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">72</p>
+                  <p class="text-black dark:text-white">{{ fakultas }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">Teknologi Informasi</p>
+                  <p class="text-black dark:text-white">{{ fakultas.nama_fakultas }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
@@ -124,6 +124,7 @@
 <script>
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
+import Api from '../../../services/Api.js'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -131,6 +132,25 @@ export default {
   components: {
     Layout,
     WelcomeBanner
+  },
+  data() {
+    return {
+      fakultasList: []
+    }
+  },
+  mounted() {
+    this.fetchFakultas()
+  },
+  methods: {
+    async fetchFakultas() {
+      try {
+        const response = await Api.getFakultas()
+        this.fakultasList = response.data
+        console.log('Response:', response.data)
+      } catch (error) {
+        console.error('Error fetching fakultas: ', error)
+      }
+    }
   }
 }
 </script>

@@ -6,8 +6,14 @@ const app = express();
 
 app.use(express.json());
 
+// middlwares
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  next();
+});
+
 // fakultas
-app.use("/datas/fakultas", fakultasRoutes);
+app.use("/data/fakultas", fakultasRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

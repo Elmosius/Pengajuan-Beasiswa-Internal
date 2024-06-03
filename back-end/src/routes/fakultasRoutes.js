@@ -1,9 +1,10 @@
 const express = require("express");
-const { getAllFakultas } = require("../controllers/fakultasController");
+const { getAllFakultas, createFakultas, getFakultas } = require("../controllers/fakultasController");
 const router = express.Router();
 
 router.get("/", getAllFakultas);
-router.post("/");
+router.get("/:id", getFakultas);
+router.post("/", createFakultas);
 router.put("/:id");
 router.delete("/:id");
 
