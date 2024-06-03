@@ -1,11 +1,13 @@
+require("dotenv").config();
+const PORT = process.env.PORT;
 const express = require("express");
-const dotenv = require("dotenv");
+const fakultasRoutes = require("./routes/fakultasRoutes");
 const app = express();
 
-dotenv.config();
-
-const PORT = process.env.PORT;
 app.use(express.json());
+
+// fakultas
+app.use("/datas/fakultas", fakultasRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
