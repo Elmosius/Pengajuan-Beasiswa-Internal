@@ -1,10 +1,10 @@
-const { findAllPendaftaran, insertPendaftaran, findPendaftaranById, updatePendaftaran, deletePendaftaran, insertPendaftaran } = require("../models/pendaftaranModel");
+const { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa, insertBeasiswa } = require("../models/beasiswaModel");
 
-const getAllPendaftaran = async (req, res) => {
+const getAllBeasiswa = async (req, res) => {
   try {
-    const [data] = await findAllPendaftaran();
+    const [data] = await findAllBeasiswa();
     res.json({
-      message: "GET all pendafataran success",
+      message: "GET all beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -15,17 +15,17 @@ const getAllPendaftaran = async (req, res) => {
   }
 };
 
-const getPendaftaranById = async (req, res) => {
+const getBeasiswaById = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
-    const [data] = await findPendaftaranById(id);
+    const [data] = await findBeasiswaById(id);
     if (data.length < 1) {
       return res.status(404).json({
         message: "Id tidak ditemukan",
       });
     }
     res.json({
-      message: "GET pendaftaran by id success",
+      message: "GET beasiswa by id success",
       data: data,
     });
   } catch (error) {
@@ -36,10 +36,10 @@ const getPendaftaranById = async (req, res) => {
   }
 };
 
-const createPendaftaran = async (req, res) => {
+const createBeasiswa = async (req, res) => {
   const data = req.body;
 
-  if (!(data.id && data.start_at && data.end_at && data.status)) {
+  if (!(data.id && data.nama_beasiswa && data.deskripsi && data.periode)) {
     return res.status(400).json({
       message: "Anda mengirimkan data yang salah",
       data: null,
@@ -47,9 +47,9 @@ const createPendaftaran = async (req, res) => {
   }
 
   try {
-    await insertPendaftaran(data);
+    await insertBeasiswa(data);
     res.status(201).json({
-      message: "CREATE new pendaftaran success",
+      message: "CREATE new beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -60,14 +60,14 @@ const createPendaftaran = async (req, res) => {
   }
 };
 
-const editPendaftaranById = async (req, res) => {
+const editBeasiswaById = async (req, res) => {
   const id = parseInt(req.params.id);
   const data = req.body;
 
   try {
-    await updatePendaftaran(id, data);
+    await updateBeasiswa(id, data);
     res.status(200).json({
-      message: "Update pendaftaran success",
+      message: "Update beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -78,12 +78,12 @@ const editPendaftaranById = async (req, res) => {
   }
 };
 
-const deletePendaftaranById = async (req, res) => {
+const deleteBeasiswaById = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
-    await deletePendaftaran(id);
+    await deleteBeasiswa(id);
     res.json({
-      message: "Delete pendaftaran success",
+      message: "Delete beasiswa success",
       data: null,
     });
   } catch (error) {
@@ -95,9 +95,9 @@ const deletePendaftaranById = async (req, res) => {
 };
 
 module.exports = {
-  getPendaftaranById,
-  getAllPendaftaran,
-  createPendaftaran,
-  editPendaftaranById,
-  deletePendaftaranById,
+  getBeasiswaById,
+  getAllBeasiswa,
+  createBeasiswa,
+  editBeasiswaById,
+  deleteBeasiswaById,
 };
