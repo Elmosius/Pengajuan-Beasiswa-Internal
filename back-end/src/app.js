@@ -16,6 +16,9 @@ app.use("/data/fakultas", fakultasRoutes);
 // prodi
 app.use("/data/program-studi", prodiRoutes);
 
+// pendaftaran
+app.use("beasiswa/pendaftaran", pendaftaranRoutes);
+
 // CORS middlwares
 app.use(corsMiddleware);
 
