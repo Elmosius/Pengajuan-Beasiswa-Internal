@@ -11,5 +11,10 @@ export default {
   // get all fakultas
   getFakultas() {
     return apiClient.get('/data/fakultas')
+  },
+
+  // delete
+  deleteFakultas(id) {
+    return apiClient.delete(`/data/fakultas/${id}`)
   }
 }

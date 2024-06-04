@@ -1,4 +1,4 @@
-const { findAllPendaftaran, insertPendaftaran, findPendaftaranById, updatePendaftaran, deletePendaftaran, insertPendaftaran } = require("../models/pendaftaranModel");
+const { findAllPendaftaran, insertPendaftaran, findPendaftaranById, updatePendaftaran, deletePendaftaran } = require("../models/pendaftaranModel");
 
 const getAllPendaftaran = async (req, res) => {
   try {

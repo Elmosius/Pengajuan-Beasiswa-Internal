@@ -4,7 +4,9 @@ const express = require("express");
 
 const fakultasRoutes = require("./routes/fakultasRoutes");
 const prodiRoutes = require("./routes/prodiRoutes");
-const corsMiddleware = require("./middlewares/validateMiddleware");
+const beasiswaRoutes = require("./routes/beasiswaRoutes");
+const pendaftaranRoutes = require("./routes/pendaftaranRoutes");
+const corsMiddleware = require("./middlewares/corsMiddleware");
 
 const app = express();
 

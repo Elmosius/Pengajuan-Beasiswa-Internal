@@ -1,4 +1,4 @@
-const { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa, insertBeasiswa } = require("../models/beasiswaModel");
+const { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa } = require("../models/beasiswaModel");
 
 const getAllBeasiswa = async (req, res) => {
   try {
