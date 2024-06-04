@@ -62,7 +62,7 @@
                       </svg>
                     </button>
 
-                    <button @click="openModal" class="hover:text-purple-500">
+                    <button @click="confirmDelete(fakultas.id)" class="hover:text-purple-500">
                       <svg
                         class="fill-current"
                         width="18"
@@ -110,7 +110,7 @@
               </button>
               <button
                 class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-1 px-4 rounded"
-                @click="deleteFakultas(fakultas.id), closeModal"
+                @click="confirmDelete"
               >
                 Delete
               </button>
@@ -139,6 +139,7 @@ export default {
   data() {
     return {
       isModalOpen: false,
+      selectedFakultasId: null,
       fakultasList: []
     }
   },
@@ -151,12 +152,12 @@ export default {
     },
     closeModal() {
       this.isModalOpen = false
+      this.selectedFakultasId = null
     },
-    handleClickOutside(event) {
-      const modalElement = this.$refs.modal.$el
-      if (modalElement && !modalElement.contains(event.target)) {
-        this.closeModal()
-      }
+    confirmDelete(id) {
+      console.info(id)
+      this.selectedFakultasId = id
+      this.openModal()
     },
     async fetchFakultas() {
       try {
@@ -166,11 +167,12 @@ export default {
         console.error('Error fetching fakultas: ', error)
       }
     },
-    async deleteFakultas(id) {
+    async deleteFakultas() {
+      if (!this.selectedFakultasId) return
       try {
-        console.info(id)
-        await Api.deleteFakultas(id)
+        await Api.deleteFakultas(this.selectedFakultasId)
         this.fetchFakultas()
+        this.closeModal()
       } catch (error) {
         console.error('Error deleting fakultas: ', error)
       }
