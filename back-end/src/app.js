@@ -12,6 +12,9 @@ const app = express();
 
 app.use(express.json());
 
+// CORS middlwares
+app.use(corsMiddleware);
+
 // fakultas
 app.use("/data/fakultas", fakultasRoutes);
 
@@ -23,9 +26,6 @@ app.use("/beasiswa/pendaftaran", pendaftaranRoutes);
 
 // beasiswa
 app.use("/beasiswa", beasiswaRoutes);
-
-// CORS middlwares
-app.use(corsMiddleware);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
