@@ -45,7 +45,10 @@
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
-                    <button class="hover:text-purple-500">
+                    <router-link
+                      :to="`/data/fakultas-edit/${fakultas.id}`"
+                      class="hover:text-purple-500"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -60,7 +63,7 @@
                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
                         />
                       </svg>
-                    </button>
+                    </router-link>
 
                     <button @click="confirmDelete(fakultas.id)" class="hover:text-purple-500">
                       <svg
@@ -99,7 +102,7 @@
           <!-- modal -->
           <Modal :isOpen="isModalOpen" @close="closeModal">
             <template v-slot:header>
-              <h2>Apa kamu yakin, karena data tidak bisa kembali?</h2>
+              <h2 class="font-medium">Apa kamu yakin, karena data tidak bisa kembali?</h2>
             </template>
             <template v-slot:footer>
               <button
@@ -110,7 +113,7 @@
               </button>
               <button
                 class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-1 px-4 rounded"
-                @click="confirmDelete"
+                @click="deleteFakultas"
               >
                 Delete
               </button>
@@ -125,7 +128,7 @@
 <script>
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
-import Api from '../../../services/Api.js'
+import Api from '../../../services/api'
 import Modal from '@/components/modal/Modal.vue'
 
 export default {
@@ -155,8 +158,8 @@ export default {
       this.selectedFakultasId = null
     },
     confirmDelete(id) {
-      console.info(id)
       this.selectedFakultasId = id
+      console.info(this.selectedFakultasId)
       this.openModal()
     },
     async fetchFakultas() {
@@ -171,8 +174,8 @@ export default {
       if (!this.selectedFakultasId) return
       try {
         await Api.deleteFakultas(this.selectedFakultasId)
-        this.fetchFakultas()
         this.closeModal()
+        this.fetchFakultas()
       } catch (error) {
         console.error('Error deleting fakultas: ', error)
       }

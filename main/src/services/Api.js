@@ -8,9 +8,19 @@ const apiClient = axios.create({
 })
 
 export default {
-  // get all fakultas
+  // getall
   getFakultas() {
     return apiClient.get('/data/fakultas')
+  },
+
+  // create
+  createFakultas(data) {
+    return apiClient.post('/data/fakultas', data)
+  },
+
+  // update
+  updateFakultas(id,data){
+    return apiClient.put(`/data/fakultas/${id}`,data)
   },
 
   // delete

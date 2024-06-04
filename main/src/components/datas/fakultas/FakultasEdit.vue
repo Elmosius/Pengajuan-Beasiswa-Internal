@@ -6,7 +6,7 @@
       >
         <form @submit.prevent="handleSubmit" action="">
           <div class="max-w-full overflow-x-auto p-5">
-            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Fakultas</h2>
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit Fakultas</h2>
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <div class="sm:col-span-1">
@@ -16,6 +16,7 @@
                 <div class="mt-2">
                   <input
                     v-model="fakultas.id"
+                    readonly
                     type="text"
                     name="id"
                     id="id"
@@ -54,7 +55,7 @@
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create
+                Edit
               </button>
             </div>
           </div>
@@ -69,31 +70,29 @@ import Layout from '../../Layout.vue'
 import Api from '../../../services/api'
 
 export default {
-  name: 'FakultasCreate',
+  name: 'FakultasEdit',
   components: {
     Layout
   },
   data() {
     return {
-      fakultas: {
-        id: '',
-        nama_fakultas: ''
-      }
+      fakultas: null
     }
   },
   methods: {
     async handleSubmit() {
       try {
-        console.info(this.fakultas)
-        await Api.createFakultas(this.fakultas)
-        alert('Fakultas created successfully!')
-        this.$router.push('/data/fakultas')
-        this.fakultas.id = ''
-        this.fakultas.nama_fakultas = ''
+        await Api.updateFakultas(this.fakultas.id, this.fakultas)
+        alert('Fakultas updated successfully!')
+        // this.$router.push('/data/fakultas')
       } catch (error) {
-        console.error('Error creating fakultas:', error)
+        console.error('Error updating fakultas:', error)
       }
     }
+  },
+  async created() {
+    const id = this.$route.params.id
+    this.fakultas = await Api.getFakultas(id)
   }
 }
 </script>
