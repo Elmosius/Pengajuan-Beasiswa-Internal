@@ -1,10 +1,10 @@
-const { findAllFakultas, insertFakultas, findFakultasById, updateFakultas, deleteFakultas } = require("../models/fakultasModel");
+const { findAllProdi, insertProdi, updateProdi, deleteProdi, findProdiById } = require("../models/prodiModel");
 
-const getAllFakultas = async (req, res) => {
+const getAllProdi = async (req, res) => {
   try {
-    const [data] = await findAllFakultas();
+    const [data] = await findAllProdi();
     res.json({
-      message: "GET all fakultas success",
+      message: "GET all Program Studi success",
       data: data,
     });
   } catch (error) {
@@ -15,17 +15,17 @@ const getAllFakultas = async (req, res) => {
   }
 };
 
-const getFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const getProdiById = async (req, res) => {
+  const id = req.params.id;
   try {
-    const [data] = await findFakultasById(id);
+    const [data] = await findProdiById(id);
     if (data.length < 1) {
       return res.status(404).json({
         message: "Id tidak ditemukan",
       });
     }
     res.json({
-      message: "GET fakultas by id success",
+      message: "GET Program Studi by id success",
       data: data,
     });
   } catch (error) {
@@ -36,10 +36,10 @@ const getFakultasById = async (req, res) => {
   }
 };
 
-const createFakultas = async (req, res) => {
+const createProdi = async (req, res) => {
   const data = req.body;
 
-  if (!(data.id && data.nama_fakultas)) {
+  if (!(data.id && data.nama_program_studi && data.fakultas_id)) {
     return res.status(400).json({
       message: "Anda mengirimkan data yang salah",
       data: null,
@@ -47,9 +47,9 @@ const createFakultas = async (req, res) => {
   }
 
   try {
-    await insertFakultas(data);
+    await insertProdi(data);
     res.status(201).json({
-      message: "CREATE new fakultas success",
+      message: "CREATE new Program Studi success",
       data: data,
     });
   } catch (error) {
@@ -60,14 +60,14 @@ const createFakultas = async (req, res) => {
   }
 };
 
-const editFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const editProdiById = async (req, res) => {
+  const id = req.params.id;
   const data = req.body;
 
   try {
-    await updateFakultas(id, data);
+    await updateProdi(id, data);
     res.status(200).json({
-      message: "Update fakultas success",
+      message: "Update Program Studi success",
       data: data,
     });
   } catch (error) {
@@ -78,12 +78,12 @@ const editFakultasById = async (req, res) => {
   }
 };
 
-const deleteFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const deleteProdiById = async (req, res) => {
+  const id = req.params.id;
   try {
-    await deleteFakultas(id);
+    await deleteProdi(id);
     res.json({
-      message: "Delete fakultas success",
+      message: "Delete Program Studi success",
       data: null,
     });
   } catch (error) {
@@ -95,9 +95,9 @@ const deleteFakultasById = async (req, res) => {
 };
 
 module.exports = {
-  getFakultasById,
-  getAllFakultas,
-  createFakultas,
-  editFakultasById,
-  deleteFakultasById,
+  getAllProdi,
+  getProdiById,
+  createProdi,
+  editProdiById,
+  deleteProdiById,
 };

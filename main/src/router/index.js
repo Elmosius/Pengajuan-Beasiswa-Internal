@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '@/components/dashboard/Dashboard.vue'
 import Fakultas from '@/components/datas/fakultas/Fakultas.vue'
-import ProgramStudi from '@/components/datas/program_studi/ProgramStudi.vue'
-import User from '@/components/datas/user/User.vue'
 import FakultasCreate from '@/components/datas/fakultas/FakultasCreate.vue'
+import FakultasEdit from '@/components/datas/fakultas/FakultasEdit.vue'
+
+import ProgramStudi from '@/components/datas/program_studi/ProgramStudi.vue'
 import ProgramStudiCreate from '@/components/datas/program_studi/ProgramStudiCreate.vue'
+
+import User from '@/components/datas/user/User.vue'
 import UserCreate from '@/components/datas/user/UserCreate.vue'
 
 const routes = [
@@ -22,6 +25,11 @@ const routes = [
     path: '/data/fakultas-create',
     name: 'FakultasCreate',
     component: FakultasCreate
+  },
+  {
+    path: '/data/fakultas-edit/:id',
+    name: 'FakultasEdit',
+    component: FakultasEdit
   },
   {
     path: '/data/program-studi',

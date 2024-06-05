@@ -1,10 +1,10 @@
-const { findAllFakultas, insertFakultas, findFakultasById, updateFakultas, deleteFakultas } = require("../models/fakultasModel");
+const { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa } = require("../models/beasiswaModel");
 
-const getAllFakultas = async (req, res) => {
+const getAllBeasiswa = async (req, res) => {
   try {
-    const [data] = await findAllFakultas();
+    const [data] = await findAllBeasiswa();
     res.json({
-      message: "GET all fakultas success",
+      message: "GET all beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -15,17 +15,17 @@ const getAllFakultas = async (req, res) => {
   }
 };
 
-const getFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const getBeasiswaById = async (req, res) => {
+  const id = parseInt(req.params.id);
   try {
-    const [data] = await findFakultasById(id);
+    const [data] = await findBeasiswaById(id);
     if (data.length < 1) {
       return res.status(404).json({
         message: "Id tidak ditemukan",
       });
     }
     res.json({
-      message: "GET fakultas by id success",
+      message: "GET beasiswa by id success",
       data: data,
     });
   } catch (error) {
@@ -36,10 +36,10 @@ const getFakultasById = async (req, res) => {
   }
 };
 
-const createFakultas = async (req, res) => {
+const createBeasiswa = async (req, res) => {
   const data = req.body;
 
-  if (!(data.id && data.nama_fakultas)) {
+  if (!(data.id && data.nama_beasiswa && data.deskripsi && data.periode)) {
     return res.status(400).json({
       message: "Anda mengirimkan data yang salah",
       data: null,
@@ -47,9 +47,9 @@ const createFakultas = async (req, res) => {
   }
 
   try {
-    await insertFakultas(data);
+    await insertBeasiswa(data);
     res.status(201).json({
-      message: "CREATE new fakultas success",
+      message: "CREATE new beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -60,14 +60,14 @@ const createFakultas = async (req, res) => {
   }
 };
 
-const editFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const editBeasiswaById = async (req, res) => {
+  const id = parseInt(req.params.id);
   const data = req.body;
 
   try {
-    await updateFakultas(id, data);
+    await updateBeasiswa(id, data);
     res.status(200).json({
-      message: "Update fakultas success",
+      message: "Update beasiswa success",
       data: data,
     });
   } catch (error) {
@@ -78,12 +78,12 @@ const editFakultasById = async (req, res) => {
   }
 };
 
-const deleteFakultasById = async (req, res) => {
-  const id = (req.params.id);
+const deleteBeasiswaById = async (req, res) => {
+  const id = parseInt(req.params.id);
   try {
-    await deleteFakultas(id);
+    await deleteBeasiswa(id);
     res.json({
-      message: "Delete fakultas success",
+      message: "Delete beasiswa success",
       data: null,
     });
   } catch (error) {
@@ -95,9 +95,9 @@ const deleteFakultasById = async (req, res) => {
 };
 
 module.exports = {
-  getFakultasById,
-  getAllFakultas,
-  createFakultas,
-  editFakultasById,
-  deleteFakultasById,
+  getBeasiswaById,
+  getAllBeasiswa,
+  createBeasiswa,
+  editBeasiswaById,
+  deleteBeasiswaById,
 };
