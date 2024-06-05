@@ -4,7 +4,7 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form @submit.prevent="handleSubmit" action="">
+        <form @submit.prevent="updateFakultas">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit Fakultas</h2>
 
@@ -15,7 +15,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="fakultas.id"
+                    v-model="fakultas.data"
                     readonly
                     type="text"
                     name="id"
@@ -48,7 +48,11 @@
               </div>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+              <button
+                type="button"
+                class="text-sm font-semibold leading-6 text-gray-900"
+                @click="cancelEdit"
+              >
                 Cancel
               </button>
               <button
@@ -76,23 +80,38 @@ export default {
   },
   data() {
     return {
-      fakultas: null
-    }
-  },
-  methods: {
-    async handleSubmit() {
-      try {
-        await Api.updateFakultas(this.fakultas.id, this.fakultas)
-        alert('Fakultas updated successfully!')
-        // this.$router.push('/data/fakultas')
-      } catch (error) {
-        console.error('Error updating fakultas:', error)
+      fakultas: {
+        id: null,
+        nama_fakultas: {}
       }
     }
   },
-  async created() {
-    const id = this.$route.params.id
-    this.fakultas = await Api.getFakultas(id)
+  mounted() {
+    this.fetchFakultas()
+  },
+  methods: {
+    async fetchFakultas() {
+      const fakultasId = this.$route.params.id
+      try {
+        const response = await Api.getFakultasById(fakultasId)
+        this.fakultas = response.data
+
+        console.info(this.fakultas.data[0].nama_fakultas  )
+      } catch (error) {
+        console.error('Error fetching fakultas: ', error)
+      }
+    },
+    async updateFakultas() {
+      try {
+        await Api.updateFakultas(this.fakultas.id, this.fakultas)
+        this.$router.push('/data/fakultas')
+      } catch (error) {
+        console.error('Error updating fakultas: ', error)
+      }
+    },
+    cancelEdit() {
+      this.$router.push('/data/fakultas')
+    }
   }
 }
 </script>

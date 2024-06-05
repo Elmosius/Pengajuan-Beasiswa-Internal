@@ -13,14 +13,19 @@ export default {
     return apiClient.get('/data/fakultas')
   },
 
+  // getFakultasById
+  getFakultasById(id) {
+    return apiClient.get(`/data/fakultas/${id}`)
+  },
+
   // create
   createFakultas(data) {
     return apiClient.post('/data/fakultas', data)
   },
 
   // update
-  updateFakultas(id,data){
-    return apiClient.put(`/data/fakultas/${id}`,data)
+  updateFakultas(id, data) {
+    return apiClient.put(`/data/fakultas/${id}`, data)
   },
 
   // delete
