@@ -128,7 +128,7 @@
 <script>
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
-import Api from '../../../services/api'
+import Api from '../../../services/fakultasAPI'
 import Modal from '@/components/modal/Modal.vue'
 
 export default {

@@ -8,6 +8,7 @@ const apiClient = axios.create({
 })
 
 export default {
+  //********** FAKULTAS ******************/
   // getall
   getFakultas() {
     return apiClient.get('/data/fakultas')
@@ -32,4 +33,6 @@ export default {
   deleteFakultas(id) {
     return apiClient.delete(`/data/fakultas/${id}`)
   }
+
+  //********** PROGRAMSTUDI ******************/
 }

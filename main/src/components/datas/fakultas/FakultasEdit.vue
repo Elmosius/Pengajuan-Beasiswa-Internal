@@ -15,7 +15,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="fakultas.data"
+                    v-model="fakultas.id"
                     readonly
                     type="text"
                     name="id"
@@ -71,7 +71,7 @@
 
 <script>
 import Layout from '../../Layout.vue'
-import Api from '../../../services/api'
+import Api from '../../../services/fakultasAPI'
 
 export default {
   name: 'FakultasEdit',
@@ -81,8 +81,8 @@ export default {
   data() {
     return {
       fakultas: {
-        id: null,
-        nama_fakultas: {}
+        id: '',
+        nama_fakultas: ''
       }
     }
   },
@@ -94,16 +94,19 @@ export default {
       const fakultasId = this.$route.params.id
       try {
         const response = await Api.getFakultasById(fakultasId)
-        this.fakultas = response.data
-
-        console.info(this.fakultas.data[0].nama_fakultas  )
+        this.fakultas = response.data.data[0]
       } catch (error) {
         console.error('Error fetching fakultas: ', error)
       }
     },
     async updateFakultas() {
       try {
-        await Api.updateFakultas(this.fakultas.id, this.fakultas)
+        const updated = {
+          nama_fakultas: this.fakultas.nama_fakultas
+        }
+
+        await Api.updateFakultas(this.fakultas.id, updated)
+
         this.$router.push('/data/fakultas')
       } catch (error) {
         console.error('Error updating fakultas: ', error)

@@ -66,7 +66,7 @@
 
 <script>
 import Layout from '../../Layout.vue'
-import Api from '../../../services/api'
+import Api from '../../../services/fakultasAPI'
 
 export default {
   name: 'FakultasCreate',
