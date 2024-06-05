@@ -33,6 +33,4 @@ export default {
   deleteFakultas(id) {
     return apiClient.delete(`/data/fakultas/${id}`)
   }
-
-  //********** PROGRAMSTUDI ******************/
 }

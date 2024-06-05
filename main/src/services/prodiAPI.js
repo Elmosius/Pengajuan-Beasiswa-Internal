@@ -9,8 +9,29 @@ const apiClient = axios.create({
 
 export default {
   //********** PROGRAMSTUDI ******************/
+
   // getall
   getProgramStudi() {
-    return apiClient.get('/data/prodi')
+    return apiClient.get('/data/program-studi')
+  },
+
+  // getFakultasById
+  getProgramStudiById(id) {
+    return apiClient.get(`/data/program-studi/${id}`)
+  },
+
+  // create
+  createProgramStudi(data) {
+    return apiClient.post('/data/program-studi', data)
+  },
+
+  // update
+  updateProgramStudi(id, data) {
+    return apiClient.put(`/data/program-studi/${id}`, data)
+  },
+
+  // delete
+  deleteProgramStudi(id) {
+    return apiClient.delete(`/data/program-studi/${id}`)
   }
 }

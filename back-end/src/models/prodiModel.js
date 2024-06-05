@@ -11,8 +11,8 @@ const findProdiById = async (id) => {
 };
 
 const insertProdi = async (data) => {
-  const query = `INSERT INTO Fakultas (id, nama_fakultas, created_at, updated_at)
-                  VALUES ('${data.id}', '${data.nama_fakultas}', now(), now())`;
+  const query = `INSERT INTO program_studi (id, nama_program_studi, fakultas_id, created_at, updated_at)
+                  VALUES ('${data.id}', '${data.nama_program_studi}','${data.fakultas_id}', now(), now())`;
 
   return dbPool.execute(query);
 };
