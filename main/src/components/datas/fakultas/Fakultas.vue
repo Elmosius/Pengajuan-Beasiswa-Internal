@@ -52,7 +52,7 @@
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
-                        viewBox="0 0 24 24" 
+                        viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
                         class="size-5"
@@ -130,6 +130,7 @@ import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
 import Api from '../../../services/fakultasAPI'
 import Modal from '@/components/modal/Modal.vue'
+import fetchFakultas from '@/components/mixins/fetchFakultas'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -139,6 +140,7 @@ export default {
     WelcomeBanner,
     Modal
   },
+  mixins: [fetchFakultas],
   data() {
     return {
       isModalOpen: false,
@@ -161,14 +163,6 @@ export default {
       this.selectedFakultasId = id
       console.info(this.selectedFakultasId)
       this.openModal()
-    },
-    async fetchFakultas() {
-      try {
-        const response = await Api.getFakultas()
-        this.fakultasList = response.data
-      } catch (error) {
-        console.error('Error fetching fakultas: ', error)
-      }
     },
     async deleteFakultas() {
       if (!this.selectedFakultasId) return

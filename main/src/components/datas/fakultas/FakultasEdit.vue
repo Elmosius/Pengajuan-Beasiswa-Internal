@@ -48,13 +48,13 @@
               </div>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button
+              <router-link
+                :to="`/data/fakultas`"
                 type="button"
                 class="text-sm font-semibold leading-6 text-gray-900"
-                @click="cancelEdit"
               >
                 Cancel
-              </button>
+              </router-link>
               <button
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -72,48 +72,28 @@
 <script>
 import Layout from '../../Layout.vue'
 import Api from '../../../services/fakultasAPI'
+import fetchFakultasById from '@/components/mixins/fetchFakultasById'
 
 export default {
   name: 'FakultasEdit',
   components: {
     Layout
   },
-  data() {
-    return {
-      fakultas: {
-        id: '',
-        nama_fakultas: ''
-      }
-    }
-  },
+  mixins: [fetchFakultasById],
   mounted() {
-    this.fetchFakultas()
+    this.fetchFakultasById()
   },
   methods: {
-    async fetchFakultas() {
-      const fakultasId = this.$route.params.id
-      try {
-        const response = await Api.getFakultasById(fakultasId)
-        this.fakultas = response.data.data[0]
-      } catch (error) {
-        console.error('Error fetching fakultas: ', error)
-      }
-    },
     async updateFakultas() {
       try {
         const updated = {
           nama_fakultas: this.fakultas.nama_fakultas
         }
-
         await Api.updateFakultas(this.fakultas.id, updated)
-
         this.$router.push('/data/fakultas')
       } catch (error) {
         console.error('Error updating fakultas: ', error)
       }
-    },
-    cancelEdit() {
-      this.$router.push('/data/fakultas')
     }
   }
 }

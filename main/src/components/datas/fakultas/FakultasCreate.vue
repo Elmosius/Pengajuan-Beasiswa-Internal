@@ -47,9 +47,13 @@
               </div>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+              <router-link
+                :to="'/data/fakultas'"
+                type="button"
+                class="text-sm font-semibold leading-6 text-gray-900"
+              >
                 Cancel
-              </button>
+              </router-link>
               <button
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -67,12 +71,18 @@
 <script>
 import Layout from '../../Layout.vue'
 import Api from '../../../services/fakultasAPI'
+import fetchFakultas from '@/components/mixins/fetchFakultas'
 
 export default {
   name: 'FakultasCreate',
   components: {
     Layout
   },
+  mixins: [fetchFakultas],
+  mounted() {
+    this.fetchFakultas()
+  },
+
   data() {
     return {
       fakultas: {

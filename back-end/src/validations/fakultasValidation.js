@@ -6,7 +6,7 @@ const createFakultasValidation = Joi.object({
 });
 
 const updateFakultasValidation = Joi.object({
-  nama_fakultas: Joi.string().min(3).max(20).required(),
+  nama_fakultas: Joi.string().min(3).max(20),
 });
 
 module.exports = {

@@ -136,6 +136,7 @@ import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
 import Api from '@/services/prodiAPI'
 import Modal from '@/components/modal/Modal.vue'
+import fetchProdi from '@/components/mixins/fetchProdi'
 
 export default {
   name: 'ProgramStudi',
@@ -144,11 +145,11 @@ export default {
     WelcomeBanner,
     Modal
   },
+  mixins: [fetchProdi],
   data() {
     return {
       isModalOpen: false,
-      selectedProdiId: null,
-      prodiList: []
+      selectedProdiId: null
     }
   },
   mounted() {
@@ -167,14 +168,7 @@ export default {
       console.info(this.selectedProdiId)
       this.openModal()
     },
-    async fetchProdi() {
-      try {
-        const response = await Api.getProgramStudi()
-        this.prodiList = response.data
-      } catch (error) {
-        console.error('Error fetching program studi: ', error)
-      }
-    },
+
     async deleteProdi() {
       if (!this.selectedProdiId) return
       try {

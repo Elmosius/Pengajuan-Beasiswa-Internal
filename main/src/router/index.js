@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '@/components/dashboard/Dashboard.vue'
+
 import Fakultas from '@/components/datas/fakultas/Fakultas.vue'
 import FakultasCreate from '@/components/datas/fakultas/FakultasCreate.vue'
 import FakultasEdit from '@/components/datas/fakultas/FakultasEdit.vue'
 
 import ProgramStudi from '@/components/datas/program_studi/ProgramStudi.vue'
 import ProgramStudiCreate from '@/components/datas/program_studi/ProgramStudiCreate.vue'
+import ProgramStudiEdit from '@/components/datas/program_studi/ProgramStudiEdit.vue'
 
 import User from '@/components/datas/user/User.vue'
 import UserCreate from '@/components/datas/user/UserCreate.vue'
@@ -40,6 +42,11 @@ const routes = [
     path: '/data/program-studi-create',
     name: 'ProgramStudiCreate',
     component: ProgramStudiCreate
+  },
+  {
+    path: '/data/program-studi-edit/:id',
+    name: 'ProgramStudiEdit',
+    component: ProgramStudiEdit
   },
   {
     path: '/data/user',
