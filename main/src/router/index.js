@@ -12,12 +12,16 @@ import ProgramStudiEdit from '@/components/datas/program_studi/ProgramStudiEdit.
 import User from '@/components/datas/user/User.vue'
 import UserCreate from '@/components/datas/user/UserCreate.vue'
 
+import DaftarList from '@/components/beasiswa/daftar_list/DaftarList.vue'
+
 const routes = [
   {
     path: '/',
     name: 'Dashboard',
     component: Dashboard
   },
+
+  // Fakultas
   {
     path: '/data/fakultas',
     name: 'Fakultas',
@@ -33,6 +37,8 @@ const routes = [
     name: 'FakultasEdit',
     component: FakultasEdit
   },
+
+  // Program Studi
   {
     path: '/data/program-studi',
     name: 'ProgramStudi',
@@ -48,6 +54,8 @@ const routes = [
     name: 'ProgramStudiEdit',
     component: ProgramStudiEdit
   },
+
+  // User
   {
     path: '/data/user',
     name: 'User',
@@ -57,6 +65,13 @@ const routes = [
     path: '/data/user-create',
     name: 'UserCreate',
     component: UserCreate
+  },
+
+  // DaftarList Beasiswa
+  {
+    path: '/beasiswa/daftar-list',
+    name: 'DaftarList',
+    component: DaftarList
   }
 ]
 
