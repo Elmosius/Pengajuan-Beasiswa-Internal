@@ -12,26 +12,26 @@ export default {
 
   // getall
   getUser() {
-    return apiClient.get('/data/program-studi')
+    return apiClient.get('/data/users')
   },
 
   // getFakultasById
   getUserById(id) {
-    return apiClient.get(`/data/program-studi/${id}`)
+    return apiClient.get(`/data/users/${id}`)
   },
 
   // create
   createUser(data) {
-    return apiClient.post('/data/program-studi', data)
+    return apiClient.post('/data/users', data)
   },
 
   // update
   updateUser(id, data) {
-    return apiClient.put(`/data/program-studi/${id}`, data)
+    return apiClient.put(`/data/users/${id}`, data)
   },
 
   // delete
   deleteUser(id) {
-    return apiClient.delete(`/data/program-studi/${id}`)
+    return apiClient.delete(`/data/users/${id}`)
   }
 }
