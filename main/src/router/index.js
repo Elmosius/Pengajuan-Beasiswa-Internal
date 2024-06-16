@@ -13,6 +13,8 @@ import User from '@/components/datas/user/User.vue'
 import UserCreate from '@/components/datas/user/UserCreate.vue'
 
 import DaftarList from '@/components/beasiswa/daftar_list/DaftarList.vue'
+import DaftarListCreate from '@/components/beasiswa/daftar_list/DaftarListCreate.vue'
+import DaftarListEdit from '@/components/beasiswa/daftar_list/DaftarListEdit.vue'
 
 const routes = [
   {
@@ -72,6 +74,16 @@ const routes = [
     path: '/beasiswa/daftar-list',
     name: 'DaftarList',
     component: DaftarList
+  },
+  {
+    path: '/beasiswa/daftar-list-create',
+    name: 'DaftarListCreate',
+    component: DaftarListCreate
+  },
+  {
+    path: '/beasiswa/daftar-list-edit/:id',
+    name: 'DaftarListEdit',
+    component: DaftarListEdit
   }
 ]
 

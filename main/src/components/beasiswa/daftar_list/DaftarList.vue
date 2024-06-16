@@ -11,7 +11,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
             </p>
           </div>
-          <router-link to="/data/fakultas-create">
+          <router-link to="/beasiswa/daftar-list-create">
             <a class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded">
               Create Beasiswa</a
             >
