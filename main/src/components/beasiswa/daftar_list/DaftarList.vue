@@ -5,15 +5,15 @@
         <div class="relative flex justify-between items-center">
           <div>
             <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-3">
-              Fakultas
+              Daftar List Beasiswa
             </h1>
             <p class="dark:text-indigo-200">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
             </p>
           </div>
-          <router-link to="/data/fakultas-create">
+          <router-link to="/beasiswa/daftar-list-create">
             <a class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded">
-              Create Fakultas</a
+              Create Beasiswa</a
             >
           </router-link>
         </div>
@@ -27,26 +27,44 @@
             <thead>
               <tr class="bg-gray-100 text-left dark:bg-meta-4">
                 <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Kode Fakultas
+                  Kode Beasiswa
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Nama Fakultas
+                  Nama Beasiswa
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Deskripsi
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Periode
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Created At
                 </th>
                 <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="fakultas in fakultasList.data" :key="fakultas.id">
+              <tr v-for="beasiswa in beasiswaList.data" :key="beasiswa.id">
                 <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">{{ fakultas.id }}</p>
+                  <p class="text-black dark:text-white">{{ beasiswa.id }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ fakultas.nama_fakultas }}</p>
+                  <p class="text-black dark:text-white">{{ beasiswa.nama_beasiswa }}</p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">{{ beasiswa.deskripsi }}</p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">{{ beasiswa.periode }}</p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">{{ formatDate(beasiswa.created_at) }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
-                      :to="`/data/fakultas-edit/${fakultas.id}`"
+                      :to="`/beasiswa/daftar-list-edit/${beasiswa.id}`"
                       class="hover:text-purple-500"
                     >
                       <svg
@@ -65,7 +83,7 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(fakultas.id)" class="hover:text-purple-500">
+                    <button @click="confirmDelete(beasiswa.id)" class="hover:text-purple-500">
                       <svg
                         class="fill-current"
                         width="18"
@@ -113,7 +131,7 @@
               </button>
               <button
                 class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-1 px-4 rounded"
-                @click="deleteFakultas"
+                @click="deleteBeasiswa"
               >
                 Delete
               </button>
@@ -128,50 +146,58 @@
 <script>
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
-import Api from '../../../services/fakultasAPI'
+import Api from '../../../services/daftarListBeasiswaAPI'
 import Modal from '@/components/modal/Modal.vue'
-import fetchFakultas from '@/components/mixins/fetchFakultas'
+import fetchBeasiswa from '@/components/mixins/fetchBeasiswa'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Fakultas',
+  name: 'DaftarList',
   components: {
     Layout,
     WelcomeBanner,
     Modal
   },
-  mixins: [fetchFakultas],
+  mixins: [fetchBeasiswa],
   data() {
     return {
       isModalOpen: false,
-      selectedFakultasId: null
+      selectedBeasiswaId: null
     }
   },
   mounted() {
-    this.fetchFakultas()
+    this.fetchBeasiswa()
   },
   methods: {
     openModal() {
       this.isModalOpen = true
     },
+
     closeModal() {
       this.isModalOpen = false
-      this.selectedFakultasId = null
+      this.selectedBeasiswaId = null
     },
+
     confirmDelete(id) {
-      this.selectedFakultasId = id
-      console.info(this.selectedFakultasId)
+      this.selectedBeasiswaId = id
+      console.info(this.selectedBeasiswaId)
       this.openModal()
     },
-    async deleteFakultas() {
-      if (!this.selectedFakultasId) return
+
+    async deleteBeasiswa() {
+      if (!this.selectedBeasiswaId) return
       try {
-        await Api.deleteFakultas(this.selectedFakultasId)
+        await Api.deleteBeasiswa(this.selectedBeasiswaId)
         this.closeModal()
-        this.fetchFakultas()
+        this.fetchBeasiswa()
       } catch (error) {
         console.error('Error deleting fakultas: ', error)
       }
+    },
+
+    formatDate(dateString) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(dateString).toLocaleDateString('id-ID', options)
     }
   }
 }

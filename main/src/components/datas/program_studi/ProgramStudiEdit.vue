@@ -4,9 +4,9 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form @submit.prevent="handleSubmit" action="">
+        <form @submit.prevent="updateProdi">
           <div class="max-w-full overflow-x-auto p-5">
-            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Program Studi</h2>
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit Program Studi</h2>
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <div class="sm:col-span-1">
@@ -16,7 +16,7 @@
                 <div class="mt-2">
                   <input
                     v-model="program_studi.id"
-                    autofocus
+                    readonly
                     type="text"
                     name="id"
                     id="id"
@@ -66,7 +66,6 @@
                   <input
                     v-model="program_studi.nama_program_studi"
                     autofocus
-                    required
                     type="text"
                     name="nama_program_studi"
                     id="nama_program_studi"
@@ -88,7 +87,7 @@
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create
+                Edit
               </button>
             </div>
           </div>
@@ -102,37 +101,29 @@
 import Layout from '../../Layout.vue'
 import prodiAPI from '@/services/prodiAPI'
 import fetchFakultas from '@/components/mixins/fetchFakultas'
+import fetchProdiById from '@/components/mixins/fetchProdiById'
 
 export default {
-  name: 'ProgramStudiCreate',
+  name: 'ProgramStudiEdit',
   components: {
     Layout
   },
-  mixins: [fetchFakultas],
-  data() {
-    return {
-      program_studi: {
-        id: '',
-        nama_program_studi: '',
-        fakultas_id: ''
-      }
-    }
-  },
+  mixins: [fetchFakultas, fetchProdiById],
   mounted() {
     this.fetchFakultas()
+    this.fetchProdiById()
   },
   methods: {
-    async handleSubmit() {
+    async updateProdi() {
       try {
-        console.info(this.program_studi)
-        await prodiAPI.createProgramStudi(this.program_studi)
-        alert('Program Studi created successfully!')
+        const updated = {
+          nama_program_studi: this.program_studi.nama_program_studi,
+          fakultas_id: this.program_studi.fakultas_id
+        }
+        await prodiAPI.updateProgramStudi(this.program_studi.id, updated)
         this.$router.push('/data/program-studi')
-        this.program_studi.id = ''
-        this.program_studi.nama_program_studi = ''
-        this.program_studi.fakultas_id = ''
       } catch (error) {
-        console.error('Error creating program studi:', error)
+        console.error('Error updating prodi: ', error)
       }
     }
   }
