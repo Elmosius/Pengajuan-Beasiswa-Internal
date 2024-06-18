@@ -4,7 +4,7 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="updateUser">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit User</h2>
             <!-- munculin error -->
@@ -20,12 +20,11 @@
                 <div class="mt-2">
                   <input
                     v-model="user.id"
-                    autofocus
                     type="text"
                     name="id"
                     id="id"
                     placeholder="12345"
-                    required
+                    readonly
                     minlength="5"
                     maxlength="10"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -174,14 +173,18 @@
               </div>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
-              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+              <router-link
+                :to="`/data/users`"
+                type="button"
+                class="text-sm font-semibold leading-6 text-gray-900"
+              >
                 Cancel
-              </button>
+              </router-link>
               <button
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create
+                Edit
               </button>
             </div>
           </div>
@@ -194,45 +197,49 @@
 <script>
 import Layout from '../../Layout.vue'
 import Api from '@/services/userAPI'
-import fetchProdi from '@/components/mixins/fetchProdi'
+import fetchUserById from '@/components/mixins/fetchUserById'
 import fetchRoles from '@/components/mixins/fetchRoles'
+import fetchProdi from '@/components/mixins/fetchProdi'
 
 export default {
-  name: 'UserCreate',
+  name: 'UserEdit',
   components: {
     Layout
   },
-  mixins: [fetchProdi, fetchRoles],
-  data() {
-    return {
-      user: {
-        id: '',
-        role_id: '',
-        program_studi_id: '',
-        nama: '',
-        email: '',
-        password: '',
-        confirm_password: '',
-        status: ''
-      },
-      error: ''
-    }
-  },
+  mixins: [fetchUserById, fetchRoles, fetchProdi],
   mounted() {
-    this.fetchProdi()
+    this.fetchUserById()
     this.fetchRoles()
+    this.fetchProdi()
   },
   methods: {
     async updateUser() {
+      if (this.user.password && this.user.password !== this.user.confirm_password) {
+        this.error = 'Password and confirm password do not match.'
+        return
+      }
+
+      const updated = {
+        role_id: this.user.role_id,
+        program_studi_id: this.user.program_studi_id,
+        nama: this.user.nama,
+        email: this.user.email,
+        status: this.user.status
+      }
+
+      if (this.user.password) {
+        updated.password = this.user.password
+      }
+
       try {
-        const updated = {
-          nama_program_studi: this.program_studi.nama_program_studi,
-          fakultas_id: this.program_studi.fakultas_id
-        }
         await Api.updateUser(this.user.id, updated)
-        this.$router.push('/data/program-studi')
+        alert('User updated successfully!')
+        this.$router.push('/data/users')
       } catch (error) {
-        console.error('Error updating prodi: ', error)
+        console.error('Error updating user: ', error)
+        this.error = error.response
+          ? error.response.data.message
+          : 'An error occurred while updating the user.'
       }
     }
   }

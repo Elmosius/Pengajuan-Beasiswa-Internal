@@ -6,23 +6,23 @@ const findAllRoles = async () => {
 };
 
 const findRoleById = async (id) => {
-  const query = `SELECT * FROM role WHERE id = ${id}`;
-  return dbPool.execute(query);
+  const query = "SELECT * FROM role WHERE id = ?";
+  return dbPool.execute(query, [id]);
 };
 
 const insertRole = async (nama_role) => {
-  const query = `INSERT INTO role (nama_role) VALUES ('${nama_role}')`;
-  return dbPool.execute(query);
+  const query = "INSERT INTO role (nama_role) VALUES (?)";
+  return dbPool.execute(query, [nama_role]);
 };
 
 const updateRole = async (id, nama_role) => {
-  const query = `UPDATE role SET nama_role = '${nama_role}' WHERE id = ${id}`;
-  return dbPool.execute(query);
+  const query = "UPDATE role SET nama_role = ? WHERE id = ?";
+  return dbPool.execute(query, [nama_role, id]);
 };
 
 const deleteRole = async (id) => {
-  const query = `DELETE FROM role WHERE id = ${id}`;
-  return dbPool.execute(query);
+  const query = "DELETE FROM role WHERE id = ?";
+  return dbPool.execute(query, [id]);
 };
 
 module.exports = {

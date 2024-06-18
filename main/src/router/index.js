@@ -11,6 +11,7 @@ import ProgramStudiEdit from '@/components/datas/program_studi/ProgramStudiEdit.
 
 import User from '@/components/datas/user/User.vue'
 import UserCreate from '@/components/datas/user/UserCreate.vue'
+import UserEdit from '@/components/datas/user/UserEdit.vue'
 
 import DaftarList from '@/components/beasiswa/daftar_list/DaftarList.vue'
 import DaftarListCreate from '@/components/beasiswa/daftar_list/DaftarListCreate.vue'
@@ -67,6 +68,11 @@ const routes = [
     path: '/data/user-create',
     name: 'UserCreate',
     component: UserCreate
+  },
+  {
+    path: '/data/user-edit/:id',
+    name: 'UserEdit',
+    component: UserEdit
   },
 
   // DaftarList Beasiswa

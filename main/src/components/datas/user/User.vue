@@ -64,7 +64,7 @@
                 </td>
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
-                    {{ user.program_studi_id }} - {{ user.nama_program_studi }}
+                    {{ user.nama_program_studi }}
                   </p>
                 </td>
                 <td class="py-5 px-4">
