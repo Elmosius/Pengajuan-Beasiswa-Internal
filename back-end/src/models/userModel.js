@@ -2,12 +2,23 @@ const bcrypt = require("bcryptjs");
 const dbPool = require("../config/database");
 
 const findAllUser = async () => {
-  const query = "SELECT * FROM user";
+  const query = `
+    SELECT user.*, role.nama_role, program_studi.nama_program_studi 
+    FROM user 
+    JOIN role ON user.role_id = role.id
+    JOIN program_studi ON user.program_studi_id = program_studi.id;
+  `;
   return dbPool.execute(query);
 };
 
 const findUserById = async (id) => {
-  const query = `SELECT * FROM user WHERE id = ${id}`;
+  const query = `
+    SELECT user.*, role.nama_role, program_studi.nama_program_studi 
+    FROM user 
+    JOIN role ON user.role_id = role.id
+    JOIN program_studi ON user.program_studi_id = program_studi.id
+    WHERE user.id = ${id};
+  `;
   return dbPool.execute(query);
 };
 
