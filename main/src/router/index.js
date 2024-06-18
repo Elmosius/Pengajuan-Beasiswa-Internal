@@ -59,7 +59,7 @@ const routes = [
 
   // User
   {
-    path: '/data/user',
+    path: '/data/users',
     name: 'User',
     component: User
   },

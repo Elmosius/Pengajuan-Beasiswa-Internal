@@ -151,7 +151,7 @@
                       </a>
                     </li>
                   </router-link>
-                  <router-link to="/data/user" custom v-slot="{ href, navigate, isExactActive }">
+                  <router-link to="/data/users" custom v-slot="{ href, navigate, isExactActive }">
                     <li class="mb-1 last:mb-0">
                       <a
                         class="block transition duration-150 truncate"
