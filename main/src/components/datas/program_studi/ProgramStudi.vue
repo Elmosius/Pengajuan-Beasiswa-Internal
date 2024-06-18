@@ -44,10 +44,10 @@
                   <p class="text-black dark:text-white">{{ prodi.id }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ prodi.nama_program_studi }}</p>
+                  <p class="text-black dark:text-white">{{ prodi.fakultas_id }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ prodi.fakultas_id }}</p>
+                  <p c  lass="text-black dark:text-white">{{ prodi.nama_program_studi }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">

@@ -7,6 +7,7 @@ const fakultasRoutes = require("./routes/fakultasRoutes");
 const prodiRoutes = require("./routes/prodiRoutes");
 const beasiswaRoutes = require("./routes/beasiswaRoutes");
 const pendaftaranRoutes = require("./routes/pendaftaranRoutes");
+const roleRoutes = require("./routes/roleRoutes");
 
 const corsMiddleware = require("./middlewares/corsMiddleware");
 
@@ -31,6 +32,9 @@ app.use("/beasiswa/pendaftaran", pendaftaranRoutes);
 
 // beasiswa
 app.use("/beasiswa", beasiswaRoutes);
+
+// role
+app.use("/roles", roleRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

@@ -57,13 +57,15 @@
                   <p class="text-black dark:text-white">{{ user.email }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ user.role_id }}</p>
+                  <p class="text-black dark:text-white">{{ user.nama_role }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">{{ user.status }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ user.program_studi_id }}</p>
+                  <p class="text-black dark:text-white">
+                    {{ user.program_studi_id }} - {{ user.nama_program_studi }}
+                  </p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">

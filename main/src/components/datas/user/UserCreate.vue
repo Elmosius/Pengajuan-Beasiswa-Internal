@@ -16,12 +16,14 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.id"
                     autofocus
                     type="text"
                     name="id"
                     id="id"
                     placeholder="12345"
                     required
+                    maxlength="10"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -33,6 +35,7 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.nama"
                     autofocus
                     required
                     type="text"
@@ -50,6 +53,7 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.email"
                     autofocus
                     required
                     type="email"
@@ -68,10 +72,11 @@
                   >
                   <div class="mt-2">
                     <select
+                      v-model="user.role_id"
                       required
-                      id="role"
-                      name="role"
-                      autocomplete="role"
+                      id="role_id"
+                      name="role_id"
+                      autocomplete="role_id"
                       class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
                     >
                       <option>Admin</option>
@@ -89,6 +94,7 @@
                   >
                   <div class="mt-2">
                     <select
+                      v-model="user.status"
                       required
                       id="status"
                       name="status"
@@ -111,6 +117,7 @@
                   >
                   <div class="mt-2">
                     <select
+                      v-model="user.program_studi_id"
                       required
                       id="program_studi_id"
                       name="program_studi_id"
@@ -130,6 +137,7 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.password"
                     autofocus
                     required
                     type="password"
@@ -142,7 +150,9 @@
               </div>
               <!-- confirm password -->
               <div class="sm:col-span-1">
-                <label for="confirm_password" class="block text-sm font-medium leading-6 text-gray-900"
+                <label
+                  for="confirm_password"
+                  class="block text-sm font-medium leading-6 text-gray-900"
                   >Confirm Password</label
                 >
                 <div class="mt-2">
@@ -178,10 +188,41 @@
 
 <script>
 import Layout from '../../Layout.vue'
+import Api from '@/services/userAPI'
+import fetchProdi from '@/components/mixins/fetchProdi'
+
 export default {
   name: 'UserCreate',
   components: {
     Layout
+  },
+  mixins: [fetchProdi],
+  data() {
+    return {
+      user: {
+        role_id: '',
+        program_studi_id: '',
+        nama: '',
+        email: '',
+        password: '',
+        status: ''
+      }
+    }
+  },
+  mounted() {
+    this.fetchFakultas()
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        console.info(this.user)
+        await Api.createUser(this.user)
+        alert('User created successfully!')
+        this.$router.push('/data/users')
+      } catch (error) {
+        console.error('Error creating user:', error)
+      }
+    }
   }
 }
 </script>
