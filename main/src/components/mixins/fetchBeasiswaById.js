@@ -8,7 +8,8 @@ export default {
         nama_beasiswa: '',
         deskripsi: '',
         periode: ''
-      }
+      },
+      error: ''
     }
   },
   methods: {

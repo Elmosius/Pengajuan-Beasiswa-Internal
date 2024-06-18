@@ -6,7 +6,7 @@
       >
         <form @submit.prevent="handleSubmit">
           <div class="max-w-full overflow-x-auto p-5">
-            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create User</h2>
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit User</h2>
             <!-- munculin error -->
             <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
               {{ error }}
@@ -144,7 +144,6 @@
                   <input
                     v-model="user.password"
                     autofocus
-                    required
                     type="password"
                     name="password"
                     id="password"
@@ -164,7 +163,6 @@
                 <div class="mt-2">
                   <input
                     v-model="user.confirm_password"
-                    required
                     type="password"
                     name="confirm_password"
                     id="confirm_password"
@@ -225,30 +223,16 @@ export default {
     this.fetchRoles()
   },
   methods: {
-    async handleSubmit() {
-      if (this.user.password !== this.user.confirm_password) {
-        this.error = 'Password and confirm password do not match.'
-        return
-      }
-
+    async updateUser() {
       try {
-        const userData = {
-          id: this.user.id,
-          role_id: this.user.role_id,
-          program_studi_id: this.user.program_studi_id,
-          nama: this.user.nama,
-          email: this.user.email,
-          password: this.user.password,
-          status: this.user.status
+        const updated = {
+          nama_program_studi: this.program_studi.nama_program_studi,
+          fakultas_id: this.program_studi.fakultas_id
         }
-
-        console.info(userData)
-        await Api.createUser(userData)
-        alert('User created successfully!')
-        this.$router.push('/data/users')
+        await Api.updateUser(this.user.id, updated)
+        this.$router.push('/data/program-studi')
       } catch (error) {
-        console.error('Error creating user:', error)
-        this.error = error.response.data.message
+        console.error('Error updating prodi: ', error)
       }
     }
   }
