@@ -108,8 +108,7 @@ export default {
       beasiswa: {
         id: '',
         nama_beasiswa: '',
-        deskripsi: '',
-        periode: ''
+        deskripsi: ''
       }
     }
   },

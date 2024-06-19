@@ -11,7 +11,7 @@ const findAllPendaftaran = async () => {
 };
 
 const insertPendaftaran = async (data) => {
-  const query = "INSERT INTO Pendaftaran (id, periode, start_at, end_at, status, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
+  const query = "INSERT INTO Pendaftaran (id, periode, start_at, end_at, status, created_at, updated_at) VALUES (?, ?,?, ?, ?, now(), now())";
   return dbPool.execute(query, [data.id, data.periode, data.start_at, data.end_at, data.status]);
 };
 

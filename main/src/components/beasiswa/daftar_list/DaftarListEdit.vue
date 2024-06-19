@@ -111,7 +111,6 @@ export default {
         const updated = {
           nama_beasiswa: this.beasiswa.nama_beasiswa,
           deskripsi: this.beasiswa.deskripsi,
-          periode: this.beasiswa.periode
         }
         await Api.updateBeasiswa(this.beasiswa.id, updated)
         this.$router.push('/beasiswa/daftar-list')

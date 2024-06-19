@@ -11,7 +11,7 @@ const findAllBeasiswa = async () => {
 };
 
 const insertBeasiswa = async (data) => {
-  const query = "INSERT INTO Beasiswa (id, nama_beasiswa, deskripsi, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
+  const query = "INSERT INTO Beasiswa (id, nama_beasiswa, deskripsi, created_at, updated_at) VALUES (?, ?, ?, now(), now())";
   return dbPool.execute(query, [data.id, data.nama_beasiswa, data.deskripsi]);
 };
 
