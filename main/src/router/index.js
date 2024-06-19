@@ -19,6 +19,9 @@ import DaftarList from '@/components/beasiswa/daftar_list/DaftarList.vue'
 import DaftarListCreate from '@/components/beasiswa/daftar_list/DaftarListCreate.vue'
 import DaftarListEdit from '@/components/beasiswa/daftar_list/DaftarListEdit.vue'
 
+import Pendaftaran from '@/components/beasiswa/pendaftaran/Pendaftaran.vue'
+import PendaftaranCreate from '@/components/beasiswa/pendaftaran/PendaftaranCreate.vue'
+
 const routes = [
   {
     path: '/',
@@ -112,6 +115,20 @@ const routes = [
     path: '/beasiswa/daftar-list-edit/:id',
     name: 'DaftarListEdit',
     component: DaftarListEdit,
+    meta: { requiresAuth: true }
+  },
+
+  // Pendaftaran
+  {
+    path: '/beasiswa/pendaftaran',
+    name: 'Pendaftaran',
+    component: Pendaftaran,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/beasiswa/pendaftaran-create',
+    name: 'PendaftaranCreate',
+    component: PendaftaranCreate,
     meta: { requiresAuth: true }
   }
 ]

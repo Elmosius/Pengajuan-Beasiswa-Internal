@@ -11,13 +11,13 @@ const findAllBeasiswa = async () => {
 };
 
 const insertBeasiswa = async (data) => {
-  const query = "INSERT INTO Beasiswa (id, nama_beasiswa, deskripsi, periode, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
-  return dbPool.execute(query, [data.id, data.nama_beasiswa, data.deskripsi, data.periode]);
+  const query = "INSERT INTO Beasiswa (id, nama_beasiswa, deskripsi, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
+  return dbPool.execute(query, [data.id, data.nama_beasiswa, data.deskripsi]);
 };
 
 const updateBeasiswa = async (id, data) => {
-  const query = "UPDATE Beasiswa SET nama_beasiswa = ?, deskripsi = ?, periode = ?, updated_at = now() WHERE id = ?";
-  return dbPool.execute(query, [data.nama_beasiswa, data.deskripsi, data.periode, id]);
+  const query = "UPDATE Beasiswa SET nama_beasiswa = ?, deskripsi = ?, updated_at = now() WHERE id = ?";
+  return dbPool.execute(query, [data.nama_beasiswa, data.deskripsi]);
 };
 
 const deleteBeasiswa = async (id) => {

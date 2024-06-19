@@ -11,13 +11,13 @@ const findAllPendaftaran = async () => {
 };
 
 const insertPendaftaran = async (data) => {
-  const query = "INSERT INTO Pendaftaran (id, start_at, end_at, status, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
-  return dbPool.execute(query, [data.id, data.start_at, data.end_at, data.status]);
+  const query = "INSERT INTO Pendaftaran (id, periode, start_at, end_at, status, created_at, updated_at) VALUES (?, ?, ?, ?, now(), now())";
+  return dbPool.execute(query, [data.id, data.periode, data.start_at, data.end_at, data.status]);
 };
 
 const updatePendaftaran = async (id, data) => {
-  const query = "UPDATE Pendaftaran SET start_at = ?, end_at = ?, status = ?, updated_at = now() WHERE id = ?";
-  return dbPool.execute(query, [data.start_at, data.end_at, data.status, id]);
+  const query = "UPDATE Pendaftaran SET data.periode = ?, start_at = ?, end_at = ?, status = ?, updated_at = now() WHERE id = ?";
+  return dbPool.execute(query, [data.periode, data.start_at, data.end_at, data.status, id]);
 };
 
 const deletePendaftaran = async (id) => {
