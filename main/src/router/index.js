@@ -123,8 +123,7 @@ const router = createRouter({
 
 // Perloginan (Navigation Guard)
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem('token') // Contoh, bisa menggunakan Vuex atau cara lain
-
+  const isLoggedIn = localStorage.getItem('token')
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
     // Jika route memerlukan auth dan user tidak login, redirect ke login
     next('/login')
