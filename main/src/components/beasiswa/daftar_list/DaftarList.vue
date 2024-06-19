@@ -35,9 +35,7 @@
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Deskripsi
                 </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Periode
-                </th>
+
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Created At
                 </th>
@@ -55,9 +53,7 @@
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">{{ beasiswa.deskripsi }}</p>
                 </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ beasiswa.periode }}</p>
-                </td>
+
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">{{ formatDate(beasiswa.created_at) }}</p>
                 </td>
