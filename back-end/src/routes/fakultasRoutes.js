@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllFakultas, createFakultas, getFakultasById, editFakultasById, deleteFakultasById } = require("../controllers/fakultasController");
+const { getAllFakultas, createFakultas, getFakultasById, editFakultasById, deleteFakultasById } = require("../controllers/fakultasController").default;
 const validate = require("../middlewares/validateMiddleware");
 const { createFakultasValidation, updateFakultasValidation } = require("../validations/fakultasValidation");
 const router = express.Router();

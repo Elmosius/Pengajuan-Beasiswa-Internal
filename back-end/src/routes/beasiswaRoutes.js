@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllBeasiswa, createBeasiswa, getBeasiswaById, editBeasiswaById, deleteBeasiswaById } = require("../controllers/beasiswaController");
+const { getAllBeasiswa, createBeasiswa, getBeasiswaById, editBeasiswaById, deleteBeasiswaById } = require("../controllers/beasiswaController").default;
 const validate = require("../middlewares/validateMiddleware");
 const { createBeasiswaValidation, updateBeasiswaValidation } = require("../validations/beasiswaValidation");
 const router = express.Router();

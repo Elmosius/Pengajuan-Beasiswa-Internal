@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllProdi, getProdiById, createProdi, deleteProdiById, editProdiById } = require("../controllers/prodiController");
+const { getAllProdi, getProdiById, createProdi, deleteProdiById, editProdiById } = require("../controllers/prodiController").default;
 const validate = require("../middlewares/validateMiddleware");
 const { createProdiValidation, updateProdiValidation } = require("../validations/prodiValidation");
 const router = express.Router();

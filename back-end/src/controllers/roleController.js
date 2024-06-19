@@ -1,4 +1,4 @@
-const { findAllRoles, findRoleById, insertRole, updateRole, deleteRole } = require("../models/roleModel");
+import { findAllRoles, findRoleById, insertRole, updateRole, deleteRole } from "../models/roleModel";
 
 const getAllRoles = async (req, res) => {
   try {
@@ -82,7 +82,7 @@ const deleteRoleById = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllRoles,
   getRoleById,
   createRole,

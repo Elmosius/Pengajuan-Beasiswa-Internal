@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllPendaftaran, createPendaftaran, getPendaftaranById, editPendaftaranById, deletePendaftaranById } = require("../controllers/pendaftaranController");
+const { getAllPendaftaran, createPendaftaran, getPendaftaranById, editPendaftaranById, deletePendaftaranById } = require("../controllers/pendaftaranController").default;
 const validate = require("../middlewares/validateMiddleware");
 const { createPendaftaranValidation, updatePendaftaranValidation } = require("../validations/pendaftaranValidation");
 const router = express.Router();
