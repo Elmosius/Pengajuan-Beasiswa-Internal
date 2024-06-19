@@ -101,7 +101,7 @@ const loginUser = async (req, res) => {
 
   try {
     const [users] = await findUserByEmail(email);
-    const user = users[0]; // Karena findUserByEmail bisa mengembalikan array
+    const user = users[0];
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -118,7 +118,7 @@ const loginUser = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: 3600, // Expires in 1 hour
+      expiresIn: 3600,
     });
 
     res.json({

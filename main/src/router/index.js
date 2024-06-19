@@ -23,88 +23,117 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: { requiresAuth: true }
   },
 
   // Login
   {
     path: '/login',
     name: 'Login',
-    component: LoginPage
+    component: LoginPage,
+    meta: { requiresGuest: true }
   },
 
   // Fakultas
   {
     path: '/data/fakultas',
     name: 'Fakultas',
-    component: Fakultas
+    component: Fakultas,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/fakultas-create',
     name: 'FakultasCreate',
-    component: FakultasCreate
+    component: FakultasCreate,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/fakultas-edit/:id',
     name: 'FakultasEdit',
-    component: FakultasEdit
+    component: FakultasEdit,
+    meta: { requiresAuth: true }
   },
 
   // Program Studi
   {
     path: '/data/program-studi',
     name: 'ProgramStudi',
-    component: ProgramStudi
+    component: ProgramStudi,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/program-studi-create',
     name: 'ProgramStudiCreate',
-    component: ProgramStudiCreate
+    component: ProgramStudiCreate,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/program-studi-edit/:id',
     name: 'ProgramStudiEdit',
-    component: ProgramStudiEdit
+    component: ProgramStudiEdit,
+    meta: { requiresAuth: true }
   },
 
   // User
   {
     path: '/data/users',
     name: 'User',
-    component: User
+    component: User,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/user-create',
     name: 'UserCreate',
-    component: UserCreate
+    component: UserCreate,
+    meta: { requiresAuth: true }
   },
   {
     path: '/data/user-edit/:id',
     name: 'UserEdit',
-    component: UserEdit
+    component: UserEdit,
+    meta: { requiresAuth: true }
   },
 
   // DaftarList Beasiswa
   {
     path: '/beasiswa/daftar-list',
     name: 'DaftarList',
-    component: DaftarList
+    component: DaftarList,
+    meta: { requiresAuth: true }
   },
   {
     path: '/beasiswa/daftar-list-create',
     name: 'DaftarListCreate',
-    component: DaftarListCreate
+    component: DaftarListCreate,
+    meta: { requiresAuth: true }
   },
   {
     path: '/beasiswa/daftar-list-edit/:id',
     name: 'DaftarListEdit',
-    component: DaftarListEdit
+    component: DaftarListEdit,
+    meta: { requiresAuth: true }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+// Perloginan (Navigation Guard)
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem('token') // Contoh, bisa menggunakan Vuex atau cara lain
+
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
+    // Jika route memerlukan auth dan user tidak login, redirect ke login
+    next('/login')
+  } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
+    // Jika route memerlukan guest dan user sudah login, redirect ke dashboard
+    next('/')
+  } else {
+    next() // Selalu memanggil next()!
+  }
 })
 
 export default router

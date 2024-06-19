@@ -19,12 +19,11 @@ export default {
   //********** USER ****************/
 
   // login
-  login(credentials) {
-    return apiClient.post('/auth/login', credentials).then((response) => {
-      // Simpan token ke localStorage
-      localStorage.setItem('token', response.data.token)
-      return response
-    })
+  async login(credentials) {
+    const response = await apiClient.post('/auth/login', credentials)
+    // Simpan token ke localStorage
+    localStorage.setItem('token', response.data.token)
+    return response
   },
 
   // getall
