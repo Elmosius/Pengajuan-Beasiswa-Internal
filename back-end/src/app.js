@@ -8,6 +8,7 @@ const prodiRoutes = require("./routes/prodiRoutes");
 const beasiswaRoutes = require("./routes/beasiswaRoutes");
 const pendaftaranRoutes = require("./routes/pendaftaranRoutes");
 const roleRoutes = require("./routes/roleRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const corsMiddleware = require("./middlewares/corsMiddleware");
 
@@ -17,6 +18,9 @@ app.use(express.json());
 
 // CORS middlwares
 app.use(corsMiddleware);
+
+// login
+app.use("/auth", authRoutes);
 
 // user
 app.use("/data/users", userRoutes);

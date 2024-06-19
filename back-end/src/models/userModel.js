@@ -1,6 +1,17 @@
 const bcrypt = require("bcryptjs");
 const dbPool = require("../config/database");
 
+const findUserByEmail = async (email) => {
+  const query = `
+    SELECT user.*, role.nama_role, program_studi.nama_program_studi 
+    FROM user 
+    JOIN role ON user.role_id = role.id
+    JOIN program_studi ON user.program_studi_id = program_studi.id
+    WHERE user.email = ?;
+  `;
+  return dbPool.execute(query, [email]);
+};
+
 const findAllUser = async () => {
   const query = `
     SELECT user.*, role.nama_role, program_studi.nama_program_studi 
@@ -83,4 +94,5 @@ module.exports = {
   insertUser,
   updateUser,
   deleteUser,
+  findUserByEmail,
 };

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '@/components/dashboard/Dashboard.vue'
 
+import LoginPage from '@/components/login/Login.vue'
+
 import Fakultas from '@/components/datas/fakultas/Fakultas.vue'
 import FakultasCreate from '@/components/datas/fakultas/FakultasCreate.vue'
 import FakultasEdit from '@/components/datas/fakultas/FakultasEdit.vue'
@@ -22,6 +24,13 @@ const routes = [
     path: '/',
     name: 'Dashboard',
     component: Dashboard
+  },
+
+  // Login
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage
   },
 
   // Fakultas

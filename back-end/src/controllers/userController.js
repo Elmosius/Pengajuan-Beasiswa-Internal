@@ -1,4 +1,6 @@
-const { findAllUser, findUserById, insertUser, updateUser, deleteUser } = require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const { findAllUser, findUserById, insertUser, updateUser, deleteUser, findUserByEmail } = require("../models/userModel");
 
 const getAllUser = async (req, res) => {
   try {
@@ -94,7 +96,43 @@ const deleteUserById = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const [users] = await findUserByEmail(email);
+    const user = users[0]; // Karena findUserByEmail bisa mengembalikan array
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const payload = {
+      id: user.id,
+      role_id: user.role_id,
+      email: user.email,
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: 3600, // Expires in 1 hour
+    });
+
+    res.json({
+      success: true,
+      token: "Bearer " + token,
+    });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
+  loginUser,
   getAllUser,
   getUserById,
   createUser,
