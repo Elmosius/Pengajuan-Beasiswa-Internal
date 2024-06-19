@@ -1,4 +1,4 @@
-import { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa } from "../models/beasiswaModel";
+const { findAllBeasiswa, insertBeasiswa, findBeasiswaById, updateBeasiswa, deleteBeasiswa } = require("../models/beasiswaModel");
 
 const getAllBeasiswa = async (req, res) => {
   try {
@@ -94,7 +94,7 @@ const deleteBeasiswaById = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getBeasiswaById,
   getAllBeasiswa,
   createBeasiswa,

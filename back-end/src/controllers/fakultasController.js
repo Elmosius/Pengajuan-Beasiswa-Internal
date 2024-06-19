@@ -1,4 +1,4 @@
-import { findAllFakultas, insertFakultas, findFakultasById, updateFakultas, deleteFakultas } from "../models/fakultasModel";
+const { findAllFakultas, insertFakultas, findFakultasById, updateFakultas, deleteFakultas } = require("../models/fakultasModel");
 
 const getAllFakultas = async (req, res) => {
   try {
@@ -94,7 +94,7 @@ const deleteFakultasById = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getFakultasById,
   getAllFakultas,
   createFakultas,

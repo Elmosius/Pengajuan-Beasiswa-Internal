@@ -1,4 +1,4 @@
-import { findAllProdi, insertProdi, updateProdi, deleteProdi, findProdiById } from "../models/prodiModel";
+const { findAllProdi, insertProdi, updateProdi, deleteProdi, findProdiById } = require("../models/prodiModel");
 
 const getAllProdi = async (req, res) => {
   try {
@@ -94,7 +94,7 @@ const deleteProdiById = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getAllProdi,
   getProdiById,
   createProdi,

@@ -1,4 +1,4 @@
-import { findAllPendaftaran, insertPendaftaran, findPendaftaranById, updatePendaftaran, deletePendaftaran } from "../models/pendaftaranModel";
+const { findAllPendaftaran, insertPendaftaran, findPendaftaranById, updatePendaftaran, deletePendaftaran } = require("../models/pendaftaranModel");
 
 const getAllPendaftaran = async (req, res) => {
   try {
@@ -94,7 +94,7 @@ const deletePendaftaranById = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   getPendaftaranById,
   getAllPendaftaran,
   createPendaftaran,

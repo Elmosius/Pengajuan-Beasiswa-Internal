@@ -1,6 +1,6 @@
-import { sign } from "jsonwebtoken";
-import { compare } from "bcryptjs";
-import { findAllUser, findUserById, insertUser, updateUser, deleteUser, findUserByEmail } from "../models/userModel";
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const { findAllUser, findUserById, insertUser, updateUser, deleteUser, findUserByEmail } = require("../models/userModel");
 
 const getAllUser = async (req, res) => {
   try {
@@ -106,7 +106,7 @@ const loginUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const isMatch = await compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -117,7 +117,7 @@ const loginUser = async (req, res) => {
       email: user.email,
     };
 
-    const token = sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: 3600,
     });
 
@@ -131,7 +131,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-export default {
+module.exports = {
   loginUser,
   getAllUser,
   getUserById,
