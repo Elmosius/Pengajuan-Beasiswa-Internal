@@ -1,4 +1,5 @@
 import axios from 'axios'
+import * as jwt_decode from 'jwt-decode'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -49,5 +50,13 @@ export default {
   // delete
   deleteUser(id) {
     return apiClient.delete(`/data/users/${id}`)
+  },
+
+  // user
+  getLoggedInUser() {
+    const token = localStorage.getItem('token')
+    if (!token) return null
+    const decodedToken = jwt_decode(token)
+    return this.getUserById(decodedToken.id)
   }
 }

@@ -7,7 +7,7 @@
         <form @submit.prevent="handleSubmit" action="">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">
-              Registrasi Beasiswa (Nama beasiswanya)
+              Registrasi Beasiswa {{ pendaftaran.nama_beasiswa }}
             </h2>
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
@@ -17,7 +17,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="beasiswa.id"
+                    v-model="user.id"
                     type="text"
                     name="id"
                     id="id"
@@ -237,16 +237,18 @@
 <script>
 import Layout from '../../Layout.vue'
 import Api from '../../../services/userAPI'
-import fetchUsers from '@/components/mixins/fetchUsers'
+import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
+import fetchPendaftaranById from '@/components/mixins/fetchPendaftaranById'
 
 export default {
   name: 'DaftarBeasiswa',
   components: {
     Layout
   },
-  mixins: [fetchUsers],
-  mounted() {
-    this.fetchUsers()
+  mixins: [fetchLoggedInUser,   fetchPendaftaranById],  
+  async mounted() {
+    await this.fetchLoggedInUser()
+    await this.fetchPendaftaranById()
   },
   data() {
     return {

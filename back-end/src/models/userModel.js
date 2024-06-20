@@ -14,20 +14,22 @@ const findUserByEmail = async (email) => {
 
 const findAllUser = async () => {
   const query = `
-    SELECT user.*, role.nama_role, program_studi.nama_program_studi 
-    FROM user 
+    SELECT user.*, role.nama_role, program_studi.nama_program_studi, fakultas.nama_fakultas
+    FROM user
     JOIN role ON user.role_id = role.id
-    JOIN program_studi ON user.program_studi_id = program_studi.id;
+    JOIN program_studi ON user.program_studi_id = program_studi.id
+    JOIN fakultas ON program_studi.fakultas_id = fakultas.id;
   `;
   return dbPool.execute(query);
 };
 
 const findUserById = async (id) => {
   const query = `
-    SELECT user.*, role.nama_role, program_studi.nama_program_studi 
-    FROM user 
+    SELECT user.*, role.nama_role, program_studi.nama_program_studi, fakultas.nama_fakultas
+    FROM user
     JOIN role ON user.role_id = role.id
     JOIN program_studi ON user.program_studi_id = program_studi.id
+    JOIN fakultas ON program_studi.fakultas_id = fakultas.id
     WHERE user.id = ?;
   `;
   return dbPool.execute(query, [id]);
