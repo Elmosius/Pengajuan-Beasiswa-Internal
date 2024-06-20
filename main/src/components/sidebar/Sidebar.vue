@@ -320,7 +320,7 @@
           <ul class="mt-3">
             <SidebarLinkGroup
               v-slot="parentLink"
-              :activeCondition="currentRoute.fullPath.includes('beasiswa')"
+              :activeCondition="currentRoute.fullPath.includes('laporan')"
             >
               <a
                 class="block text-slate-200 truncate transition duration-150"
@@ -371,7 +371,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/beasiswa/pendaftaran"
+                    to="/laporan/lihat"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >

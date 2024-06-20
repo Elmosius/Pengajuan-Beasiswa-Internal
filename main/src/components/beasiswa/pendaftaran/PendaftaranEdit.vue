@@ -4,11 +4,11 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="updatePendaftaran">
           <div class="max-w-full overflow-x-auto p-5">
-            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Periode Beasiswa</h2>
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit Periode Beasiswa</h2>
             <!-- munculin error -->
-            <div v-if="error" class="p-3 2 mt-4 bg-red-200 text-red-800 rounded">
+            <div v-if="error" class="p-3 mt-4 bg-red-200 text-red-800 rounded">
               {{ error }}
             </div>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
@@ -46,9 +46,9 @@
               </div>
 
               <div class="sm:col-span-1">
-                <label for="status" class="block text-sm font-medium leading-6 text-gray-900"
-                  >Status</label
-                >
+                <label for="status" class="block text-sm font-medium leading-6 text-gray-900">
+                  Status
+                </label>
                 <div class="mt-2">
                   <select
                     v-model="pendaftaran.status"
@@ -119,7 +119,7 @@
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create
+                Update
               </button>
             </div>
           </div>
@@ -132,43 +132,46 @@
 <script>
 import Layout from '../../Layout.vue'
 import Api from '../../../services/pendaftaranBeasiswaAPI'
+import fetchPendaftaranById from '@/components/mixins/fetchPendaftaranById'
 import fetchBeasiswa from '@/components/mixins/fetchBeasiswa'
 
 export default {
-  name: 'PendaftaranCreate',
+  name: 'PendaftaranEdit',
   components: {
     Layout
   },
-  data() {
-    return {
-      pendaftaran: {
-        start_at: '',
-        end_at: '',
-        status: '',
-        periode: ''
-      },
-      selectedBeasiswa: '',
-      error: ''
-    }
-  },
-  mixins: [fetchBeasiswa],
+  mixins: [fetchPendaftaranById, fetchBeasiswa],
   async mounted() {
+    await this.fetchPendaftaranById()
     await this.fetchBeasiswa()
+    this.selectedBeasiswa = this.pendaftaran.beasiswa_id
+    this.pendaftaran.start_at = this.formatDate(this.pendaftaran.start_at)
+    this.pendaftaran.end_at = this.formatDate(this.pendaftaran.end_at)
   },
   methods: {
-    async handleSubmit() {
+    async updatePendaftaran() {
       try {
-        const data = {
-          ...this.pendaftaran,
+        const updated = {
+          start_at: this.pendaftaran.start_at,
+          end_at: this.pendaftaran.end_at,
+          status: this.pendaftaran.status,
+          periode: this.pendaftaran.periode,
           beasiswa_id: this.selectedBeasiswa
         }
-        await Api.createPendaftaran(data)
-        alert('Pendaftaran created successfully!')
+        await Api.updatePendaftaran(this.pendaftaran.id, updated)
+        alert('Pendaftaran updated successfully!')
         this.$router.push('/beasiswa/pendaftaran')
       } catch (error) {
-        console.error('Error creating pendaftaran:', error)
+        console.error('Error updating pendaftaran: ', error)
         this.error = error.response.data.message
       }
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString)
+      const year = date.getFullYear()
+      const month = ('0' + (date.getMonth() + 1)).slice(-2)
+      const day = ('0' + date.getDate()).slice(-2)
+      return `${year}-${month}-${day}`
     }
   }
 }
