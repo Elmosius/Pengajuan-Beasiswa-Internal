@@ -27,7 +27,7 @@
             <thead>
               <tr class="bg-gray-100 text-left dark:bg-meta-4">
                 <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Kode Beasiswa
+                  Periode
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Nama Beasiswa
@@ -36,35 +36,39 @@
                   Deskripsi
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Periode
+                  Start_at
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Created At
+                  End_at
                 </th>
                 <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="beasiswa in beasiswaList.data" :key="beasiswa.id">
+              <tr v-for="pendaftaran in pendaftaranList.data" :key="pendaftaran.id">
                 <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">{{ beasiswa.id }}</p>
+                  <p class="text-black dark:text-white">{{ pendaftaran.periode }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ beasiswa.nama_beasiswa }}</p>
+                  <ul>
+                    <p class="text-black dark:text-white">{{ pendaftaran.nama_beasiswa }}</p>
+                  </ul>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ beasiswa.deskripsi }}</p>
+                  <ul>
+                    <p class="text-black dark:text-white">{{ pendaftaran.deskripsi }}</p>
+                  </ul>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ beasiswa.periode }}</p>
+                  <p class="text-black dark:text-white">{{ formatDate(pendaftaran.start_at) }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ formatDate(beasiswa.created_at) }}</p>
+                  <p class="text-black dark:text-white">{{ formatDate(pendaftaran.end_at) }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
-                      :to="`/beasiswa/daftar-list-edit/${beasiswa.id}`"
+                      :to="`/beasiswa/pendaftaran-edit/${pendaftaran.id}`"
                       class="hover:text-purple-500"
                     >
                       <svg
@@ -83,7 +87,7 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(beasiswa.id)" class="hover:text-purple-500">
+                    <button @click="confirmDelete(pendaftaran.id)" class="hover:text-purple-500">
                       <svg
                         class="fill-current"
                         width="18"
@@ -113,7 +117,6 @@
                   </div>
                 </td>
               </tr>
-              <!-- Tambahkan baris lain sesuai kebutuhan -->
             </tbody>
           </table>
 
@@ -131,7 +134,7 @@
               </button>
               <button
                 class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-1 px-4 rounded"
-                @click="deleteBeasiswa"
+                @click="deletePendaftaran"
               >
                 Delete
               </button>
@@ -146,9 +149,9 @@
 <script>
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
-import Api from '../../../services/daftarListBeasiswaAPI'
+import Api from '../../../services/pendaftaranBeasiswaAPI'
+import fetchPendaftaran from '@/components/mixins/fetchPendaftaran'
 import Modal from '@/components/modal/Modal.vue'
-import fetchBeasiswa from '@/components/mixins/fetchBeasiswa'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -158,43 +161,39 @@ export default {
     WelcomeBanner,
     Modal
   },
-  mixins: [fetchBeasiswa],
   data() {
     return {
       isModalOpen: false,
-      selectedBeasiswaId: null
+      selectedPendaftaranId: null,
+      error: ''
     }
   },
+  mixins: [fetchPendaftaran],
   mounted() {
-    this.fetchBeasiswa()
+    this.fetchPendaftaran()
   },
   methods: {
     openModal() {
       this.isModalOpen = true
     },
-
     closeModal() {
       this.isModalOpen = false
-      this.selectedBeasiswaId = null
+      this.selectedPendaftaranId = null
     },
-
     confirmDelete(id) {
-      this.selectedBeasiswaId = id
-      console.info(this.selectedBeasiswaId)
+      this.selectedPendaftaranId = id
       this.openModal()
     },
-
-    async deleteBeasiswa() {
-      if (!this.selectedBeasiswaId) return
+    async deletePendaftaran() {
+      if (!this.selectedPendaftaranId) return
       try {
-        await Api.deleteBeasiswa(this.selectedBeasiswaId)
+        await Api.deletePendaftaran(this.selectedPendaftaranId)
         this.closeModal()
-        this.fetchBeasiswa()
+        this.fetchPendaftaran()
       } catch (error) {
-        console.error('Error deleting fakultas: ', error)
+        console.error('Error deleting pendaftaran: ', error)
       }
     },
-
     formatDate(dateString) {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(dateString).toLocaleDateString('id-ID', options)

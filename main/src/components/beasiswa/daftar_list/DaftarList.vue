@@ -187,7 +187,7 @@ export default {
         this.closeModal()
         this.fetchBeasiswa()
       } catch (error) {
-        console.error('Error deleting fakultas: ', error)
+        console.error('Error deleting beasiswa: ', error)
       }
     },
 
