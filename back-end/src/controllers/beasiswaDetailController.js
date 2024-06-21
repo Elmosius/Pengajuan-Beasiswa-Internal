@@ -1,11 +1,11 @@
-const { findAllBeasiswaDetail, findBeasiswaDetailById, insertBeasiswaDetailWithDokumen } = require("../models/beasiswaDetailModel");
+const { findAllBeasiswaDetail, findBeasiswaDetailById, insertBeasiswaDetailWithDokumen, updateBeasiswaDetail, deleteBeasiswaDetail } = require("../models/beasiswaDetailModel");
 
 const getAllBeasiswaDetail = async (req, res) => {
   try {
-    const [data] = await findAllBeasiswaDetail();
+    const [results] = await findAllBeasiswaDetail();
     res.json({
       message: "GET all Beasiswa Detail success",
-      data: data,
+      data: results,
     });
   } catch (error) {
     res.status(500).json({
@@ -18,15 +18,15 @@ const getAllBeasiswaDetail = async (req, res) => {
 const getBeasiswaDetailById = async (req, res) => {
   const id = req.params.id;
   try {
-    const [data] = await findBeasiswaDetailById(id);
-    if (data.length < 1) {
+    const [results] = await findBeasiswaDetailById(id);
+    if (results.length < 1) {
       return res.status(404).json({
-        message: "ID tidak ditemukan",
+        message: "Id tidak ditemukan",
       });
     }
     res.json({
-      message: "GET Beasiswa Detail by ID success",
-      data: data,
+      message: "GET Beasiswa Detail by id success",
+      data: results,
     });
   } catch (error) {
     res.status(500).json({
@@ -36,21 +36,44 @@ const getBeasiswaDetailById = async (req, res) => {
   }
 };
 
-const createBeasiswaDetailWithDokumen = async (req, res) => {
+const createBeasiswaDetail = async (req, res) => {
   const data = req.body;
 
-  if (!data) {
-    return res.status(400).json({
-      message: "Anda mengirimkan data yang salah",
-      data: null,
+  try {
+    const result = await insertBeasiswaDetailWithDokumen(data);
+    res.status(201).json({
+      message: "Beasiswa Detail created successfully",
+      data: result,
     });
+  } catch (error) {
+    console.error("Error creating Beasiswa Detail:", error);
+    res.status(500).json({ message: "Server Error", serverMessage: error });
   }
+};
+
+const updateBeasiswaDetailById = async (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
 
   try {
-    await insertBeasiswaDetailWithDokumen(data);
-    res.status(201).json({
-      message: "CREATE new Beasiswa Detail with Dokumen success",
-      data: data,
+    const result = await updateBeasiswaDetail(id, data);
+    res.status(200).json({
+      message: "Update Beasiswa Detail success",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error updating Beasiswa Detail:", error);
+    res.status(500).json({ message: "Server Error", serverMessage: error });
+  }
+};
+
+const deleteBeasiswaDetailById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const result = await deleteBeasiswaDetail(id);
+    res.json({
+      message: "Delete Beasiswa Detail success",
+      data: result,
     });
   } catch (error) {
     res.status(500).json({
@@ -63,5 +86,7 @@ const createBeasiswaDetailWithDokumen = async (req, res) => {
 module.exports = {
   getAllBeasiswaDetail,
   getBeasiswaDetailById,
-  createBeasiswaDetailWithDokumen,
+  createBeasiswaDetail,
+  updateBeasiswaDetailById,
+  deleteBeasiswaDetailById,
 };

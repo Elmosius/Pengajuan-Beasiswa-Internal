@@ -23,6 +23,7 @@ import Pendaftaran from '@/components/beasiswa/pendaftaran/Pendaftaran.vue'
 import PendaftaranCreate from '@/components/beasiswa/pendaftaran/PendaftaranCreate.vue'
 import PendaftaranEdit from '@/components/beasiswa/pendaftaran/PendaftaranEdit.vue'
 import DaftarBeasiswa from '@/components/beasiswa/pendaftaran/Daftar.vue'
+import History from '@/components/beasiswa/pendaftaran/History.vue'
 
 const routes = [
   {
@@ -144,7 +145,13 @@ const routes = [
     name: 'DaftarBeasiswa',
     component: DaftarBeasiswa,
     meta: { requiresAuth: true }
-  }
+  },
+  {
+    path: '/beasiswa/history',
+    name: 'History',
+    component: History,
+    meta: { requiresAuth: true }
+  } 
 ]
 
 const router = createRouter({

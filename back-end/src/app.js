@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const fakultasRoutes = require("./routes/fakultasRoutes");
 const prodiRoutes = require("./routes/prodiRoutes");
 const beasiswaRoutes = require("./routes/beasiswaRoutes");
+const beasiswaDetailRoutes = require("./routes/beasiswaDetailRoutes");
 const pendaftaranRoutes = require("./routes/pendaftaranRoutes");
 const roleRoutes = require("./routes/roleRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -18,6 +19,9 @@ app.use(express.json());
 
 // CORS middlwares
 app.use(corsMiddleware);
+
+// Beasiswa Detail
+app.use("/beasiswa/detail", beasiswaDetailRoutes);
 
 // login
 app.use("/auth", authRoutes);
