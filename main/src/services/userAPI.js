@@ -1,5 +1,4 @@
 import axios from 'axios'
-import jwt from 'jsonwebtoken'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -11,7 +10,8 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`
+    console.log('Authorization Header:', config.headers.Authorization)
   }
   return config
 })
@@ -22,8 +22,9 @@ export default {
   // login
   async login(credentials) {
     const response = await apiClient.post('/auth/login', credentials)
-    // Simpan token ke localStorage
+    console.log('Token from login response:', response.data.token)
     localStorage.setItem('token', response.data.token)
+    console.log('Token saved to localStorage:', localStorage.getItem('token'))
     return response
   },
 
@@ -54,10 +55,7 @@ export default {
 
   // user
   async getLoggedInUser() {
-    const token = localStorage.getItem('token')
-    if (!token) return null
-    const decodedToken = jwt.decode(token)
-    const response = await this.getUserById(decodedToken.id)
-    return response.data
+    const response = await apiClient.get('/auth/user')
+    return response.data.user
   }
 }

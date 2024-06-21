@@ -38,21 +38,15 @@ const loginUser = async (req, res) => {
 };
 
 const getUserFromToken = async (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ message: "Token not provided" });
-  }
-
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const [user] = await findUserById(decoded.id);
-    if (!user) {
+    const userId = req.user.id;
+    const [user] = await findUserById(userId);
+    if (user.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res.json({ user });
+    res.json({ user: user[0] });
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+    res.status(500).json({ message: "Server error" });
   }
 };
 

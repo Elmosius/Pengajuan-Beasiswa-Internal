@@ -80,8 +80,6 @@ export default {
           password: this.password
         })
         console.log('Login successful:', response)
-        // Simpan token ke localStorage
-        localStorage.setItem('token', response.data.token)
         this.$router.push('/')
       } catch (error) {
         console.error('Login failed:', error.response.data.message)

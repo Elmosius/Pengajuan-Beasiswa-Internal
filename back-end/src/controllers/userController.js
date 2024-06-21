@@ -1,4 +1,4 @@
-const { findAllUser, findUserById, insertUser, updateUser, deleteUser, findUserByEmail } = require("../models/userModel");
+const { findAllUser, findUserById, insertUser, updateUser, deleteUser } = require("../models/userModel");
 
 const getAllUser = async (req, res) => {
   try {
