@@ -245,7 +245,7 @@ export default {
   components: {
     Layout
   },
-  mixins: [fetchLoggedInUser,   fetchPendaftaranById],  
+  mixins: [fetchLoggedInUser, fetchPendaftaranById],
   async mounted() {
     await this.fetchLoggedInUser()
     await this.fetchPendaftaranById()

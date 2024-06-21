@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as jwt_decode from 'jwt-decode'
+import jwt from 'jsonwebtoken'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -11,7 +11,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
-    config.headers.Authorization = token
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
@@ -53,10 +53,11 @@ export default {
   },
 
   // user
-  getLoggedInUser() {
+  async getLoggedInUser() {
     const token = localStorage.getItem('token')
     if (!token) return null
-    const decodedToken = jwt_decode(token)
-    return this.getUserById(decodedToken.id)
+    const decodedToken = jwt.decode(token)
+    const response = await this.getUserById(decodedToken.id)
+    return response.data
   }
 }
