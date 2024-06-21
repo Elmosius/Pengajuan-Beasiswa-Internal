@@ -37,7 +37,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="beasiswa.nama_beasiswa"
+                    v-model="user.email"
                     required
                     type="email"
                     name="nama_beasiswa"
@@ -55,7 +55,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="beasiswa.id"
+                    v-model="user.nama_fakultas"
                     type="text"
                     name="id"
                     id="id"
@@ -72,7 +72,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="beasiswa.id"
+                    v-model="user.nama_program_studi"
                     type="text"
                     name="id"
                     id="id"
@@ -94,7 +94,7 @@
                     name="id"
                     id="id"
                     maxlength="4"
-                    placeholder="12345"
+                    placeholder="4.0"
                     required
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -113,7 +113,7 @@
                     name="id"
                     id="id"
                     min="0"
-                    placeholder="12345"
+                    placeholder="600"
                     required
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -253,9 +253,13 @@ export default {
   data() {
     return {
       beasiswa: {
-        id: '',
-        nama_beasiswa: '',
-        deskripsi: ''
+        pendaftaran_id: '',
+        user_id: '',
+        beasiswa_id: '',
+        ipk: '',
+        poin_portofolio: '',
+        status_1: '0',
+        status_2: '0'
       }
     }
   },
