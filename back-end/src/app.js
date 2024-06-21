@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(corsMiddleware);
 
 // Beasiswa Detail
-app.use("/beasiswa/detail", beasiswaDetailRoutes);
+app.use("/beasiswa/details", beasiswaDetailRoutes);
 
 // login
 app.use("/auth", authRoutes);

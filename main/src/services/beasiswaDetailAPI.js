@@ -11,12 +11,12 @@ export default {
   //********** DAFTAR LIST BEASISWA ******************/
 
   // getall
-  getBeasiswa() {
-    return apiClient.get('/beasiswa')
+  getBeasiswaDetails() {
+    return apiClient.get('/beasiswa/details')
   },
 
   // getFakultasById
-  getBeasiswaById(id) {
+  getBeasiswaDetailById(id) {
     return apiClient.get(`/beasiswa/${id}`)
   },
 
