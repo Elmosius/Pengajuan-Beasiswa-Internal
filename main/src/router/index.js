@@ -22,7 +22,8 @@ import DaftarListEdit from '@/components/beasiswa/daftar_list/DaftarListEdit.vue
 import Pendaftaran from '@/components/beasiswa/pendaftaran/Pendaftaran.vue'
 import PendaftaranCreate from '@/components/beasiswa/pendaftaran/PendaftaranCreate.vue'
 import PendaftaranEdit from '@/components/beasiswa/pendaftaran/PendaftaranEdit.vue'
-import DaftarBeasiswa from '@/components/beasiswa/pendaftaran/Pengajuan.vue'
+import Pengajuan from '@/components/beasiswa/pendaftaran/Pengajuan.vue'
+import PengajuanEdit from '@/components/beasiswa/pendaftaran/PengajuanEdit.vue'
 import History from '@/components/beasiswa/pendaftaran/History.vue'
 
 const routes = [
@@ -142,8 +143,14 @@ const routes = [
   },
   {
     path: '/beasiswa/pendaftaran-daftar/:id',
-    name: 'DaftarBeasiswa',
-    component: DaftarBeasiswa,
+    name: 'Pengajuan',
+    component: Pengajuan,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/beasiswa/pendaftaran-daftar-edit/:id',
+    name: 'EditPengajuan',
+    component: PengajuanEdit,
     meta: { requiresAuth: true }
   },
   {
@@ -151,7 +158,7 @@ const routes = [
     name: 'History',
     component: History,
     meta: { requiresAuth: true }
-  } 
+  }
 ]
 
 const router = createRouter({

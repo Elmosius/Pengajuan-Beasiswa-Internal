@@ -84,7 +84,7 @@
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
-                      :to="`/beasiswa/pendaftaran-edit/${bd.id}`"
+                      :to="`/beasiswa/pendaftaran-daftar-edit/${bd.id}`"
                       class="hover:text-purple-500"
                     >
                       <svg

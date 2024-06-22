@@ -1,151 +1,219 @@
 <template>
   <div>
     <Layout>
-      <WelcomeBanner>
-        <div class="relative flex justify-between items-center">
-          <div>
-            <h1 class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-3">
-              History
-            </h1>
-            <p class="dark:text-indigo-200">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
-            </p>
-          </div>
-        </div>
-      </WelcomeBanner>
-
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <div class="max-w-full overflow-x-auto">
-          <table class="w-full table-auto">
-            <thead>
-              <tr class="bg-gray-100 text-left dark:bg-meta-4">
-                <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Nama Beasiswa
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">NRP</th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Nama Mahasiswa
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Program Studi
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+        <form @submit.prevent="handleSubmit" action="">
+          <div class="max-w-full overflow-x-auto p-5">
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">
+              Edit Pengajuan Beasiswa {{ pendaftaran.nama_beasiswa }} - Periode
+              {{ pendaftaran.periode }}
+            </h2>
+            <!-- munculin error -->
+            <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
+              {{ error }}
+            </div>
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  NRP
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="user.id"
+                    type="text"
+                    name="user_id"
+                    id="user_id"
+                    readonly
+                    placeholder="12345"
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label
+                  for="nama_beasiswa"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Email
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">IPK</th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Periode Beasiswa
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Status
-                </th>
-                <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="bd in beasiswaDetail" :key="bd.id">
-                <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">{{ bd.nama_beasiswa }}</p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ bd.user_id }}</p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ bd.nama }}</p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">
-                    {{ bd.nama_fakultas }} - {{ bd.nama_program_studi }}
-                  </p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">
-                    {{ bd.email }}
-                  </p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">
-                    {{ bd.ipk }}
-                  </p>
-                </td>
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">
-                    {{ bd.periode }}
-                  </p>
-                </td>
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="user.email"
+                    required
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Beasiswa Internal Akademik"
+                    readonly
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
-                <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">
-                    {{ bd.status_1 }}
-                  </p>
-                </td>
-                <td class="py-5 px-4">
-                  <div class="flex items-center space-x-3.5">
-                    <router-link
-                      :to="`/beasiswa/pendaftaran-edit/${bd.id}`"
-                      class="hover:text-purple-500"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="size-5"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                        />
-                      </svg>
-                    </router-link>
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Fakultas
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="user.nama_fakultas"
+                    type="text"
+                    name="fakultas_id"
+                    id="fakultas_id"
+                    placeholder="12345"
+                    readonly
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
-                    <button @click="confirmDelete(bd.id)" class="hover:text-purple-500">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="size-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Program Studi
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="user.nama_program_studi"
+                    type="text"
+                    name="program_studi_id"
+                    id="program_studi_id"
+                    readonly
+                    placeholder="12345"
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
-          <!-- modal -->
-          <Modal :isOpen="isModalOpen" @close="closeModal">
-            <template v-slot:header>
-              <h2 class="font-medium">Apa kamu yakin ingin tidak mengajukan beasiswamu?</h2>
-            </template>
-            <template v-slot:footer>
-              <button
-                class="bg-red-600 hover:bg-red-800 mx-3 text-white font-medium py-1 px-4 rounded"
-                @click="closeModal"
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  IPK
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="beasiswa.ipk"
+                    type="text"
+                    name="ipk"
+                    id="ipk"
+                    maxlength="4"
+                    placeholder="4.0"
+                    required
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Poin Portofolio
+                </label>
+                <div class="mt-2">
+                  <input
+                    v-model="beasiswa.poin_portofolio"
+                    type="number"
+                    name="poin_portofolio"
+                    id="poin_portofolio"
+                    placeholder="600"
+                    required
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Transkrip Nilai (.pdf)
+                </label>
+                <div class="mt-2">
+                  <input
+                    ref="transkrip_nilai"
+                    type="file"
+                    name="transkrip_nilai"
+                    id="transkrip_nilai"
+                    required
+                    accept=".pdf"
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Surat Rekomendasi Dosen (.pdf)
+                </label>
+                <div class="mt-2">
+                  <input
+                    ref="surat_rekomendasi_dosen"
+                    type="file"
+                    name="surat_rekomendasi_dosen"
+                    id="surat_rekomendasi_dosen"
+                    required
+                    accept=".pdf"
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Surat Pernyataan Tidak Menerima Beasiswa lain (.pdf)
+                </label>
+                <div class="mt-2">
+                  <input
+                    ref="surat_pernyataan"
+                    type="file"
+                    name="surat_pernyataan"
+                    id="surat_pernyataan"
+                    accept=".pdf"
+                    required
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
+                  Dokumen Lainnya (.pdf)
+                </label>
+                <div class="mt-2">
+                  <input
+                    ref="dokumen_lainnya"
+                    type="file"
+                    name="dokumen_lainnya"
+                    id="dokumen_lainnya"
+                    accept=".pdf"
+                    required
+                    autofocus
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+              <router-link
+                :to="'/beasiswa/pendaftaran-daftar'"
+                type="button"
+                class="text-sm font-semibold leading-6 text-gray-900"
               >
-                Close
-              </button>
+                Cancel
+              </router-link>
               <button
-                class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-1 px-4 rounded"
-                @click="deletePendaftaran"
+                type="submit"
+                class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Delete
+                Ajukan
               </button>
-            </template>
-          </Modal>
-        </div>
+            </div>
+          </div>
+        </form>
       </div>
     </Layout>
   </div>
@@ -153,56 +221,72 @@
 
 <script>
 import Layout from '../../Layout.vue'
-import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
 import Api from '../../../services/beasiswaDetailAPI'
-import Modal from '@/components/modal/Modal.vue'
 import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
-import fetchBeasiswaDetailByUserId from '@/components/mixins/fetchBeasiswaDetailByUserId'
+import fetchPendaftaranById from '@/components/mixins/fetchPendaftaranById'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'EditPengajuan',
   components: {
-    Layout,
-    WelcomeBanner,
-    Modal
+    Layout
+  },
+  mixins: [fetchLoggedInUser, fetchPendaftaranById],
+  async mounted() {
+    await this.fetchLoggedInUser()
+    await this.fetchPendaftaranById()
   },
   data() {
     return {
-      isModalOpen: false,
-      selectedPendaftaranId: null,
+      beasiswa: {
+        pendaftaran_id: '',
+        user_id: '',
+        beasiswa_id: '',
+        ipk: '',
+        poin_portofolio: '',
+        status_1: '0',
+        status_2: '0',
+        dokumen: {
+          transkrip_nilai: null,
+          surat_rekomendasi_dosen: null,
+          surat_pernyataan: null,
+          dokumen_lainnya: null
+        }
+      },
       error: ''
     }
   },
-  mixins: [fetchLoggedInUser, fetchBeasiswaDetailByUserId],
-  async mounted() {
-    await this.fetchLoggedInUser()
-    await this.fetchBeasiswaDetailByUserId(this.user.id)
-  },
   methods: {
-    openModal() {
-      this.isModalOpen = true
-    },
-    closeModal() {
-      this.isModalOpen = false
-      this.selectedPendaftaranId = null
-    },
-    confirmDelete(id) {
-      this.selectedPendaftaranId = id
-      this.openModal()
-    },
-    async deletePendaftaran() {
-      if (!this.selectedPendaftaranId) return
+    async handleSubmit() {
       try {
-        await Api.deleteBeasiswa(this.selectedPendaftaranId)
-        this.closeModal()
+        const formData = new FormData()
+        formData.append('pendaftaran_id', Number(this.beasiswa.pendaftaran_id))
+        formData.append('user_id', this.user.id)
+        formData.append('beasiswa_id', this.pendaftaran.beasiswa_id)
+        formData.append('ipk', this.beasiswa.ipk)
+        formData.append('poin_portofolio', this.beasiswa.poin_portofolio)
+        formData.append('status_1', this.beasiswa.status_1)
+        formData.append('status_2', this.beasiswa.status_2)
+
+        const dokumen = [
+          { jenis_doc_id: 1, path: this.$refs.transkrip_nilai.files[0] },
+          { jenis_doc_id: 2, path: this.$refs.surat_rekomendasi_dosen.files[0] },
+          { jenis_doc_id: 3, path: this.$refs.surat_pernyataan.files[0] },
+          { jenis_doc_id: 4, path: this.$refs.dokumen_lainnya.files[0] }
+        ]
+
+        dokumen.forEach((doc, index) => {
+          formData.append(`dokumen[${index}][jenis_doc_id]`, doc.jenis_doc_id)
+          formData.append(`dokumen[${index}][path]`, doc.path.name)
+        })
+
+        await Api.createBeasiswa(formData)
+        alert('Beasiswa telah diajukan !')
+        this.$router.push('/beasiswa/history')
       } catch (error) {
-        console.error('Error deleting pendaftaran: ', error)
+        console.error('Error creating beasiswa:', error)
+        this.error = error.response.data.message
       }
-    },
-    formatDate(dateString) {
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(dateString).toLocaleDateString('id-ID', options)
     }
   }
 }

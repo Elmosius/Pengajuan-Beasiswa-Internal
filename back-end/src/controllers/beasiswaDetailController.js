@@ -94,17 +94,31 @@ const createBeasiswaDetail = async (req, res) => {
 
 const updateBeasiswaDetailById = async (req, res) => {
   const id = req.params.id;
-  const data = {
+
+  const beasiswaDetail = await findBeasiswaDetailById(id);
+  if (beasiswaDetail.length === 0) {
+    return res.status(404).json({
+      message: "Beasiswa detail not found",
+    });
+  }
+
+  const bodyWithFiles = {
     ...req.body,
     dokumen: req.files.map((file, index) => {
-      const jenis_doc_id = req.body[`dokumen[${index}][jenis_doc_id]`];
+      const jenis_doc = JSON.parse(req.body.jenis_doc)[index];
       const filePath = path.join("/uploads", file.filename);
-      return { jenis_doc_id, path: filePath };
+      return { jenis_doc_id: jenis_doc.jenis_doc_id, path: filePath };
     }),
   };
 
+  const { error } = updateBeasiswaDetailValidation.validate({
+    ...req.body,
+    jenis_doc: req.body.jenis_doc,
+  });
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   try {
-    const result = await updateBeasiswaDetail(id, data);
+    const result = await updateBeasiswaDetail(id, bodyWithFiles);
     res.status(200).json({
       message: "Update Beasiswa Detail success",
       data: result,

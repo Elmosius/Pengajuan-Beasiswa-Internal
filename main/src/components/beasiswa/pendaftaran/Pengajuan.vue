@@ -135,6 +135,7 @@
                     id="transkrip_nilai"
                     required
                     accept=".pdf"
+                    max="5MB"
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -152,6 +153,7 @@
                     name="surat_rekomendasi_dosen"
                     id="surat_rekomendasi_dosen"
                     required
+                    max="5MB"
                     accept=".pdf"
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -171,6 +173,7 @@
                     id="surat_pernyataan"
                     accept=".pdf"
                     required
+                    max="5MB"
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -189,6 +192,7 @@
                     id="dokumen_lainnya"
                     accept=".pdf"
                     required
+                    max="5MB"
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -225,7 +229,8 @@ import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
 import fetchPendaftaranById from '@/components/mixins/fetchPendaftaranById'
 
 export default {
-  name: 'DaftarBeasiswa',
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: 'Pengajuan',
   components: {
     Layout
   },
