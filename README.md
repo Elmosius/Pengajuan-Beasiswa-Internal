@@ -28,10 +28,13 @@ Berikut adalah hal yang dapat dilakukan oleh masing-masing pengguna:
 - Tailwind
 - Vue + Vite
 - NodeJs
-- MySql
+- MySQL 
 - ExpressJs
 - Postman
 - Bcrypt
+- Joi
+- Jwt (jsonwebtoken)
+- Multer
 
 ## 💻 Demo
 - Coming Soon
