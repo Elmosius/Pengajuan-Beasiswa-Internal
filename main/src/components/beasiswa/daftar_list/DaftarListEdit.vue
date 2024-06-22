@@ -68,25 +68,6 @@
                   ></textarea>
                 </div>
               </div>
-
-              <div class="sm:col-span-1">
-                <label for="periode" class="block text-sm font-medium leading-6 text-gray-900">
-                  Periode
-                </label>
-                <div class="mt-2">
-                  <input
-                    v-model="beasiswa.periode"
-                    required
-                    type="text"
-                    name="periode"
-                    id="periode"
-                    autofocus
-                    minlength="2"
-                    placeholder="22/23"
-                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
             </div>
             <div class="mt-6 flex items-center justify-end gap-x-6">
               <router-link
@@ -130,7 +111,6 @@ export default {
         const updated = {
           nama_beasiswa: this.beasiswa.nama_beasiswa,
           deskripsi: this.beasiswa.deskripsi,
-          periode: this.beasiswa.periode
         }
         await Api.updateBeasiswa(this.beasiswa.id, updated)
         this.$router.push('/beasiswa/daftar-list')

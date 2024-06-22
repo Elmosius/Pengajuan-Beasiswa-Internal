@@ -6,7 +6,8 @@ export default {
       fakultas: {
         id: '',
         nama_fakultas: ''
-      }
+      },
+      error: ''
     }
   },
   methods: {

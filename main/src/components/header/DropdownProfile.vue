@@ -25,7 +25,7 @@
       <div class="flex items-center truncate">
         <span
           class="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200"
-          >Elmosius</span
+          >{{ user.nama }}</span
         >
         <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
@@ -46,8 +46,8 @@
         :class="align === 'right' ? 'right-0' : 'left-0'"
       >
         <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
-          <div class="font-medium text-slate-800 dark:text-slate-100">Elmosius Suli</div>
-          <div class="text-xs text-slate-500 dark:text-slate-400 italic">Admin</div>
+          <div class="font-medium text-slate-800 dark:text-slate-100">{{ user.id }}</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 italic">{{ user.nama_role }}</div>
         </div>
         <ul ref="dropdown" @focusin="dropdownOpen = true" @focusout="dropdownOpen = false">
           <li>
@@ -55,6 +55,7 @@
               class="font-medium text-sm text-gray-500 hover:text-black dark:hover:text-black flex items-center py-1 px-3"
               to="/signin"
               @click="dropdownOpen = false"
+              @click.prevent="logout"
               >Sign Out</router-link
             >
           </li>
@@ -67,6 +68,8 @@
 <script>
 import { ref, onMounted, onUnmounted } from 'vue'
 import UserAvatar from '../../images/user-avatar-32.png'
+import { useRouter } from 'vue-router'
+import fetchLoggedInUser from '../mixins/fetchLoggedInUser'
 
 export default {
   name: 'DropdownProfile',
@@ -76,16 +79,23 @@ export default {
       UserAvatar: UserAvatar
     }
   },
+
   setup() {
     const dropdownOpen = ref(false)
     const trigger = ref(null)
     const dropdown = ref(null)
+    const router = useRouter()
 
     // close on click outside
     const clickHandler = ({ target }) => {
       if (!dropdownOpen.value || dropdown.value.contains(target) || trigger.value.contains(target))
         return
       dropdownOpen.value = false
+    }
+
+    function logout() {
+      localStorage.removeItem('token')
+      router.push('/login')
     }
 
     // close if the esc key is pressed
@@ -107,8 +117,13 @@ export default {
     return {
       dropdownOpen,
       trigger,
-      dropdown
+      dropdown,
+      logout
     }
+  },
+  mixins: [fetchLoggedInUser],
+  async mounted() {
+    await this.fetchLoggedInUser()
   }
 }
 </script>

@@ -1,19 +1,22 @@
 const Joi = require("joi");
 
 const createPendaftaranValidation = Joi.object({
-  id: Joi.number().required(),
-  nama_beasiswa: Joi.string().min(5).max(50).required(),
-  deskripsi: Joi.string().min(5).max(255).required(),
-  periode: Joi.string().min(5).max(25).required(),
+  periode: Joi.string().max(25).required(),
+  start_at: Joi.date().required(),
+  end_at: Joi.date().greater(Joi.ref("start_at")).required(),
+  status: Joi.string().max(5).required(),
+  beasiswa_id: Joi.number().integer().required(),
 });
 
-const updatePendaftaranalidation = Joi.object({
-  nama_beasiswa: Joi.string().min(5).max(50),
-  deskripsi: Joi.string().min(5).max(255),
-  periode: Joi.string().min(5).max(25),
+const updatePendaftaranValidation = Joi.object({
+  periode: Joi.string().max(25),
+  start_at: Joi.date(),
+  end_at: Joi.date().greater(Joi.ref("start_at")),
+  status: Joi.string().max(5),
+  beasiswa_id: Joi.number().integer(),
 });
 
 module.exports = {
   createPendaftaranValidation,
-  updatePendaftaranalidation,
+  updatePendaftaranValidation,
 };

@@ -39,7 +39,7 @@ const getPendaftaranById = async (req, res) => {
 const createPendaftaran = async (req, res) => {
   const data = req.body;
 
-  if (!(data.id && data.start_at && data.end_at && data.status)) {
+  if (!(data.periode && data.start_at && data.end_at && data.status && data.beasiswa_id)) {
     return res.status(400).json({
       message: "Anda mengirimkan data yang salah",
       data: null,

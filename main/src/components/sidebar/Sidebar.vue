@@ -151,7 +151,7 @@
                       </a>
                     </li>
                   </router-link>
-                  <router-link to="/data/user" custom v-slot="{ href, navigate, isExactActive }">
+                  <router-link to="/data/users" custom v-slot="{ href, navigate, isExactActive }">
                     <li class="mb-1 last:mb-0">
                       <a
                         class="block transition duration-150 truncate"
@@ -320,7 +320,7 @@
           <ul class="mt-3">
             <SidebarLinkGroup
               v-slot="parentLink"
-              :activeCondition="currentRoute.fullPath.includes('beasiswa')"
+              :activeCondition="currentRoute.fullPath.includes('laporan')"
             >
               <a
                 class="block text-slate-200 truncate transition duration-150"
@@ -371,7 +371,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/beasiswa/pendaftaran"
+                    to="/laporan/lihat"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >
@@ -394,6 +394,48 @@
                 </ul>
               </div>
             </SidebarLinkGroup>
+          </ul>
+        </div>
+
+        <!-- logout -->
+        <div>
+          <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
+            <span
+              class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+              aria-hidden="true"
+              >•••</span
+            >
+            <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">Other</span>
+          </h3>
+          <ul class="mt-3 ms-3">
+            <li>
+              <a
+                class="block text-slate-200 truncate transition duration-150 hover:text-white"
+                href="#0"
+                @click.prevent="logout"
+              >
+                <div class="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                    />
+                  </svg>
+                  <span
+                    class="font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
+                    >Logout</span
+                  >
+                </div>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -432,11 +474,17 @@ export default {
   setup(props, { emit }) {
     const trigger = ref(null)
     const sidebar = ref(null)
+    const router = useRouter()
 
     const storedSidebarExpanded = localStorage.getItem('sidebar-expanded')
     const sidebarExpanded = ref(
       storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
     )
+
+    function logout() {
+      localStorage.removeItem('token')
+      router.push('/login')
+    }
 
     const currentRoute = useRouter().currentRoute.value
 
@@ -477,7 +525,8 @@ export default {
       trigger,
       sidebar,
       sidebarExpanded,
-      currentRoute
+      currentRoute,
+      logout
     }
   }
 }

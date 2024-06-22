@@ -7,7 +7,10 @@
         <form @submit.prevent="handleSubmit" action="">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Fakultas</h2>
-
+            <!-- munculin error -->
+            <div v-if="error" class="p-3 2 mt-4 bg-red-200 text-red-800 rounded">
+              {{ error }}
+            </div>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <div class="sm:col-span-1">
                 <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
@@ -88,7 +91,8 @@ export default {
       fakultas: {
         id: '',
         nama_fakultas: ''
-      }
+      },
+      error: ''
     }
   },
   methods: {
@@ -102,6 +106,7 @@ export default {
         this.fakultas.nama_fakultas = ''
       } catch (error) {
         console.error('Error creating fakultas:', error)
+        this.error = this.error = error.response.data.message
       }
     }
   }

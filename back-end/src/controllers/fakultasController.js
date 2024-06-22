@@ -16,7 +16,7 @@ const getAllFakultas = async (req, res) => {
 };
 
 const getFakultasById = async (req, res) => {
-  const id = (req.params.id);
+  const id = req.params.id;
   try {
     const [data] = await findFakultasById(id);
     if (data.length < 1) {
@@ -61,7 +61,7 @@ const createFakultas = async (req, res) => {
 };
 
 const editFakultasById = async (req, res) => {
-  const id = (req.params.id);
+  const id = req.params.id;
   const data = req.body;
 
   try {
@@ -79,7 +79,7 @@ const editFakultasById = async (req, res) => {
 };
 
 const deleteFakultasById = async (req, res) => {
-  const id = (req.params.id);
+  const id = req.params.id;
   try {
     await deleteFakultas(id);
     res.json({

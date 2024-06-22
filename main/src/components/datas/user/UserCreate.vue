@@ -4,10 +4,13 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form>
+        <form @submit.prevent="handleSubmit">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create User</h2>
-
+            <!-- munculin error -->
+            <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
+              {{ error }}
+            </div>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <!-- id -->
               <div class="sm:col-span-1">
@@ -16,12 +19,15 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.id"
                     autofocus
                     type="text"
                     name="id"
                     id="id"
                     placeholder="12345"
                     required
+                    minlength="5"
+                    maxlength="10"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -33,11 +39,13 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.nama"
                     autofocus
                     required
                     type="text"
                     name="nama"
                     id="nama"
+                    minlength="3"
                     placeholder="Elmosius Suli"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -50,6 +58,7 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.email"
                     autofocus
                     required
                     type="email"
@@ -62,23 +71,23 @@
               </div>
               <!-- role -->
               <div class="sm:col-span-1">
-                <div class="">
-                  <label for="role" class="block text-sm font-medium leading-6 text-gray-900"
-                    >Role</label
+                <label for="role_id" class="block text-sm font-medium leading-6 text-gray-900"
+                  >Role</label
+                >
+                <div class="mt-2">
+                  <select
+                    v-model="user.role_id"
+                    required
+                    id="role_id"
+                    name="role_id"
+                    autocomplete="role_id"
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
                   >
-                  <div class="mt-2">
-                    <select
-                      required
-                      id="role"
-                      name="role"
-                      autocomplete="role"
-                      class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
-                    >
-                      <option>Admin</option>
-                      <option>Program Studi</option>
-                      <option>Mahasiswa</option>
-                    </select>
-                  </div>
+                    <option disabled selected value="">Choose Role</option>
+                    <option v-for="role in roleList.data" :key="role.id" :value="role.id">
+                      {{ role.nama_role }}
+                    </option>
+                  </select>
                 </div>
               </div>
               <!-- status -->
@@ -89,38 +98,41 @@
                   >
                   <div class="mt-2">
                     <select
+                      v-model="user.status"
                       required
                       id="status"
                       name="status"
                       autocomplete="status"
                       class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
                     >
-                      <option>Aktif</option>
-                      <option>Tidak Aktif</option>
+                      <option disabled selected value="">Choose Role</option>
+                      <option value="1">Aktif</option>
+                      <option value="0">Tidak Aktif</option>
                     </select>
                   </div>
                 </div>
               </div>
               <!-- program studi -->
               <div class="sm:col-span-1">
-                <div class="">
-                  <label
-                    for="program_studi_id"
-                    class="block text-sm font-medium leading-6 text-gray-900"
-                    >Program Studi</label
+                <label
+                  for="program_studi_id"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Program Studi</label
+                >
+                <div class="mt-2">
+                  <select
+                    v-model="user.program_studi_id"
+                    required
+                    id="program_studi_id"
+                    name="program_studi_id"
+                    autocomplete="program_studi_id"
+                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
                   >
-                  <div class="mt-2">
-                    <select
-                      required
-                      id="program_studi_id"
-                      name="program_studi_id"
-                      autocomplete="program_studi_id"
-                      class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-00 sm:text-sm sm:leading-6"
-                    >
-                      <option>72 - Teknik Informatika</option>
-                      <option>73 - Sistem Informasi</option>
-                    </select>
-                  </div>
+                    <option disabled selected value="">Choose Program Studi</option>
+                    <option v-for="prodi in prodiList.data" :key="prodi.id" :value="prodi.id">
+                      {{ prodi.fakultas_id }} - {{ prodi.nama_program_studi }}
+                    </option>
+                  </select>
                 </div>
               </div>
               <!-- password -->
@@ -130,11 +142,13 @@
                 >
                 <div class="mt-2">
                   <input
+                    v-model="user.password"
                     autofocus
                     required
                     type="password"
                     name="password"
                     id="password"
+                    minlength="8"
                     placeholder="Masukkan password baru"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -142,17 +156,20 @@
               </div>
               <!-- confirm password -->
               <div class="sm:col-span-1">
-                <label for="confirm_password" class="block text-sm font-medium leading-6 text-gray-900"
+                <label
+                  for="confirm_password"
+                  class="block text-sm font-medium leading-6 text-gray-900"
                   >Confirm Password</label
                 >
                 <div class="mt-2">
                   <input
-                    autofocus
+                    v-model="user.confirm_password"
                     required
-                    type="confirm_password"
+                    type="password"
                     name="confirm_password"
                     id="confirm_password"
-                    placeholder="Masukkan password baru sebelumnya"
+                    minlength="8"
+                    placeholder="Ulangi password baru"
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -178,10 +195,62 @@
 
 <script>
 import Layout from '../../Layout.vue'
+import Api from '@/services/userAPI'
+import fetchProdi from '@/components/mixins/fetchProdi'
+import fetchRoles from '@/components/mixins/fetchRoles'
+
 export default {
   name: 'UserCreate',
   components: {
     Layout
+  },
+  mixins: [fetchProdi, fetchRoles],
+  data() {
+    return {
+      user: {
+        id: '',
+        role_id: '',
+        program_studi_id: '',
+        nama: '',
+        email: '',
+        password: '',
+        confirm_password: '',
+        status: ''
+      },
+      error: ''
+    }
+  },
+  mounted() {
+    this.fetchProdi()
+    this.fetchRoles()
+  },
+  methods: {
+    async handleSubmit() {
+      if (this.user.password !== this.user.confirm_password) {
+        this.error = 'Password and confirm password do not match.'
+        return
+      }
+
+      try {
+        const userData = {
+          id: this.user.id,
+          role_id: this.user.role_id,
+          program_studi_id: this.user.program_studi_id,
+          nama: this.user.nama,
+          email: this.user.email,
+          password: this.user.password,
+          status: this.user.status
+        }
+
+        console.info(userData)
+        await Api.createUser(userData)
+        alert('User created successfully!')
+        this.$router.push('/data/users')
+      } catch (error) {
+        console.error('Error creating user:', error)
+        this.error = error.response.data.message
+      }
+    }
   }
 }
 </script>

@@ -7,7 +7,10 @@
         <form @submit.prevent="handleSubmit" action="">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Program Studi</h2>
-
+            <!-- munculin error -->
+            <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
+              {{ error }}
+            </div>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <div class="sm:col-span-1">
                 <label for="id" class="block text-sm font-medium leading-6 text-gray-900"
@@ -115,7 +118,8 @@ export default {
         id: '',
         nama_program_studi: '',
         fakultas_id: ''
-      }
+      },
+      error: ''
     }
   },
   mounted() {
@@ -128,11 +132,9 @@ export default {
         await prodiAPI.createProgramStudi(this.program_studi)
         alert('Program Studi created successfully!')
         this.$router.push('/data/program-studi')
-        this.program_studi.id = ''
-        this.program_studi.nama_program_studi = ''
-        this.program_studi.fakultas_id = ''
       } catch (error) {
         console.error('Error creating program studi:', error)
+        this.error = error.response.data.message
       }
     }
   }

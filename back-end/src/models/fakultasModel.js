@@ -1,8 +1,8 @@
 const dbPool = require("../config/database");
 
 const findFakultasById = async (id) => {
-  const query = `SELECT * FROM Fakultas WHERE id = ${id}`;
-  return dbPool.execute(query);
+  const query = "SELECT * FROM Fakultas WHERE id = ?";
+  return dbPool.execute(query, [id]);
 };
 
 const findAllFakultas = async () => {
@@ -11,23 +11,18 @@ const findAllFakultas = async () => {
 };
 
 const insertFakultas = async (data) => {
-  const query = `INSERT INTO Fakultas (id, nama_fakultas, created_at, updated_at)
-                  VALUES ('${data.id}', '${data.nama_fakultas}', now(), now())`;
-
-  return dbPool.execute(query);
+  const query = "INSERT INTO Fakultas (id, nama_fakultas, created_at, updated_at) VALUES (?, ?, now(), now())";
+  return dbPool.execute(query, [data.id, data.nama_fakultas]);
 };
 
 const updateFakultas = async (id, data) => {
-  const query = `UPDATE Fakultas 
-                 SET nama_fakultas = '${data.nama_fakultas}', updated_at = now() 
-                  WHERE id = ${id}`;
-
-  return dbPool.execute(query);
+  const query = "UPDATE Fakultas SET nama_fakultas = ?, updated_at = now() WHERE id = ?";
+  return dbPool.execute(query, [data.nama_fakultas, id]);
 };
 
 const deleteFakultas = async (id) => {
-  const query = `DELETE FROM Fakultas WHERE id = '${id}'`;
-  return dbPool.execute(query);
+  const query = "DELETE FROM Fakultas WHERE id = ?";
+  return dbPool.execute(query, [id]);
 };
 
 module.exports = {
