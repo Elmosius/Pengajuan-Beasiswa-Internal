@@ -3,7 +3,7 @@ import Api from '@/services/beasiswaDetailAPI'
 export default {
   data() {
     return {
-      beasiswaDetail: [],
+      beasiswa: {},
       error: ''
     }
   },
@@ -12,9 +12,9 @@ export default {
       const beasiswaDetailId = this.$route.params.id
       try {
         const response = await Api.getBeasiswaDetailById(beasiswaDetailId)
-        this.pendaftaran = response.data.data
+        this.beasiswa = response.data.data[0]
       } catch (error) {
-        console.error('Error fetching pendaftaran: ', error)
+        console.error('Error fetching beasiswa: ', error)
         this.error = error.response.data.message
       }
     }

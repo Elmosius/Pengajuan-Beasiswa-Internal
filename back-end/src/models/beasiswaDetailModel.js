@@ -14,6 +14,8 @@ const groupBeasiswaDetails = (rows) => {
       created_at,
       updated_at,
       periode,
+      start_at,
+      end_at,
       nama,
       email,
       nama_program_studi,
@@ -39,6 +41,8 @@ const groupBeasiswaDetails = (rows) => {
         created_at,
         updated_at,
         periode,
+        start_at,
+        end_at,
         nama,
         email,
         nama_program_studi,
@@ -57,7 +61,7 @@ const groupBeasiswaDetails = (rows) => {
 const findAllBeasiswaDetail = async () => {
   const query = `
     SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
-      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa, p.start_at, p.end_at,
       jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
     FROM pendaftaran_detail pd
     LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
@@ -75,7 +79,7 @@ const findAllBeasiswaDetail = async () => {
 const findBeasiswaDetailById = async (id) => {
   const query = `
     SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
-      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,p.start_at, p.end_at,
       jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
     FROM pendaftaran_detail pd
     LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
@@ -94,7 +98,7 @@ const findBeasiswaDetailById = async (id) => {
 const findBeasiswaDetailByUserId = async (userId) => {
   const query = `
     SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
-      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,p.start_at, p.end_at,
       jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
     FROM pendaftaran_detail pd
     LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
@@ -161,17 +165,15 @@ const updateBeasiswaDetail = async (id, data) => {
     `;
     await connection.execute(queryPendaftaranDetail, [data.pendaftaran_id, data.user_id, data.beasiswa_id, data.ipk, data.poin_portofolio, data.status_1, data.status_2, id]);
 
-    const queryDeleteDokumen = `
-      DELETE FROM jenis_doc_has_pendaftaran_detail WHERE pendaftaran_detail_id = ?;
-    `;
-    await connection.execute(queryDeleteDokumen, [id]);
-
-    const queryJenisDocPendaftaranDetail = `
-      INSERT INTO jenis_doc_has_pendaftaran_detail (jenis_doc_id, pendaftaran_detail_id, path)
-      VALUES (?, ?, ?);
-    `;
-    for (const dokumen of data.dokumen) {
-      await connection.execute(queryJenisDocPendaftaranDetail, [dokumen.jenis_doc_id, id, dokumen.path]);
+    if (data.dokumen && data.dokumen.length > 0) {
+      const queryInsertOrUpdateDokumen = `
+        INSERT INTO jenis_doc_has_pendaftaran_detail (jenis_doc_id, pendaftaran_detail_id, path)
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE path = VALUES(path);
+      `;
+      for (const dokumen of data.dokumen) {
+        await connection.execute(queryInsertOrUpdateDokumen, [dokumen.jenis_doc_id, id, dokumen.path]);
+      }
     }
 
     await connection.commit();

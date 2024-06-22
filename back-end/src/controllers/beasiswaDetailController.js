@@ -102,20 +102,22 @@ const updateBeasiswaDetailById = async (req, res) => {
     });
   }
 
+  const bodyWithoutDokumen = { ...req.body };
+  delete bodyWithoutDokumen.dokumen;
+
+  const { error } = updateBeasiswaDetailValidation.validate(bodyWithoutDokumen);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
   const bodyWithFiles = {
     ...req.body,
-    dokumen: req.files.map((file, index) => {
-      const jenis_doc = JSON.parse(req.body.jenis_doc)[index];
-      const filePath = path.join("/uploads", file.filename);
-      return { jenis_doc_id: jenis_doc.jenis_doc_id, path: filePath };
-    }),
+    dokumen: req.files
+      ? req.files.map((file, index) => {
+          const jenis_doc = JSON.parse(req.body.jenis_doc)[index];
+          const filePath = path.join("/uploads", file.filename);
+          return { jenis_doc_id: jenis_doc.jenis_doc_id, path: filePath };
+        })
+      : [],
   };
-
-  const { error } = updateBeasiswaDetailValidation.validate({
-    ...req.body,
-    jenis_doc: req.body.jenis_doc,
-  });
-  if (error) return res.status(400).json({ message: error.details[0].message });
 
   try {
     const result = await updateBeasiswaDetail(id, bodyWithFiles);

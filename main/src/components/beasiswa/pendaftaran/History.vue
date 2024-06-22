@@ -39,6 +39,9 @@
                   Periode Beasiswa
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Waktu Pendaftaran
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Status
                 </th>
                 <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
@@ -73,6 +76,11 @@
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
                     {{ bd.periode }}
+                  </p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">
+                    {{ formatDate(bd.start_at) }} s/d {{ formatDate(bd.end_at) }}
                   </p>
                 </td>
 
