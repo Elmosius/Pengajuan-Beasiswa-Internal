@@ -22,68 +22,69 @@
             <thead>
               <tr class="bg-gray-100 text-left dark:bg-meta-4">
                 <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Periode
-                </th>
-                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Nama Beasiswa
                 </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">NRP</th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Deskripsi
+                  Nama Mahasiswa
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  Start_at
+                  Program Studi
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                  End_at
+                  Email
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">IPK</th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Periode Beasiswa
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Status
                 </th>
                 <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="pendaftaran in pendaftaranList.data" :key="pendaftaran.id">
+              <tr v-for="bd in beasiswaDetail" :key="bd.id">
                 <td class="py-5 px-4 xl:pl-11">
-                  <p class="text-black dark:text-white">{{ pendaftaran.periode }}</p>
+                  <p class="text-black dark:text-white">{{ bd.nama_beasiswa }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <ul>
-                    <p class="text-black dark:text-white">{{ pendaftaran.nama_beasiswa }}</p>
-                  </ul>
+                  <p class="text-black dark:text-white">{{ bd.user_id }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <ul>
-                    <p class="text-black dark:text-white">{{ pendaftaran.deskripsi }}</p>
-                  </ul>
+                  <p class="text-black dark:text-white">{{ bd.nama }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ formatDate(pendaftaran.start_at) }}</p>
+                  <p class="text-black dark:text-white">
+                    {{ bd.nama_fakultas }} - {{ bd.nama_program_studi }}
+                  </p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ formatDate(pendaftaran.end_at) }}</p>
+                  <p class="text-black dark:text-white">
+                    {{ bd.email }}
+                  </p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">
+                    {{ bd.ipk }}
+                  </p>
+                </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">
+                    {{ bd.periode }}
+                  </p>
+                </td>
+
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">
+                    {{ bd.status_1 }}
+                  </p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
-                      :to="`/beasiswa/pendaftaran-daftar/${pendaftaran.id}`"
-                      class="hover:text-purple-500"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="size-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
-                        />
-                      </svg>
-                    </router-link>
-
-                    <router-link
-                      :to="`/beasiswa/pendaftaran-edit/${pendaftaran.id}`"
+                      :to="`/beasiswa/pendaftaran-edit/${bd.id}`"
                       class="hover:text-purple-500"
                     >
                       <svg
@@ -102,7 +103,7 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(pendaftaran.id)" class="hover:text-purple-500">
+                    <button @click="confirmDelete(bd.id)" class="hover:text-purple-500">
                       <svg
                         class="fill-current"
                         width="18"
@@ -165,8 +166,9 @@
 import Layout from '../../Layout.vue'
 import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
 import Api from '../../../services/pendaftaranBeasiswaAPI'
-import fetchPendaftaran from '@/components/mixins/fetchPendaftaran'
 import Modal from '@/components/modal/Modal.vue'
+import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
+import fetchBeasiswaDetailByUserId from '@/components/mixins/fetchBeasiswaDetailByUserId'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -183,9 +185,10 @@ export default {
       error: ''
     }
   },
-  mixins: [fetchPendaftaran],
-  mounted() {
-    this.fetchPendaftaran()
+  mixins: [fetchLoggedInUser, fetchBeasiswaDetailByUserId],
+  async mounted() {
+    await this.fetchLoggedInUser()
+    await this.fetchBeasiswaDetailByUserId(this.user.id)
   },
   methods: {
     openModal() {

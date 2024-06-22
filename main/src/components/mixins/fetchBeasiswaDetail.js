@@ -1,16 +1,16 @@
-import Api from '@/services/daftarListBeasiswaAPI'
+import Api from '@/services/beasiswaDetailAPI'
 
 export default {
   data() {
     return {
-      beasiswaList: []
+      beasiswaDetailList: []
     }
   },
   methods: {
-    async fetchBeasiswa() {
+    async fetchBeasiswaDetails() {
       try {
-        const response = await Api.getBeasiswa()
-        this.beasiswaList = response.data
+        const response = await Api.getBeasiswaDetails()
+        this.beasiswaDetailList = response.data
       } catch (error) {
         console.error('Error fetching beasiswa: ', error)
       }

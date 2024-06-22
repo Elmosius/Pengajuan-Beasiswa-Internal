@@ -1,30 +1,113 @@
 const dbPool = require("../config/database");
 
+const groupBeasiswaDetails = (rows) => {
+  return rows.reduce((acc, row) => {
+    const {
+      pendaftaran_detail_id,
+      pendaftaran_id,
+      user_id,
+      beasiswa_id,
+      ipk,
+      poin_portofolio,
+      status_1,
+      status_2,
+      created_at,
+      updated_at,
+      periode,
+      nama,
+      email,
+      nama_program_studi,
+      nama_fakultas,
+      nama_beasiswa,
+      jenis_doc_id,
+      jenis_dokumen,
+      path,
+    } = row;
+
+    const detail = acc.find((d) => d.id === pendaftaran_detail_id);
+
+    if (!detail) {
+      acc.push({
+        id: pendaftaran_detail_id,
+        pendaftaran_id,
+        user_id,
+        beasiswa_id,
+        ipk,
+        poin_portofolio,
+        status_1,
+        status_2,
+        created_at,
+        updated_at,
+        periode,
+        nama,
+        email,
+        nama_program_studi,
+        nama_fakultas,
+        nama_beasiswa,
+        dokumen: jenis_doc_id ? [{ jenis_doc_id, jenis_dokumen, path }] : [],
+      });
+    } else {
+      detail.dokumen.push({ jenis_doc_id, jenis_dokumen, path });
+    }
+
+    return acc;
+  }, []);
+};
+
 const findAllBeasiswaDetail = async () => {
   const query = `
-    SELECT pd.*, p.periode, u.nama, ps.nama_program_studi, f.nama_fakultas 
+    SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
     FROM pendaftaran_detail pd
     LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
     LEFT JOIN user u ON pd.user_id = u.id
     LEFT JOIN program_studi ps ON u.program_studi_id = ps.id
     LEFT JOIN fakultas f ON ps.fakultas_id = f.id
+    LEFT JOIN beasiswa b ON pd.beasiswa_id = b.id
+    LEFT JOIN jenis_doc_has_pendaftaran_detail jdhpd ON pd.id = jdhpd.pendaftaran_detail_id
+    LEFT JOIN jenis_doc jd ON jdhpd.jenis_doc_id = jd.id
   `;
-  return dbPool.execute(query);
+  const [rows] = await dbPool.execute(query);
+  return groupBeasiswaDetails(rows);
 };
 
 const findBeasiswaDetailById = async (id) => {
   const query = `
-    SELECT pd.*, p.periode, u.nama, ps.nama_program_studi, f.nama_fakultas, jd.nama AS jenis_dokumen, jdhpd.path
+    SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
     FROM pendaftaran_detail pd
     LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
     LEFT JOIN user u ON pd.user_id = u.id
     LEFT JOIN program_studi ps ON u.program_studi_id = ps.id
     LEFT JOIN fakultas f ON ps.fakultas_id = f.id
+    LEFT JOIN beasiswa b ON pd.beasiswa_id = b.id
     LEFT JOIN jenis_doc_has_pendaftaran_detail jdhpd ON pd.id = jdhpd.pendaftaran_detail_id
     LEFT JOIN jenis_doc jd ON jdhpd.jenis_doc_id = jd.id
     WHERE pd.id = ?
   `;
-  return dbPool.execute(query, [id]);
+  const [rows] = await dbPool.execute(query, [id]);
+  return groupBeasiswaDetails(rows);
+};
+
+const findBeasiswaDetailByUserId = async (userId) => {
+  const query = `
+    SELECT pd.id AS pendaftaran_detail_id, pd.pendaftaran_id, pd.user_id, pd.beasiswa_id, pd.ipk, pd.poin_portofolio, pd.status_1, pd.status_2, pd.created_at, pd.updated_at,
+      p.periode, u.nama, u.email, ps.nama_program_studi, f.nama_fakultas, b.nama_beasiswa,
+      jd.id AS jenis_doc_id, jd.nama AS jenis_dokumen, jdhpd.path
+    FROM pendaftaran_detail pd
+    LEFT JOIN pendaftaran p ON pd.pendaftaran_id = p.id
+    LEFT JOIN user u ON pd.user_id = u.id
+    LEFT JOIN program_studi ps ON u.program_studi_id = ps.id
+    LEFT JOIN fakultas f ON ps.fakultas_id = f.id
+    LEFT JOIN beasiswa b ON pd.beasiswa_id = b.id
+    LEFT JOIN jenis_doc_has_pendaftaran_detail jdhpd ON pd.id = jdhpd.pendaftaran_detail_id
+    LEFT JOIN jenis_doc jd ON jdhpd.jenis_doc_id = jd.id
+    WHERE pd.user_id = ?
+  `;
+  const [rows] = await dbPool.execute(query, [userId]);
+  return groupBeasiswaDetails(rows);
 };
 
 const insertBeasiswaDetailWithDokumen = async (data) => {
@@ -121,6 +204,7 @@ const deleteBeasiswaDetail = async (id) => {
 module.exports = {
   findAllBeasiswaDetail,
   findBeasiswaDetailById,
+  findBeasiswaDetailByUserId,
   insertBeasiswaDetailWithDokumen,
   updateBeasiswaDetail,
   deleteBeasiswaDetail,

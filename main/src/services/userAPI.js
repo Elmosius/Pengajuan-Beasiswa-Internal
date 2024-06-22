@@ -12,7 +12,7 @@ apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = token.startsWith('Bearer ') ? token : `Bearer ${token}`
-    console.log('Authorization Header:', config.headers.Authorization)
+    // console.log('Authorization Header:', config.headers.Authorization)
   }
   return config
 })
@@ -35,9 +35,9 @@ export default {
   // login
   async login(credentials) {
     const response = await apiClient.post('/auth/login', credentials)
-    console.log('Token from login response:', response.data.token)
+    // console.log('Token from login response:', response.data.token)
     localStorage.setItem('token', response.data.token)
-    console.log('Token saved to localStorage:', localStorage.getItem('token'))
+    // console.log('Token saved to localStorage:', localStorage.getItem('token'))
     return response
   },
 

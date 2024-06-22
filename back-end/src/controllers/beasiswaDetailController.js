@@ -1,11 +1,12 @@
-const { findAllBeasiswaDetail, findBeasiswaDetailById, insertBeasiswaDetailWithDokumen, updateBeasiswaDetail, deleteBeasiswaDetail } = require("../models/beasiswaDetailModel");
+const { findAllBeasiswaDetail, findBeasiswaDetailById, insertBeasiswaDetailWithDokumen, updateBeasiswaDetail, deleteBeasiswaDetail, findBeasiswaDetailByUserId } = require("../models/beasiswaDetailModel");
+const { findUserById } = require("../models/userModel");
 
 const getAllBeasiswaDetail = async (req, res) => {
   try {
-    const [results] = await findAllBeasiswaDetail();
+    const beasiswaDetails = await findAllBeasiswaDetail();
     res.json({
-      message: "GET all Beasiswa Detail success",
-      data: results,
+      message: "GET all beasiswa details success",
+      data: beasiswaDetails,
     });
   } catch (error) {
     res.status(500).json({
@@ -18,15 +19,36 @@ const getAllBeasiswaDetail = async (req, res) => {
 const getBeasiswaDetailById = async (req, res) => {
   const id = req.params.id;
   try {
-    const [results] = await findBeasiswaDetailById(id);
-    if (results.length < 1) {
+    const beasiswaDetail = await findBeasiswaDetailById(id);
+    if (beasiswaDetail.length === 0) {
       return res.status(404).json({
-        message: "Id tidak ditemukan",
+        message: "Beasiswa detail not found",
       });
     }
     res.json({
-      message: "GET Beasiswa Detail by id success",
-      data: results,
+      message: "GET beasiswa detail by id success",
+      data: beasiswaDetail,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error",
+      serverMessage: error,
+    });
+  }
+};
+
+const getBeasiswaDetailByUserId = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const beasiswaDetails = await findBeasiswaDetailByUserId(userId);
+    if (beasiswaDetails.length === 0) {
+      return res.status(404).json({
+        message: "No beasiswa details found for this user",
+      });
+    }
+    res.json({
+      message: "GET beasiswa detail by user id success",
+      data: beasiswaDetails,
     });
   } catch (error) {
     res.status(500).json({
@@ -86,6 +108,7 @@ const deleteBeasiswaDetailById = async (req, res) => {
 module.exports = {
   getAllBeasiswaDetail,
   getBeasiswaDetailById,
+  getBeasiswaDetailByUserId,
   createBeasiswaDetail,
   updateBeasiswaDetailById,
   deleteBeasiswaDetailById,
