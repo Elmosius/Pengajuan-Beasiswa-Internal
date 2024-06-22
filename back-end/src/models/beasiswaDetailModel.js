@@ -107,7 +107,9 @@ const findBeasiswaDetailByUserId = async (userId) => {
     WHERE pd.user_id = ?
   `;
   const [rows] = await dbPool.execute(query, [userId]);
-  return groupBeasiswaDetails(rows);
+  const groupedDetails = groupBeasiswaDetails(rows);
+
+  return groupedDetails;
 };
 
 const insertBeasiswaDetailWithDokumen = async (data) => {

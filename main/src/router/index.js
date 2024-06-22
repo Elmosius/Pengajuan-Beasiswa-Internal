@@ -22,7 +22,7 @@ import DaftarListEdit from '@/components/beasiswa/daftar_list/DaftarListEdit.vue
 import Pendaftaran from '@/components/beasiswa/pendaftaran/Pendaftaran.vue'
 import PendaftaranCreate from '@/components/beasiswa/pendaftaran/PendaftaranCreate.vue'
 import PendaftaranEdit from '@/components/beasiswa/pendaftaran/PendaftaranEdit.vue'
-import DaftarBeasiswa from '@/components/beasiswa/pendaftaran/Daftar.vue'
+import DaftarBeasiswa from '@/components/beasiswa/pendaftaran/Pengajuan.vue'
 import History from '@/components/beasiswa/pendaftaran/History.vue'
 
 const routes = [

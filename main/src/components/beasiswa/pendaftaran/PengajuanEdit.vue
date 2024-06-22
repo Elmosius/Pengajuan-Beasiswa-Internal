@@ -161,7 +161,7 @@ import fetchBeasiswaDetailByUserId from '@/components/mixins/fetchBeasiswaDetail
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'History',
+  name: 'EditPengajuan',
   components: {
     Layout,
     WelcomeBanner,

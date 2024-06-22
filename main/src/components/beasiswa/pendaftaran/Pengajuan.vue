@@ -7,7 +7,7 @@
         <form @submit.prevent="handleSubmit" action="">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">
-              Registrasi Beasiswa {{ pendaftaran.nama_beasiswa }}
+              Pengajuan Beasiswa {{ pendaftaran.nama_beasiswa }}
             </h2>
             <!-- munculin error -->
             <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
@@ -276,7 +276,7 @@ export default {
         dokumen.forEach((doc, index) => {
           formData.append(`dokumen[${index}][jenis_doc_id]`, doc.jenis_doc_id)
           formData.append(`dokumen[${index}][path]`, doc.path.name)
-          })
+        })
 
         await Api.createBeasiswa(formData)
         alert('Beasiswa telah diajukan !')

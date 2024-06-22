@@ -50,15 +50,16 @@ const getBeasiswaDetailByUserId = async (req, res) => {
   }
 
   try {
-    const [data] = await findBeasiswaDetailByUserId(userId);
-    res.json({
+    const beasiswaDetails = await findBeasiswaDetailByUserId(req.params.userId);
+    res.status(200).json({
       message: "GET Beasiswa Detail by user id success",
-      data: data,
+      data: beasiswaDetails,
     });
   } catch (error) {
+    console.error("Error fetching beasiswa detail by user id: ", error);
     res.status(500).json({
-      message: "Server Error",
-      serverMessage: error,
+      message: "Server error",
+      error: error.message,
     });
   }
 };

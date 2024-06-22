@@ -12,7 +12,6 @@ export default {
       try {
         const response = await Api.getBeasiswaDetailByUserId(userId)
         this.beasiswaDetail = response.data.data
-        // console.info((this.beasiswaDetail = response.data.data))
       } catch (error) {
         console.error('Error fetching beasiswa detail by user id: ', error)
         this.error = error.response ? error.response.data.message : error.message
