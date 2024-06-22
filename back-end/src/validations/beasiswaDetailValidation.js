@@ -8,16 +8,7 @@ const createBeasiswaDetailValidation = Joi.object({
   poin_portofolio: Joi.string().required(),
   status_1: Joi.string().required(),
   status_2: Joi.string().required(),
-  dokumen: Joi.array()
-    .items(
-      Joi.object({
-        jenis_doc_id: Joi.number().required(),
-        path: Joi.string()
-          .required()
-          .regex(/\.pdf$/),
-      })
-    )
-    .required(),
+  jenis_doc: Joi.string().required(),
 });
 
 const updateBeasiswaDetailValidation = Joi.object({
@@ -28,16 +19,7 @@ const updateBeasiswaDetailValidation = Joi.object({
   poin_portofolio: Joi.string().required(),
   status_1: Joi.string().required(),
   status_2: Joi.string().required(),
-  dokumen: Joi.array()
-    .items(
-      Joi.object({
-        jenis_doc_id: Joi.number().required(),
-        path: Joi.string()
-          .required()
-          .regex(/\.pdf$/),
-      })
-    )
-    .required(),
+  jenis_doc: Joi.string().required(),
 });
 
 module.exports = {

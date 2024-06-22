@@ -113,6 +113,7 @@ const findBeasiswaDetailByUserId = async (userId) => {
 const insertBeasiswaDetailWithDokumen = async (data) => {
   const connection = await dbPool.getConnection();
   try {
+    console.log("Starting transaction");
     await connection.beginTransaction();
 
     const queryPendaftaranDetail = `
@@ -120,6 +121,7 @@ const insertBeasiswaDetailWithDokumen = async (data) => {
       VALUES (?, ?, ?, ?, ?, ?, ?, now(), now());
     `;
     const [result] = await connection.execute(queryPendaftaranDetail, [data.pendaftaran_id, data.user_id, data.beasiswa_id, data.ipk, data.poin_portofolio, data.status_1, data.status_2]);
+    console.log("Pendaftaran detail inserted", result);
 
     const pendaftaran_detail_id = result.insertId;
 
@@ -128,16 +130,20 @@ const insertBeasiswaDetailWithDokumen = async (data) => {
       VALUES (?, ?, ?);
     `;
     for (const dokumen of data.dokumen) {
+      console.log("Inserting document", dokumen);
       await connection.execute(queryJenisDocPendaftaranDetail, [dokumen.jenis_doc_id, pendaftaran_detail_id, dokumen.path]);
     }
 
     await connection.commit();
+    console.log("Transaction committed");
     return result;
   } catch (error) {
+    console.error("Transaction failed", error);
     await connection.rollback();
     throw error;
   } finally {
     connection.release();
+    console.log("Connection released");
   }
 };
 

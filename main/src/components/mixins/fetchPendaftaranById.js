@@ -8,7 +8,8 @@ export default {
         start_at: '',
         end_at: '',
         status: '',
-        periode: ''
+        periode: '',
+        beasiswa_id: ''
       },
       error: '',
       selectedBeasiswa: ''
