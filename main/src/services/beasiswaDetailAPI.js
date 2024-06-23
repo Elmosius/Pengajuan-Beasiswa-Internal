@@ -25,6 +25,16 @@ export default {
     return apiClient.get(`/beasiswa/details/user/${userId}`)
   },
 
+  // getBeasiswaDetailByPendaftaranId
+  getBeasiswaDetailByPendaftaranId(pendaftaranId) {
+    return apiClient.get(`/beasiswa/details/pendaftaran/${pendaftaranId}`)
+  },
+
+  // getBeasiswaDetailByPendaftaranUserId
+  getBeasiswaDetailByPendaftaranUserId(pdId, userId) {
+    return apiClient.get(`/beasiswa/details/pendaftaran/${pdId}/user/${userId}`)
+  },
+
   // create
   createBeasiswa(data) {
     return apiClient.post('/beasiswa/details', data)
@@ -33,6 +43,11 @@ export default {
   // update
   updateBeasiswa(id, data) {
     return apiClient.put(`/beasiswa/details/${id}`, data)
+  },
+
+  // update status
+  updateBeasiswaStatus(id, data) {
+    return apiClient.put(`/beasiswa/details/status/${id}`, data)
   },
 
   // delete

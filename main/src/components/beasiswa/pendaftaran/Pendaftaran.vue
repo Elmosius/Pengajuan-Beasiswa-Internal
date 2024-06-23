@@ -45,7 +45,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="pendaftaran in pendaftaranList.data" :key="pendaftaran.id">
+              <tr v-for="pendaftaran in pendaftaranList" :key="pendaftaran.id">
                 <td class="py-5 px-4 xl:pl-11">
                   <p class="text-black dark:text-white">{{ pendaftaran.periode }}</p>
                 </td>

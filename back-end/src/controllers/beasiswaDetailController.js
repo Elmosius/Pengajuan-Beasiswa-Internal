@@ -1,4 +1,14 @@
-const { findAllBeasiswaDetail, findBeasiswaDetailById, insertBeasiswaDetailWithDokumen, updateBeasiswaDetail, deleteBeasiswaDetail, findBeasiswaDetailByUserId } = require("../models/beasiswaDetailModel");
+const {
+  findAllBeasiswaDetail,
+  findBeasiswaDetailById,
+  insertBeasiswaDetailWithDokumen,
+  updateBeasiswaDetail,
+  deleteBeasiswaDetail,
+  findBeasiswaDetailByUserId,
+  findBeasiswaDetailByPendaftaranId,
+  findBeasiswaDetailByPendaftaranUserId,
+  updateBeasiswaStatus,
+} = require("../models/beasiswaDetailModel");
 const { findUserById } = require("../models/userModel");
 const path = require("path");
 const { createBeasiswaDetailValidation, updateBeasiswaDetailValidation } = require("../validations/beasiswaDetailValidation");
@@ -61,6 +71,46 @@ const getBeasiswaDetailByUserId = async (req, res) => {
       message: "Server error",
       error: error.message,
     });
+  }
+};
+
+const getBeasiswaDetailByPendaftaranId = async (req, res) => {
+  const { pendaftaranId } = req.params;
+
+  try {
+    const beasiswaDetails = await findBeasiswaDetailByPendaftaranId(pendaftaranId);
+    if (beasiswaDetails.length === 0) {
+      return res.status(404).json({
+        message: "Beasiswa details not found for the given pendaftaran ID",
+      });
+    }
+    res.status(200).json({
+      message: "Get Beasiswa details by pendaftaran ID success",
+      data: beasiswaDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching Beasiswa details by pendaftaran ID:", error);
+    res.status(500).json({ message: "Server Error", serverMessage: error.message });
+  }
+};
+
+const getBeasiswaDetailByPendaftaranUserId = async (req, res) => {
+  const { pendaftaranId, userId } = req.params;
+
+  try {
+    const beasiswaDetails = await findBeasiswaDetailByPendaftaranUserId(pendaftaranId, userId);
+    if (beasiswaDetails.length === 0) {
+      return res.status(404).json({
+        message: "Beasiswa details not found for the given pendaftaran ID and user ID",
+      });
+    }
+    res.status(200).json({
+      message: "Get Beasiswa details by pendaftaran ID and user ID success",
+      data: beasiswaDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching Beasiswa details by pendaftaran ID and user ID:", error);
+    res.status(500).json({ message: "Server Error", serverMessage: error.message });
   }
 };
 
@@ -131,6 +181,19 @@ const updateBeasiswaDetailById = async (req, res) => {
   }
 };
 
+const updateBeasiswaStatusById = async (req, res) => {
+  const { id } = req.params;
+  const { status_1, status_2 } = req.body;
+
+  try {
+    await updateBeasiswaStatus(id, { status_1, status_2 });
+    res.status(200).json({ message: "Beasiswa status updated successfully" });
+  } catch (error) {
+    console.error("Error updating Beasiswa status:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
 const deleteBeasiswaDetailById = async (req, res) => {
   const id = req.params.id;
 
@@ -159,7 +222,10 @@ module.exports = {
   getAllBeasiswaDetail,
   getBeasiswaDetailById,
   getBeasiswaDetailByUserId,
+  getBeasiswaDetailByPendaftaranId,
+  getBeasiswaDetailByPendaftaranUserId,
   createBeasiswaDetail,
+  updateBeasiswaStatusById,
   updateBeasiswaDetailById,
   deleteBeasiswaDetailById,
 };

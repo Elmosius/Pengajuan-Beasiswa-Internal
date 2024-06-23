@@ -27,6 +27,8 @@ import PengajuanEdit from '@/components/beasiswa/pendaftaran/PengajuanEdit.vue'
 import History from '@/components/beasiswa/pendaftaran/History.vue'
 
 import LihatLaporanPengajuan from '@/components/laporan/Lihat.vue'
+import LihatLaporanPengajuanDetail from '@/components/laporan/LihatDetail.vue'
+import Approval from '@/components/laporan/Approval.vue'
 
 const routes = [
   {
@@ -167,6 +169,18 @@ const routes = [
     path: '/laporan/lihat-pengajuan',
     name: 'LihatLaporan',
     component: LihatLaporanPengajuan,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/laporan/lihat-pengajuan/:id',
+    name: 'LihatLaporanDetail',
+    component: LihatLaporanPengajuanDetail,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/laporan/approval/:pendaftaranId/:userId',
+    name: 'Approval',
+    component: Approval,
     meta: { requiresAuth: true }
   }
 ]
