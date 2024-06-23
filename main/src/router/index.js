@@ -123,7 +123,7 @@ const routes = [
     path: '/beasiswa/daftar-list-edit/:id',
     name: 'DaftarListEdit',
     component: DaftarListEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas'] }
   },
 
   // PENDAFTARAN
@@ -131,37 +131,37 @@ const routes = [
     path: '/beasiswa/pendaftaran',
     name: 'Pendaftaran',
     component: Pendaftaran,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi', 'Mahasiswa'] }
   },
   {
     path: '/beasiswa/pendaftaran-create',
     name: 'PendaftaranCreate',
     component: PendaftaranCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas'] }
   },
   {
     path: '/beasiswa/pendaftaran-edit/:id',
     name: 'PendaftaranEdit',
     component: PendaftaranEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas'] }
   },
   {
     path: '/beasiswa/pendaftaran-daftar/:id',
     name: 'Pengajuan',
     component: Pengajuan,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
   },
   {
     path: '/beasiswa/pendaftaran-daftar-edit/:id',
     name: 'EditPengajuan',
     component: PengajuanEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
   },
   {
     path: '/beasiswa/history',
     name: 'History',
     component: History,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
   },
 
   // LAPORAN
@@ -169,19 +169,19 @@ const routes = [
     path: '/laporan/lihat-pengajuan',
     name: 'LihatLaporan',
     component: LihatLaporanPengajuan,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi', 'Admin'] }
   },
   {
     path: '/laporan/lihat-pengajuan/:id',
     name: 'LihatLaporanDetail',
     component: LihatLaporanPengajuanDetail,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi', 'Admin'] }
   },
   {
     path: '/laporan/approval/:pendaftaranId/:userId',
     name: 'Approval',
     component: Approval,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   }
 ]
 

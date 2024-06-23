@@ -7,6 +7,14 @@ const apiClient = axios.create({
   }
 })
 
+const updateBeasiswaWithFormData = (id, data) => {
+  return axios.put(`${import.meta.env.VITE_API_URL}/beasiswa/details/${id}`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export default {
   //********** DAFTAR LIST BEASISWA ******************/
 
@@ -42,7 +50,7 @@ export default {
 
   // update
   updateBeasiswa(id, data) {
-    return apiClient.put(`/beasiswa/details/${id}`, data)
+    return updateBeasiswaWithFormData(id, data)
   },
 
   // update status

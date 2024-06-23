@@ -196,8 +196,6 @@ export default {
         beasiswa_id: '',
         ipk: '',
         poin_portofolio: '',
-        status_1: '0',
-        status_2: '0',
         dokumen: []
       },
       error: ''
@@ -212,23 +210,18 @@ export default {
         formData.append('beasiswa_id', this.beasiswa.beasiswa_id)
         formData.append('ipk', this.beasiswa.ipk)
         formData.append('poin_portofolio', this.beasiswa.poin_portofolio)
-        formData.append('status_1', this.beasiswa.status_1)
-        formData.append('status_2', this.beasiswa.status_2)
 
-        const jenisDoc = []
+        const jenisDoc = this.beasiswa.dokumen.map((dokumen) => ({
+          jenis_doc_id: dokumen.jenis_doc_id
+        }))
+        formData.append('jenis_doc', JSON.stringify(jenisDoc))
 
         this.beasiswa.dokumen.forEach((dokumen, index) => {
-          const file = this.$refs['dokumen_' + index][0].files[0]
+          const file = this.$refs['dokumen_' + index][0]?.files[0]
           if (file) {
-            formData.append(`dokumen[${index}][path]`, file)
-            jenisDoc.push({ jenis_doc_id: dokumen.jenis_doc_id })
-          } else {
-            formData.append(`dokumen[${index}][path]`, dokumen.path)
-            jenisDoc.push({ jenis_doc_id: dokumen.jenis_doc_id })
+            formData.append(`dokumen`, file)
           }
         })
-
-        formData.append('jenis_doc', JSON.stringify(jenisDoc))
 
         await Api.updateBeasiswa(this.beasiswa.id, formData)
         alert('Pendaftaran updated successfully!')

@@ -17,8 +17,6 @@ const updateBeasiswaDetailValidation = Joi.object({
   beasiswa_id: Joi.string(),
   ipk: Joi.string(),
   poin_portofolio: Joi.string(),
-  status_1: Joi.string(),
-  status_2: Joi.string(),
   jenis_doc: Joi.string(),
 });
 

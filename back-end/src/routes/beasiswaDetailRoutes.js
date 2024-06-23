@@ -23,7 +23,7 @@ router.get("/user/:userId", getBeasiswaDetailByUserId);
 router.post("/", upload.array("dokumen", 4), createBeasiswaDetail);
 
 router.put("/status/:id", updateBeasiswaStatusById);
-router.put("/:id", upload.array("dokumen", 4), updateBeasiswaDetailById);
+router.put("/:id", upload.array("dokumen"), updateBeasiswaDetailById);
 
 router.delete("/:id", deleteBeasiswaDetailById);
 

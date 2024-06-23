@@ -193,10 +193,10 @@ const updateBeasiswaDetail = async (id, data) => {
 
     const queryPendaftaranDetail = `
       UPDATE pendaftaran_detail
-      SET pendaftaran_id = ?, user_id = ?, beasiswa_id = ?, ipk = ?, poin_portofolio = ?, status_1 = ?, status_2 = ?, updated_at = now()
+      SET pendaftaran_id = ?, user_id = ?, beasiswa_id = ?, ipk = ?, poin_portofolio = ?, updated_at = now()
       WHERE id = ?;
     `;
-    await connection.execute(queryPendaftaranDetail, [data.pendaftaran_id, data.user_id, data.beasiswa_id, data.ipk, data.poin_portofolio, data.status_1, data.status_2, id]);
+    await connection.execute(queryPendaftaranDetail, [data.pendaftaran_id, data.user_id, data.beasiswa_id, data.ipk, data.poin_portofolio, id]);
 
     if (data.dokumen && data.dokumen.length > 0) {
       const queryInsertOrUpdateDokumen = `
