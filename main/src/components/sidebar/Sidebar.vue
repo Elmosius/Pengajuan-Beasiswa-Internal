@@ -371,7 +371,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/laporan/lihat"
+                    to="/laporan/lihat-pengajuan"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >

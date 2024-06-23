@@ -10,7 +10,7 @@ export default {
     async fetchPendaftaran() {
       try {
         const response = await Api.getPendaftaran()
-        this.pendaftaranList = response.data
+        this.pendaftaranList = response.data.data
       } catch (error) {
         console.error('Error fetching pendaftaran: ', error)
       }

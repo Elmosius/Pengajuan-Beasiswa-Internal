@@ -26,6 +26,8 @@ import Pengajuan from '@/components/beasiswa/pendaftaran/Pengajuan.vue'
 import PengajuanEdit from '@/components/beasiswa/pendaftaran/PengajuanEdit.vue'
 import History from '@/components/beasiswa/pendaftaran/History.vue'
 
+import LihatLaporanPengajuan from '@/components/laporan/Lihat.vue'
+
 const routes = [
   {
     path: '/',
@@ -42,7 +44,7 @@ const routes = [
     meta: { requiresGuest: true }
   },
 
-  // Fakultas
+  // FAKULTAS
   {
     path: '/data/fakultas',
     name: 'Fakultas',
@@ -62,7 +64,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
 
-  // Program Studi
+  // PROGRAM STUDI
   {
     path: '/data/program-studi',
     name: 'ProgramStudi',
@@ -82,7 +84,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
 
-  // User
+  // USER
   {
     path: '/data/users',
     name: 'User',
@@ -102,7 +104,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
 
-  // DaftarList Beasiswa
+  // DAFTARLIST BEASISWA
   {
     path: '/beasiswa/daftar-list',
     name: 'DaftarList',
@@ -122,7 +124,7 @@ const routes = [
     meta: { requiresAuth: true }
   },
 
-  // Pendaftaran
+  // PENDAFTARAN
   {
     path: '/beasiswa/pendaftaran',
     name: 'Pendaftaran',
@@ -157,6 +159,14 @@ const routes = [
     path: '/beasiswa/history',
     name: 'History',
     component: History,
+    meta: { requiresAuth: true }
+  },
+
+  // LAPORAN
+  {
+    path: '/laporan/lihat-pengajuan',
+    name: 'LihatLaporan',
+    component: LihatLaporanPengajuan,
     meta: { requiresAuth: true }
   }
 ]
