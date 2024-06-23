@@ -21,6 +21,7 @@ const loginUser = async (req, res) => {
       id: user.id,
       role_id: user.role_id,
       email: user.email,
+      role: user.nama_role,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -30,6 +31,10 @@ const loginUser = async (req, res) => {
     res.json({
       success: true,
       token: "Bearer " + token,
+      user: {
+        id: user.id,
+        role: user.nama_role,
+      },
     });
   } catch (error) {
     console.error("Error during login:", error);

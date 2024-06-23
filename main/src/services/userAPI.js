@@ -23,6 +23,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
       router.push('/login')
     }
     return Promise.reject(error)
@@ -37,6 +38,8 @@ export default {
     const response = await apiClient.post('/auth/login', credentials)
     // console.log('Token from login response:', response.data.token)
     localStorage.setItem('token', response.data.token)
+    localStorage.setItem('role', response.data.user.role)
+    // console.log('Token saved to localStorage:', localStorage.getItem('role'))
     // console.log('Token saved to localStorage:', localStorage.getItem('token'))
     return response
   },
