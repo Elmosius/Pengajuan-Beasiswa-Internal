@@ -39,7 +39,7 @@
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Tanggal Pengumpulan
                 </th>
-                <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+                <th class="py-4 px-4 font-medium text-black dark:text-white" v-if="isAuthorized(['Fakultas', 'Prodi'])">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@
                     {{ formatDate(b.created_at) }}
                   </p>
                 </td>
-                <td class="py-5 px-4">
+                <td class="py-5 px-4" v-if="isAuthorized(['Fakultas', 'Prodi'])">
                   <div class="flex items-center space-x-3.5">
                     <router-link
                       :to="`/laporan/approval/${b.id}/${b.user_id}`"
@@ -148,6 +148,10 @@ export default {
     }
   },
   methods: {
+    isAuthorized(requiredRoles) {
+      const role = localStorage.getItem('role')
+      return requiredRoles.includes(role)
+},
     formatDate(dateString) {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(dateString).toLocaleDateString('id-ID', options)
