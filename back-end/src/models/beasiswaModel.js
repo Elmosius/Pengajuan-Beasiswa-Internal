@@ -17,7 +17,7 @@ const insertBeasiswa = async (data) => {
 
 const updateBeasiswa = async (id, data) => {
   const query = "UPDATE Beasiswa SET nama_beasiswa = ?, deskripsi = ?, updated_at = now() WHERE id = ?";
-  return dbPool.execute(query, [data.nama_beasiswa, data.deskripsi]);
+  return dbPool.execute(query, [data.nama_beasiswa, data.deskripsi, id]);
 };
 
 const deleteBeasiswa = async (id) => {

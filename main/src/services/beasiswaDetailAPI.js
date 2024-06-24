@@ -7,6 +7,22 @@ const apiClient = axios.create({
   }
 })
 
+const createBeasiswaWithFormData = (data) => {
+  return axios.post(`${import.meta.env.VITE_API_URL}/beasiswa/details`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+const updateBeasiswaWithFormData = (id, data) => {
+  return axios.put(`${import.meta.env.VITE_API_URL}/beasiswa/details/${id}`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 export default {
   //********** DAFTAR LIST BEASISWA ******************/
 
@@ -25,14 +41,29 @@ export default {
     return apiClient.get(`/beasiswa/details/user/${userId}`)
   },
 
+  // getBeasiswaDetailByPendaftaranId
+  getBeasiswaDetailByPendaftaranId(pendaftaranId) {
+    return apiClient.get(`/beasiswa/details/pendaftaran/${pendaftaranId}`)
+  },
+
+  // getBeasiswaDetailByPendaftaranUserId
+  getBeasiswaDetailByPendaftaranUserId(pdId, userId) {
+    return apiClient.get(`/beasiswa/details/pendaftaran/${pdId}/user/${userId}`)
+  },
+
   // create
   createBeasiswa(data) {
-    return apiClient.post('/beasiswa/details', data)
+    return createBeasiswaWithFormData(data)
   },
 
   // update
   updateBeasiswa(id, data) {
-    return apiClient.put(`/beasiswa/details/${id}`, data)
+    return updateBeasiswaWithFormData(id, data)
+  },
+
+  // update status
+  updateBeasiswaStatus(id, data) {
+    return apiClient.put(`/beasiswa/details/status/${id}`, data)
   },
 
   // delete

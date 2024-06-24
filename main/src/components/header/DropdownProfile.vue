@@ -95,6 +95,8 @@ export default {
 
     function logout() {
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
+      localStorage.removeItem('status')
       router.push('/login')
     }
 

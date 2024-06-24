@@ -11,7 +11,10 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
             </p>
           </div>
-          <router-link to="/beasiswa/pendaftaran-create">
+          <router-link
+            to="/beasiswa/pendaftaran-create"
+            v-if="isAuthorizedRole(['Fakultas', 'Prodi'])"
+          >
             <a class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded">
               Create Periode Beasiswa</a
             >
@@ -45,7 +48,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="pendaftaran in pendaftaranList.data" :key="pendaftaran.id">
+              <tr v-for="pendaftaran in filteredPendaftaranList" :key="pendaftaran.id">
                 <td class="py-5 px-4 xl:pl-11">
                   <p class="text-black dark:text-white">{{ pendaftaran.periode }}</p>
                 </td>
@@ -70,6 +73,10 @@
                     <router-link
                       :to="`/beasiswa/pendaftaran-daftar/${pendaftaran.id}`"
                       class="hover:text-purple-500"
+                      v-if="
+                        isAuthorized(['Mahasiswa'], ['1']) &&
+                        !isBeasiswaAlreadyRegistered(pendaftaran.periode)
+                      "
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -90,6 +97,7 @@
                     <router-link
                       :to="`/beasiswa/pendaftaran-edit/${pendaftaran.id}`"
                       class="hover:text-purple-500"
+                      v-if="isAuthorizedRole(['Fakultas', 'Prodi'])"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +115,11 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(pendaftaran.id)" class="hover:text-purple-500">
+                    <button
+                      @click="confirmDelete(pendaftaran.id)"
+                      class="hover:text-purple-500"
+                      v-if="isAuthorizedRole(['Fakultas', 'Prodi'])"
+                    >
                       <svg
                         class="fill-current"
                         width="18"
@@ -172,6 +184,8 @@ import WelcomeBanner from '../../dashboard/WelcomeBanner.vue'
 import Api from '../../../services/pendaftaranBeasiswaAPI'
 import fetchPendaftaran from '@/components/mixins/fetchPendaftaran'
 import Modal from '@/components/modal/Modal.vue'
+import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
+import fetchBeasiswaDetailByUserId from '@/components/mixins/fetchBeasiswaDetailByUserId'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -188,11 +202,40 @@ export default {
       error: ''
     }
   },
-  mixins: [fetchPendaftaran],
-  mounted() {
-    this.fetchPendaftaran()
+  mixins: [fetchPendaftaran, fetchLoggedInUser, fetchBeasiswaDetailByUserId],
+  computed: {
+    filteredPendaftaranList() {
+      const today = new Date()
+      if (this.user.nama_role !== 'Mahasiswa') {
+        return this.pendaftaranList
+      }
+      return this.pendaftaranList.filter((pendaftaran) => {
+        const startAt = new Date(pendaftaran.start_at)
+        const endAt = new Date(pendaftaran.end_at)
+        return pendaftaran.status === '1' && today >= startAt && today <= endAt
+      })
+    }
+  },
+  async mounted() {
+    await this.fetchPendaftaran()
+    await this.fetchLoggedInUser()
+    await this.fetchBeasiswaDetailByUserId(this.user.id)
   },
   methods: {
+    isAuthorizedRole(requiredRoles) {
+      const role = localStorage.getItem('role')
+      return requiredRoles.includes(role)
+    },
+    isAuthorized(req, req2) {
+      const role = localStorage.getItem('role')
+      const status = localStorage.getItem('status')
+      const result = req.includes(role) && req2.includes(status)
+
+      return result
+    },
+    isBeasiswaAlreadyRegistered(periode) {
+      return this.beasiswaDetail.some((beasiswa) => beasiswa.periode === periode)
+    },
     openModal() {
       this.isModalOpen = true
     },
@@ -212,6 +255,7 @@ export default {
         this.fetchPendaftaran()
       } catch (error) {
         console.error('Error deleting pendaftaran: ', error)
+        alert('Error deleting pendaftaran: ', error)
       }
     },
     formatDate(dateString) {

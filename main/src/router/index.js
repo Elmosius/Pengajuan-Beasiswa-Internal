@@ -26,12 +26,16 @@ import Pengajuan from '@/components/beasiswa/pendaftaran/Pengajuan.vue'
 import PengajuanEdit from '@/components/beasiswa/pendaftaran/PengajuanEdit.vue'
 import History from '@/components/beasiswa/pendaftaran/History.vue'
 
+import LihatLaporanPengajuan from '@/components/laporan/Lihat.vue'
+import LihatLaporanPengajuanDetail from '@/components/laporan/LihatDetail.vue'
+import Approval from '@/components/laporan/Approval.vue'
+
 const routes = [
   {
     path: '/',
     name: 'Dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Mahasiswa', 'Fakultas', 'Prodi'] }
   },
 
   // Login
@@ -42,122 +46,142 @@ const routes = [
     meta: { requiresGuest: true }
   },
 
-  // Fakultas
+  // FAKULTAS
   {
     path: '/data/fakultas',
     name: 'Fakultas',
     component: Fakultas,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi'] }
   },
   {
     path: '/data/fakultas-create',
     name: 'FakultasCreate',
     component: FakultasCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
   {
     path: '/data/fakultas-edit/:id',
     name: 'FakultasEdit',
     component: FakultasEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
 
-  // Program Studi
+  // PROGRAM STUDI
   {
     path: '/data/program-studi',
     name: 'ProgramStudi',
     component: ProgramStudi,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi'] }
   },
   {
     path: '/data/program-studi-create',
     name: 'ProgramStudiCreate',
     component: ProgramStudiCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
   {
     path: '/data/program-studi-edit/:id',
     name: 'ProgramStudiEdit',
     component: ProgramStudiEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
 
-  // User
+  // USER
   {
     path: '/data/users',
     name: 'User',
     component: User,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi'] }
   },
   {
     path: '/data/user-create',
     name: 'UserCreate',
     component: UserCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
   {
     path: '/data/user-edit/:id',
     name: 'UserEdit',
     component: UserEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
 
-  // DaftarList Beasiswa
+  // DAFTARLIST BEASISWA
   {
     path: '/beasiswa/daftar-list',
     name: 'DaftarList',
     component: DaftarList,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi'] }
   },
   {
     path: '/beasiswa/daftar-list-create',
     name: 'DaftarListCreate',
     component: DaftarListCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
   {
     path: '/beasiswa/daftar-list-edit/:id',
     name: 'DaftarListEdit',
     component: DaftarListEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
 
-  // Pendaftaran
+  // PENDAFTARAN
   {
     path: '/beasiswa/pendaftaran',
     name: 'Pendaftaran',
     component: Pendaftaran,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Admin', 'Fakultas', 'Prodi', 'Mahasiswa'] }
   },
   {
     path: '/beasiswa/pendaftaran-create',
     name: 'PendaftaranCreate',
     component: PendaftaranCreate,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   },
   {
     path: '/beasiswa/pendaftaran-edit/:id',
     name: 'PendaftaranEdit',
     component: PendaftaranEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   },
   {
     path: '/beasiswa/pendaftaran-daftar/:id',
     name: 'Pengajuan',
     component: Pengajuan,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
   },
   {
     path: '/beasiswa/pendaftaran-daftar-edit/:id',
     name: 'EditPengajuan',
     component: PengajuanEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
   },
   {
     path: '/beasiswa/history',
     name: 'History',
     component: History,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, role: ['Mahasiswa'] }
+  },
+
+  // LAPORAN
+  {
+    path: '/laporan/lihat-pengajuan',
+    name: 'LihatLaporan',
+    component: LihatLaporanPengajuan,
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi', 'Admin'] }
+  },
+  {
+    path: '/laporan/lihat-pengajuan/:id',
+    name: 'LihatLaporanDetail',
+    component: LihatLaporanPengajuanDetail,
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi', 'Admin'] }
+  },
+  {
+    path: '/laporan/approval/:pendaftaranId/:userId',
+    name: 'Approval',
+    component: Approval,
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   }
 ]
 
@@ -166,15 +190,23 @@ const router = createRouter({
   routes
 })
 
-// Perloginan (Navigation Guard)
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('token')
+  const userRole = localStorage.getItem('role') // Peran pengguna disimpan di local storage
+
   if (to.matched.some((record) => record.meta.requiresAuth) && !isLoggedIn) {
     // Jika route memerlukan auth dan user tidak login, redirect ke login
     next('/login')
   } else if (to.matched.some((record) => record.meta.requiresGuest) && isLoggedIn) {
     // Jika route memerlukan guest dan user sudah login, redirect ke dashboard
     next('/')
+  } else if (to.matched.some((record) => record.meta.requiresAuth && record.meta.role)) {
+    // Jika route memerlukan auth dan memiliki peran khusus
+    if (to.meta.role.includes(userRole)) {
+      next() // Jika peran pengguna termasuk dalam peran yang diizinkan, lanjutkan
+    } else {
+      next('/') // Jika tidak, redirect ke dashboard atau halaman lain
+    }
   } else {
     next() // Selalu memanggil next()!
   }

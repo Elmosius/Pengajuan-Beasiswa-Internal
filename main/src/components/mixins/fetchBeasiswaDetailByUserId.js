@@ -3,7 +3,7 @@ import Api from '@/services/beasiswaDetailAPI'
 export default {
   data() {
     return {
-      beasiswaDetail: [],
+      beasiswaDetail: {},
       error: ''
     }
   },

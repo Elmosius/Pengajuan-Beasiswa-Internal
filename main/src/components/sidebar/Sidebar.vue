@@ -47,7 +47,7 @@
       <!-- Links -->
       <div class="space-y-5">
         <!-- Data Fakultas, Prodi, User-->
-        <div>
+        <div v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])">
           <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
             <span
               class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -242,6 +242,7 @@
                     to="/beasiswa/daftar-list"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
+                    v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])"
                   >
                     <li class="mb-1 last:mb-0">
                       <a
@@ -284,6 +285,7 @@
                     to="/beasiswa/history"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
+                    v-if="isAuthorized(['Mahasiswa'])"
                   >
                     <li class="mb-1 last:mb-0">
                       <a
@@ -308,7 +310,7 @@
         </div>
 
         <!-- Laporan -->
-        <div>
+        <div v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])">
           <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
             <span
               class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -371,7 +373,7 @@
               <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                 <ul class="pl-9 mt-2 space-y-2" :class="!parentLink.expanded && 'hidden'">
                   <router-link
-                    to="/laporan/lihat"
+                    to="/laporan/lihat-pengajuan"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
                   >
@@ -481,8 +483,15 @@ export default {
       storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
     )
 
+    function isAuthorized(requiredRoles) {
+      const role = localStorage.getItem('role')
+      return requiredRoles.includes(role)
+    }
+
     function logout() {
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
+      localStorage.removeItem('status')
       router.push('/login')
     }
 
@@ -526,7 +535,8 @@ export default {
       sidebar,
       sidebarExpanded,
       currentRoute,
-      logout
+      logout,
+      isAuthorized
     }
   }
 }

@@ -4,11 +4,11 @@
       <div
         class="rounded-md border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
       >
-        <form @submit.prevent="handleSubmit" action="">
+        <form @submit.prevent="updatePengajuan" action="">
           <div class="max-w-full overflow-x-auto p-5">
             <h2 class="font-bold leading-7 text-gray-900 text-2xl">
-              Edit Pengajuan Beasiswa {{ pendaftaran.nama_beasiswa }} - Periode
-              {{ pendaftaran.periode }}
+              Edit Pengajuan Beasiswa {{ beasiswa.nama_beasiswa }} -
+              {{ beasiswa.periode }}
             </h2>
             <!-- munculin error -->
             <div v-if="error" class="p-3 mb-2 mt-4 bg-red-200 text-red-800 rounded">
@@ -21,7 +21,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="user.id"
+                    v-model="beasiswa.user_id"
                     type="text"
                     name="user_id"
                     id="user_id"
@@ -41,8 +41,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="user.email"
-                    required
+                    v-model="beasiswa.email"
                     type="email"
                     name="email"
                     id="email"
@@ -59,7 +58,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="user.nama_fakultas"
+                    v-model="beasiswa.nama_fakultas"
                     type="text"
                     name="fakultas_id"
                     id="fakultas_id"
@@ -76,7 +75,7 @@
                 </label>
                 <div class="mt-2">
                   <input
-                    v-model="user.nama_program_studi"
+                    v-model="beasiswa.nama_program_studi"
                     type="text"
                     name="program_studi_id"
                     id="program_studi_id"
@@ -99,7 +98,6 @@
                     id="ipk"
                     maxlength="4"
                     placeholder="4.0"
-                    required
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -117,89 +115,44 @@
                     name="poin_portofolio"
                     id="poin_portofolio"
                     placeholder="600"
-                    required
                     autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
 
-              <div class="sm:col-span-1">
-                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
-                  Transkrip Nilai (.pdf)
+              <div class="sm:col-span-1" v-for="(dokumen, index) in beasiswa.dokumen" :key="index">
+                <label
+                  :for="'dokumen_' + index"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  {{ dokumen.jenis_dokumen }} (.pdf)
                 </label>
                 <div class="mt-2">
                   <input
-                    ref="transkrip_nilai"
+                    :ref="'dokumen_' + index"
                     type="file"
-                    name="transkrip_nilai"
-                    id="transkrip_nilai"
-                    required
+                    :name="'dokumen_' + index"
+                    :id="'dokumen_' + index"
                     accept=".pdf"
-                    autofocus
                     class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div>
-
-              <div class="sm:col-span-1">
-                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
-                  Surat Rekomendasi Dosen (.pdf)
-                </label>
-                <div class="mt-2">
-                  <input
-                    ref="surat_rekomendasi_dosen"
-                    type="file"
-                    name="surat_rekomendasi_dosen"
-                    id="surat_rekomendasi_dosen"
-                    required
-                    accept=".pdf"
-                    autofocus
-                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div class="sm:col-span-1">
-                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
-                  Surat Pernyataan Tidak Menerima Beasiswa lain (.pdf)
-                </label>
-                <div class="mt-2">
-                  <input
-                    ref="surat_pernyataan"
-                    type="file"
-                    name="surat_pernyataan"
-                    id="surat_pernyataan"
-                    accept=".pdf"
-                    required
-                    autofocus
-                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div class="sm:col-span-1">
-                <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
-                  Dokumen Lainnya (.pdf)
-                </label>
-                <div class="mt-2">
-                  <input
-                    ref="dokumen_lainnya"
-                    type="file"
-                    name="dokumen_lainnya"
-                    id="dokumen_lainnya"
-                    accept=".pdf"
-                    required
-                    autofocus
-                    class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                <div v-if="dokumen.path">
+                  <a
+                    :href="getFileUrl(dokumen.path)"
+                    target="_blank"
+                    class="text-blue-600 underline text-xs"
+                  >
+                    Lihat {{ dokumen.jenis_dokumen }} sebelumnya
+                  </a>
                 </div>
               </div>
             </div>
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
               <router-link
-                :to="'/beasiswa/pendaftaran-daftar'"
+                :to="'/beasiswa/history'"
                 type="button"
                 class="text-sm font-semibold leading-6 text-gray-900"
               >
@@ -209,7 +162,7 @@
                 type="submit"
                 class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Ajukan
+                Edit
               </button>
             </div>
           </div>
@@ -223,18 +176,17 @@
 import Layout from '../../Layout.vue'
 import Api from '../../../services/beasiswaDetailAPI'
 import fetchLoggedInUser from '@/components/mixins/fetchLoggedInUser'
-import fetchPendaftaranById from '@/components/mixins/fetchPendaftaranById'
+import fetchBeasiswaDetailById from '@/components/mixins/fetchBeasiswaDetailById'
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   name: 'EditPengajuan',
   components: {
     Layout
   },
-  mixins: [fetchLoggedInUser, fetchPendaftaranById],
+  mixins: [fetchLoggedInUser, fetchBeasiswaDetailById],
   async mounted() {
     await this.fetchLoggedInUser()
-    await this.fetchPendaftaranById()
+    await this.fetchBeasiswaDetailById()
   },
   data() {
     return {
@@ -244,49 +196,43 @@ export default {
         beasiswa_id: '',
         ipk: '',
         poin_portofolio: '',
-        status_1: '0',
-        status_2: '0',
-        dokumen: {
-          transkrip_nilai: null,
-          surat_rekomendasi_dosen: null,
-          surat_pernyataan: null,
-          dokumen_lainnya: null
-        }
+        dokumen: []
       },
       error: ''
     }
   },
   methods: {
-    async handleSubmit() {
+    async updatePengajuan() {
       try {
         const formData = new FormData()
         formData.append('pendaftaran_id', Number(this.beasiswa.pendaftaran_id))
-        formData.append('user_id', this.user.id)
-        formData.append('beasiswa_id', this.pendaftaran.beasiswa_id)
+        formData.append('user_id', this.beasiswa.user_id)
+        formData.append('beasiswa_id', this.beasiswa.beasiswa_id)
         formData.append('ipk', this.beasiswa.ipk)
         formData.append('poin_portofolio', this.beasiswa.poin_portofolio)
-        formData.append('status_1', this.beasiswa.status_1)
-        formData.append('status_2', this.beasiswa.status_2)
 
-        const dokumen = [
-          { jenis_doc_id: 1, path: this.$refs.transkrip_nilai.files[0] },
-          { jenis_doc_id: 2, path: this.$refs.surat_rekomendasi_dosen.files[0] },
-          { jenis_doc_id: 3, path: this.$refs.surat_pernyataan.files[0] },
-          { jenis_doc_id: 4, path: this.$refs.dokumen_lainnya.files[0] }
-        ]
+        const jenisDoc = this.beasiswa.dokumen.map((dokumen) => ({
+          jenis_doc_id: dokumen.jenis_doc_id
+        }))
+        formData.append('jenis_doc', JSON.stringify(jenisDoc))
 
-        dokumen.forEach((doc, index) => {
-          formData.append(`dokumen[${index}][jenis_doc_id]`, doc.jenis_doc_id)
-          formData.append(`dokumen[${index}][path]`, doc.path.name)
+        this.beasiswa.dokumen.forEach((dokumen, index) => {
+          const file = this.$refs['dokumen_' + index][0]?.files[0]
+          if (file) {
+            formData.append(`dokumen`, file)
+          }
         })
 
-        await Api.createBeasiswa(formData)
-        alert('Beasiswa telah diajukan !')
+        await Api.updateBeasiswa(this.beasiswa.id, formData)
+        alert('Pendaftaran updated successfully!')
         this.$router.push('/beasiswa/history')
       } catch (error) {
-        console.error('Error creating beasiswa:', error)
+        console.error('Error updating pendaftaran: ', error)
         this.error = error.response.data.message
       }
+    },
+    getFileUrl(path) {
+      return `http://localhost:3000${path}`
     }
   }
 }

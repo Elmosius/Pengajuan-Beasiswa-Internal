@@ -3,14 +3,7 @@ import Api from '@/services/userAPI'
 export default {
   data() {
     return {
-      user: {
-        id: '',
-        role_id: '',
-        program_studi_id: '',
-        nama: '',
-        email: '',
-        status: ''
-      },
+      user: {},
       error: ''
     }
   },

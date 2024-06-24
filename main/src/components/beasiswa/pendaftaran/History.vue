@@ -39,6 +39,9 @@
                   Periode Beasiswa
                 </th>
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                  Waktu Pendaftaran
+                </th>
+                <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Status
                 </th>
                 <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
@@ -75,15 +78,21 @@
                     {{ bd.periode }}
                   </p>
                 </td>
+                <td class="py-5 px-4">
+                  <p class="text-black dark:text-white">
+                    {{ formatDate(bd.start_at) }} s/d {{ formatDate(bd.end_at) }}
+                  </p>
+                </td>
 
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
-                    {{ bd.status_1 }}
+                    {{ getStatus(bd.status_1, bd.status_2) }}
                   </p>
                 </td>
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
+                      v-if="isWithinDateRange(bd.start_at, bd.end_at)"
                       :to="`/beasiswa/pendaftaran-daftar-edit/${bd.id}`"
                       class="hover:text-purple-500"
                     >
@@ -103,7 +112,11 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(bd.id)" class="hover:text-purple-500">
+                    <button
+                      @click="confirmDelete(bd.id)"
+                      class="hover:text-purple-500"
+                      v-if="isWithinDateRange(bd.start_at, bd.end_at)"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -169,6 +182,7 @@ export default {
   },
   data() {
     return {
+      beasiswaDetailList: [],
       isModalOpen: false,
       selectedPendaftaranId: null,
       error: ''
@@ -179,7 +193,12 @@ export default {
     await this.fetchLoggedInUser()
     await this.fetchBeasiswaDetailByUserId(this.user.id)
   },
+
   methods: {
+    isWithinDateRange(start_at, end_at) {
+      const currentDate = new Date()
+      return new Date(start_at) <= currentDate && currentDate <= new Date(end_at)
+    },
     openModal() {
       this.isModalOpen = true
     },
@@ -196,13 +215,25 @@ export default {
       try {
         await Api.deleteBeasiswa(this.selectedPendaftaranId)
         this.closeModal()
+        alert('Pengajuan berhasil dibatalkan!')
+        this.fetchBeasiswaDetailByUserId(this.user.id)
       } catch (error) {
         console.error('Error deleting pendaftaran: ', error)
+        alert('Error deleting pendaftaran: ', error)
       }
     },
     formatDate(dateString) {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(dateString).toLocaleDateString('id-ID', options)
+    },
+    getStatus(status_1, status_2) {
+      if (status_1 === '1') {
+        return 'Disetujui Fakultas'
+      } else if (status_2 === '1') {
+        return 'Disetujui Prodi'
+      } else {
+        return 'Dalam Proses'
+      }
     }
   }
 }

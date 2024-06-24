@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const PORT = process.env.PORT;
 const express = require("express");
 
@@ -43,6 +44,9 @@ app.use("/beasiswa", beasiswaRoutes);
 
 // role
 app.use("/roles", roleRoutes);
+
+// Akses liat file
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

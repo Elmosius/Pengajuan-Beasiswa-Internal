@@ -11,7 +11,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
             </p>
           </div>
-          <router-link to="/data/user-create">
+          <router-link to="/data/user-create" v-if="isAuthorized(['Admin'])">
             <a class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded">
               Create User</a
             >
@@ -42,7 +42,12 @@
                 <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Program Studi
                 </th>
-                <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+                <th
+                  class="py-4 px-4 font-medium text-black dark:text-white"
+                  v-if="isAuthorized(['Admin'])"
+                >
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -60,14 +65,14 @@
                   <p class="text-black dark:text-white">{{ user.nama_role }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ user.status }}</p>
+                  <p class="text-black dark:text-white">{{ changeStatus(user.status) }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
                     {{ user.nama_fakultas }} - {{ user.nama_program_studi }}
                   </p>
                 </td>
-                <td class="py-5 px-4">
+                <td class="py-5 px-4" v-if="isAuthorized(['Admin'])">
                   <div class="flex items-center space-x-3.5">
                     <router-link :to="`/data/user-edit/${user.id}`" class="hover:text-purple-500">
                       <svg
@@ -171,6 +176,15 @@ export default {
     this.fetchUsers()
   },
   methods: {
+    isAuthorized(requiredRoles) {
+      const role = localStorage.getItem('role')
+      return requiredRoles.includes(role)
+    },
+    changeStatus(status) {
+      let result = ''
+      status === '1' ? (result = 'Aktif') : (result = 'Tidak Aktif')
+      return result
+    },
     openModal() {
       this.isModalOpen = true
     },
@@ -191,6 +205,7 @@ export default {
         this.fetchUsers()
       } catch (error) {
         console.error('Error deleting user: ', error)
+        alert('Error deleting user: ', error)
       }
     }
   }
