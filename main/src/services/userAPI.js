@@ -24,6 +24,7 @@ apiClient.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('role')
+      localStorage.removeItem('status')
       router.push('/login')
     }
     return Promise.reject(error)
@@ -39,8 +40,10 @@ export default {
     // console.log('Token from login response:', response.data.token)
     localStorage.setItem('token', response.data.token)
     localStorage.setItem('role', response.data.user.role)
+    localStorage.setItem('status', response.data.user.status)
     // console.log('Token saved to localStorage:', localStorage.getItem('role'))
     // console.log('Token saved to localStorage:', localStorage.getItem('token'))
+    // console.log('Token saved to localStorage:', localStorage.getItem('status'))
     return response
   },
 
