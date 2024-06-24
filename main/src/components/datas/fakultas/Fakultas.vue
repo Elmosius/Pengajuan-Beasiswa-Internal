@@ -171,6 +171,7 @@ export default {
         this.fetchFakultas()
       } catch (error) {
         console.error('Error deleting fakultas: ', error)
+        alert('Error deleting fakultas: ', error)
       }
     }
   }

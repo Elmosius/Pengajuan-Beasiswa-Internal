@@ -212,6 +212,7 @@ export default {
         this.fetchPendaftaran()
       } catch (error) {
         console.error('Error deleting pendaftaran: ', error)
+        alert('Error deleting pendaftaran: ', error)
       }
     },
     formatDate(dateString) {

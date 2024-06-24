@@ -188,6 +188,7 @@ export default {
         this.fetchBeasiswa()
       } catch (error) {
         console.error('Error deleting beasiswa: ', error)
+        alert('Error deleting beasiswa: ', error)
       }
     },
 
