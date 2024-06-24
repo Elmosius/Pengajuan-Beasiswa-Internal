@@ -21,6 +21,7 @@ export default {
       try {
         const response = await Api.getPendaftaranById(pendaftaranId)
         this.pendaftaran = response.data.data[0]
+        console.info((this.pendaftaran = response.data.data[0]))
       } catch (error) {
         console.error('Error fetching pendaftaran: ', error)
         this.error = error.response.data.message

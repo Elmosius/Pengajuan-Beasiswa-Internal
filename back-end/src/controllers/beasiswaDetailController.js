@@ -115,12 +115,25 @@ const getBeasiswaDetailByPendaftaranUserId = async (req, res) => {
 };
 
 const createBeasiswaDetail = async (req, res) => {
+  console.log("Files:", req.files); // Log untuk memeriksa file yang diterima
+  console.log("Body:", req.body); // Log untuk memeriksa body yang diterima
+
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ message: "No files uploaded" });
+  }
+
+  let jenis_doc;
+  try {
+    jenis_doc = JSON.parse(req.body.jenis_doc); // Ubah JSON string jadi objek
+  } catch (error) {
+    return res.status(400).json({ message: "Invalid jenis_doc format" });
+  }
+
   const bodyWithFiles = {
     ...req.body,
     dokumen: req.files.map((file, index) => {
-      const jenis_doc = JSON.parse(req.body.jenis_doc)[index];
       const filePath = path.join("/uploads", file.filename);
-      return { jenis_doc_id: jenis_doc.jenis_doc_id, path: filePath };
+      return { jenis_doc_id: jenis_doc[index].jenis_doc_id, path: filePath };
     }),
   };
 
@@ -141,7 +154,6 @@ const createBeasiswaDetail = async (req, res) => {
     res.status(500).json({ message: "Server Error", serverMessage: error });
   }
 };
-
 const updateBeasiswaDetailById = async (req, res) => {
   const id = req.params.id;
 

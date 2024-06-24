@@ -11,7 +11,10 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, ex?
             </p>
           </div>
-          <router-link to="/beasiswa/pendaftaran-create" v-if="isAuthorizedRole(['Fakultas', 'Prodi'])">
+          <router-link
+            to="/beasiswa/pendaftaran-create"
+            v-if="isAuthorizedRole(['Fakultas', 'Prodi'])"
+          >
             <a class="bg-blue-500 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded">
               Create Periode Beasiswa</a
             >
@@ -112,7 +115,11 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(pendaftaran.id)" class="hover:text-purple-500" v-if="isAuthorizedRole(['Fakultas', 'Prodi'])">
+                    <button
+                      @click="confirmDelete(pendaftaran.id)"
+                      class="hover:text-purple-500"
+                      v-if="isAuthorizedRole(['Fakultas', 'Prodi'])"
+                    >
                       <svg
                         class="fill-current"
                         width="18"
@@ -199,7 +206,7 @@ export default {
   computed: {
     filteredPendaftaranList() {
       const today = new Date()
-      if (this.user.role_id !== 'Mahasiswa') {
+      if (this.user.nama_role !== 'Mahasiswa') {
         return this.pendaftaranList
       }
       return this.pendaftaranList.filter((pendaftaran) => {

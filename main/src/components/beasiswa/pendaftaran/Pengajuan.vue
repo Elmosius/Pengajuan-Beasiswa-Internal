@@ -263,7 +263,7 @@ export default {
     async handleSubmit() {
       try {
         const formData = new FormData()
-        formData.append('pendaftaran_id', Number(this.beasiswa.pendaftaran_id))
+        formData.append('pendaftaran_id', Number(this.pendaftaran.id))
         formData.append('user_id', this.user.id)
         formData.append('beasiswa_id', this.pendaftaran.beasiswa_id)
         formData.append('ipk', this.beasiswa.ipk)
@@ -278,9 +278,11 @@ export default {
           { jenis_doc_id: 4, path: this.$refs.dokumen_lainnya.files[0] }
         ]
 
-        dokumen.forEach((doc, index) => {
-          formData.append(`dokumen[${index}][jenis_doc_id]`, doc.jenis_doc_id)
-          formData.append(`dokumen[${index}][path]`, doc.path.name)
+        const jenis_doc = dokumen.map((doc) => ({ jenis_doc_id: doc.jenis_doc_id }))
+        formData.append('jenis_doc', JSON.stringify(jenis_doc))
+
+        dokumen.forEach((doc) => {
+          formData.append('dokumen', doc.path)
         })
 
         await Api.createBeasiswa(formData)

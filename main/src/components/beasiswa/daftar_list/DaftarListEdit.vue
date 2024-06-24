@@ -6,8 +6,7 @@
       >
         <form @submit.prevent="updateBeasiswa" action="">
           <div class="max-w-full overflow-x-auto p-5">
-            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Create Beasiswa</h2>
-
+            <h2 class="font-bold leading-7 text-gray-900 text-2xl">Edit Beasiswa</h2>
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
               <div class="sm:col-span-1">
                 <label for="id" class="block text-sm font-medium leading-6 text-gray-900">
@@ -110,12 +109,14 @@ export default {
       try {
         const updated = {
           nama_beasiswa: this.beasiswa.nama_beasiswa,
-          deskripsi: this.beasiswa.deskripsi,
+          deskripsi: this.beasiswa.deskripsi
         }
         await Api.updateBeasiswa(this.beasiswa.id, updated)
         this.$router.push('/beasiswa/daftar-list')
+        alert('Update Beasiswa berhasil!')
       } catch (error) {
         console.error('Error updating beasiswa: ', error)
+        alert('Error updating beasiswa: ', error)
       }
     }
   }

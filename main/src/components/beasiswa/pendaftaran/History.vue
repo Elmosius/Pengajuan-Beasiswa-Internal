@@ -215,8 +215,11 @@ export default {
       try {
         await Api.deleteBeasiswa(this.selectedPendaftaranId)
         this.closeModal()
+        alert('Pengajuan berhasil dibatalkan!')
+        this.fetchBeasiswaDetailByUserId(this.user.id)
       } catch (error) {
         console.error('Error deleting pendaftaran: ', error)
+        alert('Error deleting pendaftaran: ', error)
       }
     },
     formatDate(dateString) {
