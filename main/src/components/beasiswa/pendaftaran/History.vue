@@ -92,6 +92,7 @@
                 <td class="py-5 px-4">
                   <div class="flex items-center space-x-3.5">
                     <router-link
+                      v-if="isWithinDateRange(bd.start_at, bd.end_at)"
                       :to="`/beasiswa/pendaftaran-daftar-edit/${bd.id}`"
                       class="hover:text-purple-500"
                     >
@@ -111,7 +112,11 @@
                       </svg>
                     </router-link>
 
-                    <button @click="confirmDelete(bd.id)" class="hover:text-purple-500">
+                    <button
+                      @click="confirmDelete(bd.id)"
+                      class="hover:text-purple-500"
+                      v-if="isWithinDateRange(bd.start_at, bd.end_at)"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -190,6 +195,10 @@ export default {
   },
 
   methods: {
+    isWithinDateRange(start_at, end_at) {
+      const currentDate = new Date()
+      return new Date(start_at) <= currentDate && currentDate <= new Date(end_at)
+    },
     openModal() {
       this.isModalOpen = true
     },
