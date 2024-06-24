@@ -43,7 +43,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="b in formattedBeasiswa" :key="b.id">
+              <tr v-for="b in filteredBeasiswa" :key="b.id">
                 <td class="py-5 px-4 xl:pl-11">
                   <p class="text-black dark:text-white">{{ b.user_id }}</p>
                 </td>
@@ -109,6 +109,7 @@ import Layout from '../Layout.vue'
 import WelcomeBanner from '../dashboard/WelcomeBanner.vue'
 import fetchBeasiswaDetailByPendaftaranId from '../mixins/fetchBeasiswaDetailByPendaftaranId'
 import fetchPendaftaranById from '../mixins/fetchPendaftaranById'
+import fetchLoggedInUser from '../mixins/fetchLoggedInUser'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -117,21 +118,33 @@ export default {
     Layout,
     WelcomeBanner
   },
-  mixins: [fetchBeasiswaDetailByPendaftaranId, fetchPendaftaranById],
+  mixins: [fetchBeasiswaDetailByPendaftaranId, fetchPendaftaranById, fetchLoggedInUser],
   data() {
     return {}
   },
   async mounted() {
     await this.fetchBeasiswaDetailByPendaftaranId()
     await this.fetchPendaftaranById()
+    await this.fetchLoggedInUser()
   },
   computed: {
-    formattedBeasiswa() {
-      return this.beasiswa.map((b) => ({
-        ...b,
-        status_1: b.status_1 === '1' ? 'Disetujui' : 'Tidak Disetujui',
-        status_2: b.status_2 === '1' ? 'Disetujui' : 'Tidak Disetujui'
-      }))
+    filteredBeasiswa() {
+      return this.beasiswa
+        .filter((b) => {
+          if (this.user.nama_role === 'Fakultas') {
+            return b.nama_fakultas === this.user.nama_fakultas
+          } else if (this.user.nama_role === 'Prodi') {
+            console.info(b.nama_program_studi)
+            console.info(this.user.nama_program_studi)
+            return b.nama_program_studi === this.user.nama_program_studi
+          }
+          return true
+        })
+        .map((b) => ({
+          ...b,
+          status_1: b.status_1 === '1' ? 'Disetujui' : 'Tidak Disetujui',
+          status_2: b.status_2 === '1' ? 'Disetujui' : 'Tidak Disetujui'
+        }))
     }
   },
   methods: {
