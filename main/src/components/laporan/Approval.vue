@@ -132,6 +132,7 @@
                   v-model="status_1"
                   name="status_1"
                   id="status_1"
+                  :disabled="isProdi"
                   class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                   <option value="0">Tidak Disetujui</option>
@@ -149,6 +150,7 @@
                   v-model="status_2"
                   name="status_2"
                   id="status_2"
+                  :disabled="isFakultas"
                   class="block w-full indent-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                   <option value="0">Tidak Disetujui</option>
@@ -205,6 +207,7 @@
 import Layout from '../Layout.vue'
 import fetchBeasiswaDetailByPendaftaranUserId from '../mixins/fetchBeasiswaDetailByPdUserId'
 import Api from '@/services/beasiswaDetailAPI'
+import fetchLoggedInUser from '../mixins/fetchLoggedInUser'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -212,15 +215,24 @@ export default {
   components: {
     Layout
   },
-  mixins: [fetchBeasiswaDetailByPendaftaranUserId],
+  mixins: [fetchBeasiswaDetailByPendaftaranUserId, fetchLoggedInUser],
   async mounted() {
     await this.fetchBeasiswaDetailByPendaftaranUserId()
+    await this.fetchLoggedInUser()
   },
   data() {
     return {
       error: '',
-      status_1: '0',
-      status_2: '0'
+      status_1: '',
+      status_2: ''
+    }
+  },
+  computed: {
+    isProdi() {
+      return this.user.nama_role === 'Prodi'
+    },
+    isFakultas() {
+      return this.user.nama_role === 'Fakultas'
     }
   },
   methods: {

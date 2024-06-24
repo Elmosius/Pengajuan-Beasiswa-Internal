@@ -132,7 +132,7 @@ export default {
       return this.beasiswa
         .filter((b) => {
           if (this.user.nama_role === 'Fakultas') {
-            return b.nama_fakultas === this.user.nama_fakultas
+            return b.nama_fakultas === this.user.nama_fakultas && b.status_2 === '1'
           } else if (this.user.nama_role === 'Prodi') {
             console.info(b.nama_program_studi)
             console.info(this.user.nama_program_studi)
