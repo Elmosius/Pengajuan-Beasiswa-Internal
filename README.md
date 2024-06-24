@@ -40,4 +40,24 @@ Berikut adalah hal yang dapat dilakukan oleh masing-masing pengguna:
 - Coming Soon
 
 ## ⚠️ Instalasi
-- Coming Soon
+Berikut langkah-langkah untuk menginstal dan menjalankan aplikasi:
+1. Clone repository:
+```
+git clone https://github.com/Elmosius/Project-UAS-PWL.git
+```
+2. Instal module pada folder back-end dan main:
+```
+npm install
+```
+3. Salin file .env.example menjadi .env dan sesuaikan konfigurasi database di folder back-end:
+```
+cp .env.example .env
+```
+4. Jalankan server back-end :
+```
+nodemon . atau node .
+```
+5. Jalankan server front-end :
+```
+npm run dev
+```
