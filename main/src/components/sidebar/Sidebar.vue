@@ -47,7 +47,7 @@
       <!-- Links -->
       <div class="space-y-5">
         <!-- Data Fakultas, Prodi, User-->
-        <div>
+        <div v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])">
           <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
             <span
               class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -242,6 +242,7 @@
                     to="/beasiswa/daftar-list"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
+                    v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])"
                   >
                     <li class="mb-1 last:mb-0">
                       <a
@@ -308,7 +309,7 @@
         </div>
 
         <!-- Laporan -->
-        <div>
+        <div v-if="isAuthorized(['Admin', 'Fakultas', 'Prodi'])">
           <h3 class="text-xs uppercase text-slate-500 font-semibold pl-3">
             <span
               class="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -481,6 +482,11 @@ export default {
       storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
     )
 
+    function isAuthorized(requiredRoles) {
+      const role = localStorage.getItem('role')
+      return requiredRoles.includes(role)
+    }
+
     function logout() {
       localStorage.removeItem('token')
       localStorage.removeItem('role')
@@ -528,7 +534,8 @@ export default {
       sidebar,
       sidebarExpanded,
       currentRoute,
-      logout
+      logout,
+      isAuthorized
     }
   }
 }
