@@ -285,6 +285,7 @@
                     to="/beasiswa/history"
                     custom
                     v-slot="{ href, navigate, isExactActive }"
+                    v-if="isAuthorized(['Mahasiswa'])"
                   >
                     <li class="mb-1 last:mb-0">
                       <a
