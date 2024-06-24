@@ -117,13 +117,13 @@ const routes = [
     path: '/beasiswa/daftar-list-create',
     name: 'DaftarListCreate',
     component: DaftarListCreate,
-    meta: { requiresAuth: true, role: ['Fakultas'] }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
   {
     path: '/beasiswa/daftar-list-edit/:id',
     name: 'DaftarListEdit',
     component: DaftarListEdit,
-    meta: { requiresAuth: true, role: ['Fakultas'] }
+    meta: { requiresAuth: true, role: ['Admin'] }
   },
 
   // PENDAFTARAN
@@ -137,13 +137,13 @@ const routes = [
     path: '/beasiswa/pendaftaran-create',
     name: 'PendaftaranCreate',
     component: PendaftaranCreate,
-    meta: { requiresAuth: true, role: ['Fakultas'] }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   },
   {
     path: '/beasiswa/pendaftaran-edit/:id',
     name: 'PendaftaranEdit',
     component: PendaftaranEdit,
-    meta: { requiresAuth: true, role: ['Fakultas'] }
+    meta: { requiresAuth: true, role: ['Fakultas', 'Prodi'] }
   },
   {
     path: '/beasiswa/pendaftaran-daftar/:id',

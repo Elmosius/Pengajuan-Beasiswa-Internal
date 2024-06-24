@@ -86,7 +86,7 @@
 
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
-                    {{ bd.status_1 }}
+                    {{ getStatus(bd.status_1, bd.status_2) }}
                   </p>
                 </td>
                 <td class="py-5 px-4">
@@ -177,6 +177,7 @@ export default {
   },
   data() {
     return {
+      beasiswaDetailList: [],
       isModalOpen: false,
       selectedPendaftaranId: null,
       error: ''
@@ -187,6 +188,7 @@ export default {
     await this.fetchLoggedInUser()
     await this.fetchBeasiswaDetailByUserId(this.user.id)
   },
+
   methods: {
     openModal() {
       this.isModalOpen = true
@@ -211,6 +213,15 @@ export default {
     formatDate(dateString) {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(dateString).toLocaleDateString('id-ID', options)
+    },
+    getStatus(status_1, status_2) {
+      if (status_1 === '1') {
+        return 'Disetujui Fakultas'
+      } else if (status_2 === '1') {
+        return 'Disetujui Prodi'
+      } else {
+        return 'Dalam Proses'
+      }
     }
   }
 }
