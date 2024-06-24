@@ -70,6 +70,7 @@
                     <router-link
                       :to="`/beasiswa/pendaftaran-daftar/${pendaftaran.id}`"
                       class="hover:text-purple-500"
+                      v-if="isAuthorized(['Mahasiswa'])"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -193,6 +194,11 @@ export default {
     this.fetchPendaftaran()
   },
   methods: {
+    isAuthorized(required) {
+      const role = localStorage.getItem('role')
+      const status = localStorage.getItem('status')
+      return required.includes(role, status)
+    },
     openModal() {
       this.isModalOpen = true
     },

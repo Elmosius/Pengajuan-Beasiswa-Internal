@@ -65,7 +65,7 @@
                   <p class="text-black dark:text-white">{{ user.nama_role }}</p>
                 </td>
                 <td class="py-5 px-4">
-                  <p class="text-black dark:text-white">{{ user.status }}</p>
+                  <p class="text-black dark:text-white">{{ changeStatus(user.status) }}</p>
                 </td>
                 <td class="py-5 px-4">
                   <p class="text-black dark:text-white">
@@ -179,6 +179,11 @@ export default {
     isAuthorized(requiredRoles) {
       const role = localStorage.getItem('role')
       return requiredRoles.includes(role)
+    },
+    changeStatus(status) {
+      let result = ''
+      status === '1' ? (result = 'Aktif') : (result = 'Tidak Aktif')
+      return result
     },
     openModal() {
       this.isModalOpen = true

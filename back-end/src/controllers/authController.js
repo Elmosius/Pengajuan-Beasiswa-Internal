@@ -22,6 +22,7 @@ const loginUser = async (req, res) => {
       role_id: user.role_id,
       email: user.email,
       role: user.nama_role,
+      status: user.status,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -34,6 +35,7 @@ const loginUser = async (req, res) => {
       user: {
         id: user.id,
         role: user.nama_role,
+        status: user.status,
       },
     });
   } catch (error) {
