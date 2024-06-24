@@ -21,7 +21,7 @@ Berikut adalah hal yang dapat dilakukan oleh masing-masing pengguna:
 ## 📚 Daftar Branch
 
 - Main
-- Mencoba
+- Cadangan
 
 ## ⚙️ Teknologi yang dipakai
 
