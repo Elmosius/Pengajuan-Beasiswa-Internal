@@ -1,4 +1,4 @@
-# 🚀 PWL - Tugas Besar UAS
+# 🚀 Pengajuan Beasiswa Internal
 
 Selamat datang di repositori GitHub kami untuk Tugas Besar Ujian Akhir Semester mata kuliah Pemrograman Web Lanjut. Kami adalah Kelompok 1 yang terdiri dari:
 
