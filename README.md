@@ -26,7 +26,8 @@ Berikut adalah hal yang dapat dilakukan oleh masing-masing pengguna:
 ## ⚙️ Teknologi yang dipakai
 
 - Tailwind
-- Vue + Vite
+- Vue.js
+- Vite
 - NodeJs
 - MySQL 
 - ExpressJs
